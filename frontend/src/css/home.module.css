@@ -1,0 +1,61 @@
+body > div {
+    height: 100vh;
+}
+nav {
+    display: flex;
+    justify-content: end;
+    justify-items: end;
+}
+
+.main {
+    height: 100%;
+    background-color: blue;
+    background: url(../../public/img/test01.png) no-repeat center center fixed;
+}
+
+.ghost_btn {
+    display: inline-block;
+    position: relative;
+    padding: 5px;
+    margin-left: 10px;
+    margin-bottom: 10px;
+    border: 1px solid rgb(0, 0, 0);
+    border-radius: 10px;
+    color: rgb(0, 0, 0);
+    text-align: center;
+    text-decoration: none;
+    background-color: rgba(255, 255, 255, 0);
+}
+
+.ghost_btn:hover {
+    background-color: #fff;
+    color: black;
+}
+
+.container {
+    height: 90%;
+    display: grid;
+    grid-gap: 1px;
+    grid-template-areas: 'myMbti mbti_16'
+                         'match board';
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+}
+
+.container > button {
+    border: rgba(255, 0, 0, 0);
+}
+
+#my_mbti {
+    grid-area: my_mbti;
+}
+#mbti_16 {
+    grid-area: mbti_16;
+}
+#match {
+    grid-area: match;
+}
+#board {
+    grid-area: board;
+}
+
