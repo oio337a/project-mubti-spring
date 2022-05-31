@@ -1,9 +1,5 @@
 # Security OAuth
 spring:
-  config:
-    activate:
-      on-profile: "oauth"
-
   security:
     oauth2.client:
       registration:
