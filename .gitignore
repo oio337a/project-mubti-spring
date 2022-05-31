@@ -24,7 +24,7 @@ MANIFEST.MF
 _site/
 activemq-data
 bin
-build
+build/
 !/**/src/**/bin
 !/**/src/**/build
 build.log
