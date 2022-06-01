@@ -1,11 +1,8 @@
-package com.mbti.model;
+package com.mbti.oauthlogin.api.entity.model;
 
 import com.mbti.oauthlogin.api.entity.user.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -15,12 +12,13 @@ import java.time.LocalDateTime;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 @Entity
 @Table(name = "Comment")
-public class Comment {
+public class Comments {
     @ManyToOne
     @JoinColumn(name = "POST_NUM")
-    private Post post;
+    private Posts posts;
 
     @JsonIgnore
     @Id
@@ -32,19 +30,20 @@ public class Comment {
     @JoinColumn(name = "USER_NAME")
     private User user;
 
+    @Column(name = "COMMENT_CONTENT", columnDefinition = "TEXT")
+    @NotNull
+    private String commentContent;
     @Column(name = "COMMENT_DATE")
     @NotNull
     private LocalDateTime commentDate;
 
-    @Column(name = "COMMENT_CONTENT", columnDefinition = "TEXT")
-    @NotNull
-    private String commentContent;
-
-    public Comment(
+    public Comments(
             @NotNull User user,
             @NotNull String commentContent,
             @NotNull LocalDateTime commentDate
     ) {
+        this.posts = posts;
+        this.commentNum = commentNum;
         this.user = user;
         this.commentContent = commentContent;
         this.commentDate = commentDate;

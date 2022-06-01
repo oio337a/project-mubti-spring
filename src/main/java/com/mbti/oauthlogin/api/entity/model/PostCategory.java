@@ -1,4 +1,4 @@
-package com.mbti.model;
+package com.mbti.oauthlogin.api.entity.model;
 
 import lombok.Getter;
 

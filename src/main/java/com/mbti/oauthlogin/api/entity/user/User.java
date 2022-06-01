@@ -31,10 +31,10 @@ public class User {
     @Size(max = 64)
     private String userId;
 
-    @Column(name = "USERNAME", length = 100)
+    @Column(name = "USER_ALIAS", length = 100)
     @NotNull
     @Size(max = 100)
-    private String username;
+    private String userAlias;
 
     @JsonIgnore
     @Column(name = "PASSWORD", length = 128)
@@ -77,7 +77,7 @@ public class User {
 
     public User(
             @NotNull @Size(max = 64) String userId,
-            @NotNull @Size(max = 100) String username,
+            @NotNull @Size(max = 100) String userAlias,
             @NotNull @Size(max = 512) String email,
             @NotNull @Size(max = 1) String emailVerifiedYn,
             @NotNull @Size(max = 512) String profileImageUrl,
@@ -87,7 +87,7 @@ public class User {
             @NotNull LocalDateTime modifiedAt
     ) {
         this.userId = userId;
-        this.username = username;
+        this.userAlias = userAlias;
         this.password = "NO_PASS";
         this.email = email != null ? email : "NO_EMAIL";
         this.emailVerifiedYn = emailVerifiedYn;

@@ -1,11 +1,8 @@
-package com.mbti.model;
+package com.mbti.oauthlogin.api.entity.model;
 
 import com.mbti.oauthlogin.api.entity.user.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -17,9 +14,10 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 @Entity
 @Table(name = "Post")
-public class Post {
+public class Posts {
     @JsonIgnore
     @Id
     @Column(name = "POST_NUM")
@@ -56,11 +54,10 @@ public class Post {
     @NotNull
     private Long votes;
 
-    @OneToMany(cascade = CascadeType.REMOVE)
-    @JoinColumn(name = "POST_NUM")
-    private List<Comment> comment;
+    @OneToMany(mappedBy = "post", cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
+    private List<Comments> comments;
 
-    public Post(
+    public Posts(
             @NotNull User user,
             @NotNull @Size(max = 512) String postTitle,
             @NotNull PostCategory postCategory,
@@ -69,6 +66,7 @@ public class Post {
             @NotNull Long views,
             @NotNull Long votes
     ) {
+        this.postNum = postNum;
         this.user = user;
         this.postTitle = postTitle;
         this.postCategory = postCategory;
@@ -76,5 +74,6 @@ public class Post {
         this.postDate = postDate;
         this.views = views == null ? 0 : views;
         this.votes = votes == null ? 0 : votes;
+        this.comments = comments;
     }
 }
