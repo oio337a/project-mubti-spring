@@ -1,12 +1,13 @@
 import { useState } from "react";
-import {BrowserRouter as Router, Link} from 'react-router-dom';
+import {BrowserRouter as Router, Link, useNavigate} from 'react-router-dom';
 import Board from "./Board"
 
 function Post()
 {
     const [category, setCateroty] = useState("--선택--");
-    const [title, setTitle] = useState("제목입니다");
+    const [title, setTitle] = useState("");
     const [content, setContent] = useState("");
+    const navigate = useNavigate();
     const onTitleChanged = (event) => {
         setTitle(event.target.value);
     };
@@ -14,7 +15,7 @@ function Post()
         setContent(event.target.value);
     };
     const onUndo = () => {
-
+       navigate("/board");
     };
     const onSubmit = () => {
 
@@ -29,8 +30,8 @@ function Post()
             <div>
                 <h3>카테고리</h3>
                 <select value={category} onChange={onSelect}>
-                    {types.map((type) => (
-                        <option value={type}>
+                    {types.map((type, index) => (
+                        <option value={type} key={index}>
                             {type}
                         </option>
                     ))}
@@ -56,11 +57,7 @@ function Post()
                 value={content}
                 onChange={onContentChanged}
             />
-            <Router>
-                <Link to="/board">
-                    <button onClick={onUndo}>취소</button>
-                </Link>
-            </Router>
+            <button onClick={onUndo}>취소</button>
             <button onClick={onSubmit}>등록</button>
         </div>
     );

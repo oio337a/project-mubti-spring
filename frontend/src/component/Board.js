@@ -1,4 +1,3 @@
-//import { BoardView } from "./assets/component/Board_view"
 
 function Board() {
   return <div>hello</div>;
