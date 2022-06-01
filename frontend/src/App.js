@@ -17,7 +17,8 @@ function App() {
   }, []);
   return (
     <>
-      <Board />
+    {message.map((v,idx)=><li key={`${idx}-${v}`}>{v}</li>)}
+//      <Board />
     </>
     //   <Router>
     //       <Routes>
