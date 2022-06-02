@@ -71,7 +71,7 @@ spring:
       on-profile: "test-db"
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/mubti-test
+    url: jdbc:mysql://localhost:3306/mubti_test
     username: root
     password: 1234
     hikari:
