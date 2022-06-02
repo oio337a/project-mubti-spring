@@ -19,11 +19,19 @@ function App() {
   //const store = createStore(reducer);
   return (
       <Router>
+<<<<<<< HEAD
         <Routes>
           <Route path="/" element={<h1>hello</h1>} />
           <Route path="post/" element={<Post />} />
           <Route path="board/" element={<Board />} />
         </Routes>
+=======
+         <Routes>
+           <Route path="/" element={<h1>hello</h1>} />
+           <Route path="post/" element={<Post />} />
+           <Route path="board/" element={<Board />} />
+         </Routes>
+>>>>>>> 8e8854aa52e66c7c028dacc6012ed59f01eaa6c3
       </Router>
   );
 }

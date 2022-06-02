@@ -1,3 +1,4 @@
+<<<<<<< HEAD:src/main/java/com/mubti/global/config/security/SecurityConfig.java
 package com.mubti.global.config.security;
 
 import com.mubti.domain.user.repository.UserRefreshTokenRepository;
@@ -12,6 +13,23 @@ import com.mubti.global.common.oauth.handler.TokenAccessDeniedHandler;
 import com.mubti.global.common.oauth.repository.OAuth2AuthorizationRequestBasedOnCookieRepository;
 import com.mubti.global.common.oauth.service.CustomOAuth2UserService;
 import com.mubti.global.common.oauth.token.AuthTokenProvider;
+=======
+package com.mbti.oauthlogin.config.security;
+
+import com.mbti.oauthlogin.api.repository.UserRefreshTokenRepository;
+import com.mbti.oauthlogin.config.properties.AppProperties;
+import com.mbti.oauthlogin.config.properties.CorsProperties;
+import com.mbti.oauthlogin.oauth.entity.RoleType;
+import com.mbti.oauthlogin.oauth.exception.RestAuthenticationEntryPoint;
+import com.mbti.oauthlogin.oauth.filter.TokenAuthenticationFilter;
+import com.mbti.oauthlogin.oauth.handler.OAuth2AuthenticationFailureHandler;
+import com.mbti.oauthlogin.oauth.handler.OAuth2AuthenticationSuccessHandler;
+import com.mbti.oauthlogin.oauth.handler.TokenAccessDeniedHandler;
+import com.mbti.oauthlogin.oauth.repository.OAuth2AuthorizationRequestBasedOnCookieRepository;
+import com.mbti.oauthlogin.oauth.service.CustomOAuth2UserService;
+import com.mbti.oauthlogin.oauth.service.CustomUserDetailsService;
+import com.mbti.oauthlogin.oauth.token.AuthTokenProvider;
+>>>>>>> 8e8854aa52e66c7c028dacc6012ed59f01eaa6c3:src/main/java/com/mbti/oauthlogin/config/security/SecurityConfig.java
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

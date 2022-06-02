@@ -1,3 +1,4 @@
+<<<<<<< HEAD:src/main/java/com/mubti/global/common/oauth/handler/OAuth2AuthenticationSuccessHandler.java
 package com.mubti.global.common.oauth.handler;
 
 import com.mubti.domain.user.entity.user.UserRefreshToken;
@@ -11,6 +12,21 @@ import com.mubti.global.config.properties.AppProperties;
 import com.mubti.global.common.oauth.info.OAuth2UserInfoFactory;
 import com.mubti.global.common.oauth.repository.OAuth2AuthorizationRequestBasedOnCookieRepository;
 import com.mubti.global.utils.CookieUtil;
+=======
+package com.mbti.oauthlogin.oauth.handler;
+
+import com.mbti.oauthlogin.api.entity.user.UserRefreshToken;
+import com.mbti.oauthlogin.api.repository.UserRefreshTokenRepository;
+import com.mbti.oauthlogin.config.properties.AppProperties;
+import com.mbti.oauthlogin.oauth.entity.ProviderType;
+import com.mbti.oauthlogin.oauth.entity.RoleType;
+import com.mbti.oauthlogin.oauth.info.OAuth2UserInfo;
+import com.mbti.oauthlogin.oauth.info.OAuth2UserInfoFactory;
+import com.mbti.oauthlogin.oauth.repository.OAuth2AuthorizationRequestBasedOnCookieRepository;
+import com.mbti.oauthlogin.oauth.token.AuthToken;
+import com.mbti.oauthlogin.oauth.token.AuthTokenProvider;
+import com.mbti.oauthlogin.utils.CookieUtil;
+>>>>>>> 8e8854aa52e66c7c028dacc6012ed59f01eaa6c3:src/main/java/com/mbti/oauthlogin/oauth/handler/OAuth2AuthenticationSuccessHandler.java
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;

@@ -1,3 +1,4 @@
+<<<<<<< HEAD:src/main/java/com/mubti/domain/user/controller/auth/AuthController.java
 package com.mubti.domain.user.controller.auth;
 
 import com.mubti.domain.user.entity.auth.AuthReqModel;
@@ -11,6 +12,21 @@ import com.mubti.global.common.oauth.token.AuthToken;
 import com.mubti.global.common.oauth.token.AuthTokenProvider;
 import com.mubti.global.utils.CookieUtil;
 import com.mubti.global.utils.HeaderUtil;
+=======
+package com.mbti.oauthlogin.api.controller.auth;
+
+import com.mbti.oauthlogin.api.entity.auth.AuthReqModel;
+import com.mbti.oauthlogin.api.entity.user.UserRefreshToken;
+import com.mbti.oauthlogin.api.repository.UserRefreshTokenRepository;
+import com.mbti.oauthlogin.common.ApiResponse;
+import com.mbti.oauthlogin.config.properties.AppProperties;
+import com.mbti.oauthlogin.oauth.entity.RoleType;
+import com.mbti.oauthlogin.oauth.entity.UserPrincipal;
+import com.mbti.oauthlogin.oauth.token.AuthToken;
+import com.mbti.oauthlogin.oauth.token.AuthTokenProvider;
+import com.mbti.oauthlogin.utils.CookieUtil;
+import com.mbti.oauthlogin.utils.HeaderUtil;
+>>>>>>> 8e8854aa52e66c7c028dacc6012ed59f01eaa6c3:src/main/java/com/mbti/oauthlogin/api/controller/auth/AuthController.java
 import io.jsonwebtoken.Claims;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;

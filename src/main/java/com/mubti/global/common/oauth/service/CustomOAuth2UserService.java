@@ -1,5 +1,6 @@
 package com.mubti.global.common.oauth.service;
 
+<<<<<<< HEAD:src/main/java/com/mubti/global/common/oauth/service/CustomOAuth2UserService.java
 import com.mubti.domain.user.entity.user.User;
 import com.mubti.domain.user.repository.UserRepository;
 import com.mubti.global.common.oauth.entity.ProviderType;
@@ -8,6 +9,16 @@ import com.mubti.global.common.oauth.entity.UserPrincipal;
 import com.mubti.global.common.oauth.info.OAuth2UserInfo;
 import com.mubti.global.common.oauth.info.OAuth2UserInfoFactory;
 import com.mubti.global.common.oauth.exception.OAuthProviderMissMatchException;
+=======
+import com.mbti.oauthlogin.api.entity.user.User;
+import com.mbti.oauthlogin.api.repository.UserRepository;
+import com.mbti.oauthlogin.oauth.entity.ProviderType;
+import com.mbti.oauthlogin.oauth.entity.RoleType;
+import com.mbti.oauthlogin.oauth.entity.UserPrincipal;
+import com.mbti.oauthlogin.oauth.exception.OAuthProviderMissMatchException;
+import com.mbti.oauthlogin.oauth.info.OAuth2UserInfo;
+import com.mbti.oauthlogin.oauth.info.OAuth2UserInfoFactory;
+>>>>>>> 8e8854aa52e66c7c028dacc6012ed59f01eaa6c3:src/main/java/com/mbti/oauthlogin/oauth/service/CustomOAuth2UserService.java
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.InternalAuthenticationServiceException;
 import org.springframework.security.core.AuthenticationException;

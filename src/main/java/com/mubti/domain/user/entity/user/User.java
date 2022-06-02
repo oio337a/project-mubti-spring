@@ -31,6 +31,35 @@ public class User {
     @Size(max = 64)
     private String userId;
 
+<<<<<<< HEAD:src/main/java/com/mubti/domain/user/entity/user/User.java
+=======
+    @Column(name = "USER_ALIAS", length = 100)
+    @NotNull
+    @Size(max = 100)
+    private String userAlias;
+
+    @JsonIgnore
+    @Column(name = "PASSWORD", length = 128)
+    @NotNull
+    @Size(max = 128)
+    private String password;
+
+    @Column(name = "EMAIL", length = 512, unique = true)
+    @NotNull
+    @Size(max = 512)
+    private String email;
+
+    @Column(name = "EMAIL_VERIFIED_YN", length = 1)
+    @NotNull
+    @Size(min = 1, max = 1)
+    private String emailVerifiedYn;
+
+    @Column(name = "PROFILE_IMAGE_URL", length = 512)
+    @NotNull
+    @Size(max = 512)
+    private String profileImageUrl;
+
+>>>>>>> 8e8854aa52e66c7c028dacc6012ed59f01eaa6c3:src/main/java/com/mbti/oauthlogin/api/entity/user/User.java
     @Column(name = "PROVIDER_TYPE", length = 20)
     @Enumerated(EnumType.STRING)
     @NotNull
@@ -51,12 +80,27 @@ public class User {
 
     public User(
             @NotNull @Size(max = 64) String userId,
+<<<<<<< HEAD:src/main/java/com/mubti/domain/user/entity/user/User.java
+=======
+            @NotNull @Size(max = 100) String userAlias,
+            @NotNull @Size(max = 512) String email,
+            @NotNull @Size(max = 1) String emailVerifiedYn,
+            @NotNull @Size(max = 512) String profileImageUrl,
+>>>>>>> 8e8854aa52e66c7c028dacc6012ed59f01eaa6c3:src/main/java/com/mbti/oauthlogin/api/entity/user/User.java
             @NotNull ProviderType providerType,
             @NotNull RoleType roleType,
             @NotNull LocalDateTime createdAt,
             @NotNull LocalDateTime modifiedAt
     ) {
         this.userId = userId;
+<<<<<<< HEAD:src/main/java/com/mubti/domain/user/entity/user/User.java
+=======
+        this.userAlias = userAlias;
+        this.password = "NO_PASS";
+        this.email = email != null ? email : "NO_EMAIL";
+        this.emailVerifiedYn = emailVerifiedYn;
+        this.profileImageUrl = profileImageUrl != null ? profileImageUrl : "";
+>>>>>>> 8e8854aa52e66c7c028dacc6012ed59f01eaa6c3:src/main/java/com/mbti/oauthlogin/api/entity/user/User.java
         this.providerType = providerType;
         this.roleType = roleType;
         this.createdAt = createdAt;
