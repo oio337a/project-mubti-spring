@@ -15,11 +15,7 @@ function Post()
         setContent(event.target.value);
     };
     const onUndo = () => {
-<<<<<<< HEAD
         navigate("/board");
-=======
-       navigate("/board");
->>>>>>> 8e8854aa52e66c7c028dacc6012ed59f01eaa6c3
     };
     const onSubmit = () => {
 
