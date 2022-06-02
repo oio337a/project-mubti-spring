@@ -31,6 +31,14 @@ public class User {
     @Size(max = 64)
     private String userId;
 
+    @Column(name = "USER_ALIAS", length = 15, unique = true)
+    @Size(max = 15)
+    private String userAlias;
+
+    @Column(name = "MBTI_TYPE", length = 4, unique = true)
+    @Size(max = 4)
+    private String mbtiType;
+
     @Column(name = "PROVIDER_TYPE", length = 20)
     @Enumerated(EnumType.STRING)
     @NotNull
@@ -49,6 +57,10 @@ public class User {
     @NotNull
     private LocalDateTime modifiedAt;
 
+    @Column(name = "SAVED_REPORT")
+    @NotNull
+    private int savedReport;
+
     public User(
             @NotNull @Size(max = 64) String userId,
             @NotNull ProviderType providerType,
@@ -61,5 +73,6 @@ public class User {
         this.roleType = roleType;
         this.createdAt = createdAt;
         this.modifiedAt = modifiedAt;
+        this.savedReport = 0;
     }
 }
