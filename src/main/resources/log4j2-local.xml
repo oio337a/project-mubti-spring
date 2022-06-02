@@ -16,7 +16,7 @@
         <logger name="org.springframework" level="info" additivity="false" >
             <AppenderRef ref="console" />
         </logger>
-        <logger name="com.mbti.*" additivity="true" >
+        <logger name="com.mubti.*" additivity="true" >
             <AppenderRef ref="console" level="debug" />
         </logger>
     </Loggers>

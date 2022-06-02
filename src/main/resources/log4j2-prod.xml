@@ -20,7 +20,7 @@
         <logger name="org.springframework" level="info" additivity="false" >
             <AppenderRef ref="file" />
         </logger>
-        <logger name="com.mbti.*" additivity="true" >
+        <logger name="com.mubti.*" additivity="true" >
             <AppenderRef ref="file" level="debug" />
         </logger>
     </Loggers>

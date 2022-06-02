@@ -4,11 +4,9 @@ spring:
     oauth2.client:
       registration:
         google:
-          clientId: "73a11a14a29b17568e3ff9a1d1e81eae"
-          clientSecret: "hhv5dahMHr8rZqeq5XeWzU6vRnJwBFWZ"
+          client-id: "20496405764-022dns1s96qtq81rrcrmhaouf91itkkk.apps.googleusercontent.com"
+          client-secret: "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"
           scope:
-            - email
-            - profile
         naver:
           clientId: '{네이버 client-id}'
           clientSecret: '{네이버 client-secret}'
@@ -16,9 +14,6 @@ spring:
           authorizationGrantType: authorization_code
           redirectUri: "{baseUrl}/{action}/oauth2/code/{registrationId}"
           scope:
-            - nickname
-            - email
-            - profile_image
           clientName: Naver
         kakao:
           clientId: "73a11a14a29b17568e3ff9a1d1e81eae"
@@ -27,7 +22,6 @@ spring:
           authorizationGrantType: authorization_code
           redirectUri: "{baseUrl}/{action}/oauth2/code/{registrationId}"
           scope:
-            - account_email
           clientName: Kakao
       # Provider 설정
       provider:
