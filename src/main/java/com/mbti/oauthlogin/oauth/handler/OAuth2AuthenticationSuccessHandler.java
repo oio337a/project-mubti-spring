@@ -1,7 +1,7 @@
 package com.mbti.oauthlogin.oauth.handler;
 
 import com.mbti.oauthlogin.api.entity.user.UserRefreshToken;
-import com.mbti.oauthlogin.api.repository.user.UserRefreshTokenRepository;
+import com.mbti.oauthlogin.api.repository.UserRefreshTokenRepository;
 import com.mbti.oauthlogin.config.properties.AppProperties;
 import com.mbti.oauthlogin.oauth.entity.ProviderType;
 import com.mbti.oauthlogin.oauth.entity.RoleType;

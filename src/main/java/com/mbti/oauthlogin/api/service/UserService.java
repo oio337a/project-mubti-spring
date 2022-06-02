@@ -1,7 +1,7 @@
 package com.mbti.oauthlogin.api.service;
 
 import com.mbti.oauthlogin.api.entity.user.User;
-import com.mbti.oauthlogin.api.repository.user.UserRepository;
+import com.mbti.oauthlogin.api.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

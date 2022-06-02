@@ -1,4 +1,4 @@
-package com.mbti.oauthlogin.api.repository.user;
+package com.mbti.oauthlogin.api.repository;
 
 import com.mbti.oauthlogin.api.entity.user.UserRefreshToken;
 import org.springframework.data.jpa.repository.JpaRepository;

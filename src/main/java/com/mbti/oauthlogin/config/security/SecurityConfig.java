@@ -1,6 +1,6 @@
 package com.mbti.oauthlogin.config.security;
 
-import com.mbti.oauthlogin.api.repository.user.UserRefreshTokenRepository;
+import com.mbti.oauthlogin.api.repository.UserRefreshTokenRepository;
 import com.mbti.oauthlogin.config.properties.AppProperties;
 import com.mbti.oauthlogin.config.properties.CorsProperties;
 import com.mbti.oauthlogin.oauth.entity.RoleType;

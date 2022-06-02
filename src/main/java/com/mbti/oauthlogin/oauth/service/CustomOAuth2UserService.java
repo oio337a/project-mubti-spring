@@ -1,7 +1,7 @@
 package com.mbti.oauthlogin.oauth.service;
 
 import com.mbti.oauthlogin.api.entity.user.User;
-import com.mbti.oauthlogin.api.repository.user.UserRepository;
+import com.mbti.oauthlogin.api.repository.UserRepository;
 import com.mbti.oauthlogin.oauth.entity.ProviderType;
 import com.mbti.oauthlogin.oauth.entity.RoleType;
 import com.mbti.oauthlogin.oauth.entity.UserPrincipal;

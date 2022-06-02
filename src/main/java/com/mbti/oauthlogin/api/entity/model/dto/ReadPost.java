@@ -2,7 +2,7 @@ package com.mbti.oauthlogin.api.entity.model.dto;
 
 import com.mbti.oauthlogin.api.entity.model.Posts;
 import com.mbti.oauthlogin.api.entity.model.PostCategory;
-import lombok.Getter;
+import lombok.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
