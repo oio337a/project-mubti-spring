@@ -1,6 +1,12 @@
 import React from "react";
 import styled from "styled-components";
 
+const Navi = styled.nav`
+  display: flex;
+  justify-content: end;
+  justify-items: end;
+`;
+
 const Button = styled.button`
   display: inline-block;
   position: relative;
@@ -17,10 +23,10 @@ const Button = styled.button`
 
 function Header() {
   return (
-    <nav>
+    <Navi>
       <Button>로그인</Button>
       <Button>회원가입</Button>
-    </nav>
+    </Navi>
   );
 }
 

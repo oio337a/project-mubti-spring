@@ -2,12 +2,12 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { Header, Footer } from "../components/Tools";
 import { Link } from "react-router-dom";
+import MainImg from "../assets/test01.png";
 
 const Main = styled.div`
-  display: flex;
-  height: 100%;
+  height: 100vh;
   background-color: blue;
-  background: url(../../public/img/test01.png) no-repeat center center fixed;
+  background: url(${MainImg}) no-repeat center center fixed;
 `;
 
 const Button = styled.button`
@@ -56,4 +56,4 @@ function Home() {
   );
 }
 
-export { Home };
+export default Home;

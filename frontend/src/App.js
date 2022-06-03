@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
-import Home from "./component/Home";
+import Home from "./pages/Home";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Login from "./component/login.js";
-import Board from "./component/Board";
+import Board from "./pages/Board";
+import Login from "./pages/login";
+import Mubti from "./pages/Mubti";
 
 function App() {
   const [message, setMessage] = useState([]);
@@ -17,8 +18,10 @@ function App() {
   }, []);
   return (
     <>
-    {message.map((v,idx)=><li key={`${idx}-${v}`}>{v}</li>)}
-//      <Board />
+      {message.map((v, idx) => (
+        <li key={`${idx}-${v}`}>{v}</li>
+      ))}
+      <Mubti />
     </>
     //   <Router>
     //       <Routes>
