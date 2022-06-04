@@ -1,6 +1,6 @@
 import { useState } from "react";
 import {BrowserRouter as Router, Link, useNavigate} from 'react-router-dom';
-import Board from "./Board"
+import Board from "../../../../dd/src/component/Board"
 
 function Post()
 {
