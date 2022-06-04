@@ -1,5 +1,10 @@
 package com.mubti.domain.user.entity.user;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import com.mubti.global.common.oauth.entity.ProviderType;
 import com.mubti.global.common.oauth.entity.RoleType;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -7,6 +12,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -31,6 +37,14 @@ public class User {
     @Size(max = 64)
     private String userId;
 
+    @Column(name = "USER_ALIAS", length = 15, unique = true)
+    @Size(max = 15)
+    private String userAlias;
+
+    @Column(name = "MBTI_TYPE", length = 4, unique = true)
+    @Size(max = 4)
+    private String mbtiType;
+
     @Column(name = "PROVIDER_TYPE", length = 20)
     @Enumerated(EnumType.STRING)
     @NotNull
@@ -42,12 +56,22 @@ public class User {
     private RoleType roleType;
 
     @Column(name = "CREATED_AT")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS")
+    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
+    @JsonSerialize(using = LocalDateTimeSerializer.class)
     @NotNull
     private LocalDateTime createdAt;
 
     @Column(name = "MODIFIED_AT")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS")
+    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
+    @JsonSerialize(using = LocalDateTimeSerializer.class)
     @NotNull
     private LocalDateTime modifiedAt;
+
+    @Column(name = "SAVED_REPORT")
+    @NotNull
+    private int savedReport;
 
     public User(
             @NotNull @Size(max = 64) String userId,
@@ -61,5 +85,6 @@ public class User {
         this.roleType = roleType;
         this.createdAt = createdAt;
         this.modifiedAt = modifiedAt;
+        this.savedReport = 0;
     }
 }

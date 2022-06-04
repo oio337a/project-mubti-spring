@@ -1,79 +1,115 @@
 package com.mubti.global.common.logging;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.mubti.global.common.response.ApiResponse;
 import lombok.extern.slf4j.Slf4j;
+import net.minidev.json.JSONObject;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
-import org.aspectj.lang.annotation.After;
-import org.aspectj.lang.annotation.Around;
-import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Before;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.aspectj.lang.annotation.*;
+import org.aspectj.lang.reflect.CodeSignature;
+import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.*;
 
-import java.util.Arrays;
+import java.lang.annotation.Annotation;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.util.*;
+import java.util.stream.Stream;
 
 @Aspect
 @Component
 @Slf4j
 public class LoggingAdvice {
-    private static final Logger logger = LoggerFactory.getLogger(LoggingAdvice.class);
 
-    //target 메소드의 파라미터 등 정보를 출력
-    @Before("execution(* com.mbti..*(..))")
-    public void startLog(JoinPoint jp) {
+    @Before("execution(* com.mubti.domain..*Controller.*(..))")
+    public void beforeLog(JoinPoint joinPoint) throws Throwable{
+        JSONObject jsonObject = new JSONObject();
+        Class clazz = joinPoint.getTarget().getClass();
 
-        /* 전달되는 모든 파라미터들을 object의 배열로 가져옴 */
-        logger.info("-----------> REQUEST : " + Arrays.toString(jp.getArgs()));
-
-        //해당 JoinPoint 타입을 알아냄
-        logger.info("-----------> REQUEST : " + jp.getKind());
-
-        //실행하는 대상 객체의 메소드에 대한 정보 알아낼때 사용
-        logger.info("-----------> REQUEST : " + jp.getSignature().getName());
-
-        //target 객체를 알아낼때 사용
-        logger.info("-----------> REQUEST : " + jp.getTarget().toString());
-
-        //advice를 행하는 객체를 알아낼때 사용
-        logger.info("-----------> REQUEST : " + jp.getThis().toString());
+        log.info(getRequestUrl(joinPoint, clazz));
+        log.info("parameters" + jsonObject.toJSONString(params(joinPoint)));
     }
 
-    @After("execution(* com.mbti..*(..))")
-    public void after(JoinPoint jp) {
-        logger.info("------------------------------------------------");
-        logger.info("------------------------------------------------");
+    @AfterReturning(pointcut = "execution(* com.mubti.domain..*Controller.*(..))",
+                    returning = "result")
+    public void afterReturningLog(JoinPoint joinPoint, Object result) throws Throwable{
+        JSONObject jsonObject = new JSONObject();
+        HashMap<String, Object> resultMap = new HashMap<>();
 
-        /* 전달되는 모든 파라미터들을 object의 배열로 가져옴 */
-        logger.info("-----------> RESPONCE : " + Arrays.toString(jp.getArgs()));
+        ApiResponse apiResponse = (ApiResponse) result;
+        resultMap.put("header", objectByMap(apiResponse.getHeader()));
+        resultMap.put("body", objectByMap(apiResponse.getBody()));
 
-        //해당 advice의 타입을 알아냄
-        logger.info("-----------> RESPONCE : " + jp.getKind());
-
-        //실행하는 대상 객체의 메소드에 대한 정보 알아낼때 사용
-        logger.info("-----------> RESPONCE : " + jp.getSignature().getName());
-
-        //target 객체를 알아낼때 사용
-        logger.info("-----------> RESPONCE : " + jp.getTarget().toString());
-
-        //advice를 행하는 객체를 알아낼때 사용
-        logger.info("-----------> RESPONCE : " + jp.getThis().toString());
+        log.info("response: " + jsonObject.toJSONString(resultMap));
     }
 
-    //target 메소드의 동작 시간을 측정
-    @Around("execution(* com.mbti..*(..))")
-    public Object timeLog(ProceedingJoinPoint pjp) throws Throwable {
+    @AfterThrowing(pointcut = "execution(* com.mubti.domain..*Controller.*(..))",
+                   throwing = "ex")
+    public void afterThrowingLog(JoinPoint joinPoint, Throwable ex) {
+        String signatureString = joinPoint.getSignature().getName();
+        System.out.println("[" + signatureString + "] 메서드 실행 중 예외 발생");
+        System.out.println("[" + signatureString + "] 예외 = " + ex);
+    }
+
+    @Around("execution(* com.mubti.domain..*Controller.*(..))")
+    public Object aroundLog(ProceedingJoinPoint joinPoint) throws Throwable{
         long startTime = System.currentTimeMillis();
-
-        //실제 타겟을 실행하는 부분. 이 부분이 없으면 advice가 적용된 메소드가 동작하지 않음
-        Object result = pjp.proceed(); //proceed는 exception보다 상위 throwable을 처리해야 함
-
+        Object result = joinPoint.proceed();
         long endTime = System.currentTimeMillis();
-        //target메소드의 동작 시간을 출력
-        logger.info(pjp.getSignature().getName() + ":" + (endTime - startTime));
-        logger.info("==================================");
 
-        //around를 사용할 경우 반드시 object를 리턴해야함
+        log.info("execution time: " + (endTime - startTime) + "ms");
         return result;
     }
+
+    private Map<String, Object> objectByMap(Object object)
+    {
+        if (object == null)
+            return null;
+        ObjectMapper objectMapper = new ObjectMapper();
+        return objectMapper.convertValue(object, HashMap.class);
+    }
+
+    private String getRequestUrl(JoinPoint joinPoint, Class clazz) {
+        MethodSignature methodSignature = (MethodSignature) joinPoint.getSignature();
+        Method method = methodSignature.getMethod();
+        RequestMapping requestMapping = (RequestMapping) clazz.getAnnotation(RequestMapping.class);
+        String baseUrl = requestMapping.value()[0];
+
+        String url = Stream.of( GetMapping.class, PutMapping.class, PostMapping.class,
+                        PatchMapping.class, DeleteMapping.class, RequestMapping.class)
+                .filter(mappingClass -> method.isAnnotationPresent(mappingClass))
+                .map(mappingClass -> getUrl(method, mappingClass, baseUrl))
+                .findFirst().orElse(null);
+        return url;
+    }
+
+    private String getUrl(Method method, Class<? extends Annotation> annotationClass, String baseUrl){
+        Annotation annotation = method.getAnnotation(annotationClass);
+        String[] value;
+        String httpMethod = null;
+
+        try {
+            value = (String[])annotationClass.getMethod("value").invoke(annotation);
+            httpMethod = (annotationClass.getSimpleName().replace("Mapping", "")).toUpperCase();
+        } catch (IllegalAccessException | NoSuchMethodException | InvocationTargetException e) {
+            return null;
+        }
+        return String.format("%s %s%s", httpMethod, baseUrl, value.length > 0 ? value[0] : "") ;
+    }
+
+    private Map params(JoinPoint joinPoint) {
+        Map<String, Object> params = new HashMap<>();
+
+        CodeSignature codeSignature = (CodeSignature) joinPoint.getSignature();
+        String[] parameterNames = codeSignature.getParameterNames();
+        Object[] args = joinPoint.getArgs();
+
+        for (int i = 0; i < parameterNames.length; i++) {
+            params.put(parameterNames[i], args[i]);
+        }
+        return params;
+    }
+
 }
