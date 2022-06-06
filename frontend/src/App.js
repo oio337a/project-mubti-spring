@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
 import Home from "./component/Home";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Login from "./component/login.js";
-import Board from "./component/Board";
+import {BrowserRouter as Router, Routes, Route} from "react-router-dom";
+import Login from "./page/login.js";
+import Redirect from "./page/redirect.js";
+import Test from "./page/test.js";
 
 function App() {
   const [message, setMessage] = useState([]);
@@ -28,14 +29,4 @@ function App() {
   );
 }
 
-export default App; /*}
-
-/*
-      </Router>
-      <>
-          <Properties />
-    {/* <ul>
-    {message.map((v,idx)=><li key={`${idx}-${v}`}>{v}</li>)}
-      </ul> */
-// </>
-// */
+export default App;
