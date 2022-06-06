@@ -5,8 +5,6 @@ import Login from "./page/login.js";
 import Redirect from "./page/redirect.js";
 import Test from "./page/test.js";
 
-import Board from "./component/Board";
-
 function App() {
   return (
       <Router>
