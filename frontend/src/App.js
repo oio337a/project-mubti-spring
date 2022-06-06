@@ -1,34 +1,35 @@
 import React, { useState, useEffect } from "react";
+import Home from "./component/Home";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Login from "../../../dd/src/component/login.js";
-import Board from "../../../dd/src/component/Board"
-import { createStore } from "redux";
-import Post from "../../../dd/src/component/Post"
+import Login from "./component/login.js";
+import Board from "./component/Board";
 
 function App() {
   const [message, setMessage] = useState([]);
   useEffect(() => {
     fetch("/hello")
-        .then((res) => {
-          return res.json();
-        })
-        .then((data) => {
-          setMessage(data);
-        });
+      .then((res) => {
+        return res.json();
+      })
+      .then((data) => {
+        setMessage(data);
+      });
   }, []);
-  //const store = createStore(reducer);
   return (
-      <Router>
-         <Routes>
-           <Route path="/" element={<h1>hello</h1>} />
-           <Route path="post/" element={<Post />} />
-           <Route path="board/" element={<Board />} />
-         </Routes>
-      </Router>
+    <>
+      <Board />
+    </>
+    //   <Router>
+    //       <Routes>
+    //           <Route path="/" element={<h1>hello</h1>} />
+    //           <Route path="/login" element={<Login />} />
+    //       </Routes>
+    //   </Router>
   );
 }
 
 export default App; /*}
+
 /*
       </Router>
       <>
