@@ -1,6 +1,6 @@
 import ReadPosts from "../component/posts/ReadPosts.js"
 
-function Posts() {
+function Board() {
     return (
         <div>
             <ReadPosts />
@@ -8,4 +8,4 @@ function Posts() {
     );
 }
 
-export default Posts;
+export default Board;

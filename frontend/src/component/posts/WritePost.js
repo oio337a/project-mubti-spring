@@ -1,12 +1,18 @@
 import { useState } from "react";
 import { useNavigate } from 'react-router-dom';
+import { types } from "./mbtiTypes.js";
+import { useDispatch } from "react-redux";
+import { savePost } from "../../reducers/postReducer";
 
 function WritePost()
 {
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+
     const [category, setCateroty] = useState("--선택--");
     const [title, setTitle] = useState("");
     const [content, setContent] = useState("");
-    const navigate = useNavigate();
+
     const onTitleChanged = (event) => {
         setTitle(event.target.value);
     };
@@ -17,11 +23,11 @@ function WritePost()
         navigate("/posts");
     };
     const onSubmit = () => {
-
+        dispatch(savePost({category: category, title: title, content: content}));
+        navigate("/posts");
     };
+
     function SelectCategory(){
-        const types = ["ENFJ", "ENFP", "ENTJ", "ENTP", "ESFJ", "ESTJ", "ESFP", "ESTP",
-            "INFJ", "INFP", "INTJ", "INTP", "ISFJ", "ISTJ", "ISFP", "ISTP"];
         const onSelect = (event) => {
             setCateroty(event.target.value);
         };
@@ -38,6 +44,7 @@ function WritePost()
             </div>
         );
     }
+
     return (
         <div>
             <SelectCategory />

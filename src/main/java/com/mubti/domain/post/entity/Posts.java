@@ -54,7 +54,7 @@ public class Posts {
     @NotNull
     private Long votes;
 
-    @OneToMany(mappedBy = "post", cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "posts", cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
     private List<Comments> comments;
 
     public Posts(

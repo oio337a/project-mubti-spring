@@ -1,11 +1,11 @@
 import axios from 'axios';
 
-const BOARD_API_BASE_URL = "http://localhost:8080/board";
+const BOARD_API_BASE_URL = "http://localhost:8080/posts";
 
-class BoardService {
+class PostsService {
     getBoards() {
         return axios.get(BOARD_API_BASE_URL);
     }
 }
 
-export default new BoardService();
+export default new PostsService();

@@ -42,8 +42,8 @@ public class Comments {
             @NotNull String commentContent,
             @NotNull LocalDateTime commentDate
     ) {
-        this.posts = posts;
-        this.commentNum = commentNum;
+        //this.posts = posts;
+        //this.commentNum = commentNum;
         this.user = user;
         this.commentContent = commentContent;
         this.commentDate = commentDate;
