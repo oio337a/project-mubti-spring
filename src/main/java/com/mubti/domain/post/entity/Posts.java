@@ -1,7 +1,7 @@
 package com.mubti.domain.post.entity;
 
-import com.mbti.oauthlogin.api.entity.user.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.mubti.domain.user.entity.user.User;
 import lombok.*;
 
 import javax.persistence.*;
@@ -16,7 +16,7 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 @Entity
-@Table(name = "Post")
+@Table(name = "Posts")
 public class Posts {
     @JsonIgnore
     @Id
@@ -28,9 +28,9 @@ public class Posts {
     @JoinColumn(name = "USER_NAME")
     private User user;
 
-    @Column(name = "POST_TITLE", length = 512)
+    @Column(name = "POST_TITLE", length = 128)
     @NotNull
-    @Size(max = 512)
+    @Size(max = 128)
     private String postTitle;
 
     @Column(name = "POST_CATEROTY", length = 4)
@@ -59,7 +59,7 @@ public class Posts {
 
     public Posts(
             @NotNull User user,
-            @NotNull @Size(max = 512) String postTitle,
+            @NotNull @Size(max = 128) String postTitle,
             @NotNull PostCategory postCategory,
             @NotNull String postContent,
             @NotNull LocalDateTime postDate,

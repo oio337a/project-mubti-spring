@@ -1,6 +1,7 @@
 package com.mubti.domain.post.entity.dto;
 
-import com.mbti.oauthlogin.api.entity.model.Comments;
+
+import com.mubti.domain.post.entity.Comments;
 import lombok.Getter;
 
 import java.time.LocalDateTime;

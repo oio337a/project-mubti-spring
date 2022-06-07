@@ -1,7 +1,8 @@
 package com.mubti.domain.post.entity.dto;
 
-import com.mbti.oauthlogin.api.entity.model.Posts;
-import com.mbti.oauthlogin.api.entity.model.PostCategory;
+
+import com.mubti.domain.post.entity.PostCategory;
+import com.mubti.domain.post.entity.Posts;
 import lombok.*;
 
 import java.time.LocalDateTime;

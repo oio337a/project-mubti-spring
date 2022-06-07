@@ -1,7 +1,7 @@
 package com.mubti.domain.post.entity;
 
-import com.mbti.oauthlogin.api.entity.user.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.mubti.domain.user.entity.user.User;
 import lombok.*;
 
 import javax.persistence.*;

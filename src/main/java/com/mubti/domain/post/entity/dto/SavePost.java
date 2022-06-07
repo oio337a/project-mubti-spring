@@ -1,11 +1,11 @@
 package com.mubti.domain.post.entity.dto;
 
-import com.mbti.oauthlogin.api.entity.model.Comments;
-import com.mbti.oauthlogin.api.entity.model.PostCategory;
-import com.mbti.oauthlogin.api.entity.user.User;
+import com.mubti.domain.post.entity.Comments;
+import com.mubti.domain.post.entity.PostCategory;
+import com.mubti.domain.post.entity.Posts;
+import com.mubti.domain.user.entity.user.User;
 import lombok.*;
 
-import com.mbti.oauthlogin.api.entity.model.Posts;
 import java.time.LocalDateTime;
 import java.util.List;
 
