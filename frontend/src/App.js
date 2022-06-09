@@ -1,41 +1,22 @@
 import React, { useState, useEffect } from "react";
-import Home from "./component/Home";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Login from "./component/login.js";
-import Board from "./component/Board";
+import Login from "./pages/login.js";
+import Redirect from "./pages/redirect.js";
+import Test from "./pages/test.js";
+import Home from "./pages/Home.js";
 
 function App() {
-  const [message, setMessage] = useState([]);
-  useEffect(() => {
-    fetch("/hello")
-      .then((res) => {
-        return res.json();
-      })
-      .then((data) => {
-        setMessage(data);
-      });
-  }, []);
   return (
-    <>
-      <Board />
-    </>
-    //   <Router>
-    //       <Routes>
-    //           <Route path="/" element={<h1>hello</h1>} />
-    //           <Route path="/login" element={<Login />} />
-    //       </Routes>
-    //   </Router>
+    <Router>
+      <Routes>
+        <Route path="/" element={<h1>hello</h1>} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/oauth/redirect" element={<Redirect />} />
+        <Route path="/test" element={<Test />} />
+        <Route path="/home" element={<Home />} />
+      </Routes>
+    </Router>
   );
 }
 
-export default App; /*}
-
-/*
-      </Router>
-      <>
-          <Properties />
-    {/* <ul>
-    {message.map((v,idx)=><li key={`${idx}-${v}`}>{v}</li>)}
-      </ul> */
-// </>
-// */
+export default App;
