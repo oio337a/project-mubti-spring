@@ -10,18 +10,15 @@ function Redirect(){
     let navigate = useNavigate();
 
     const token = queryString.parse(window.location.search).token;
+    const expiryTime = queryString.parse(window.location.search).expiryTime;
 
-    var base64Payload = token.split('.')[1];
-    var tokenPayload = Buffer.from(base64Payload, 'base64');
-    var decodedToken = JSON.parse(tokenPayload.toString())
-
-    console.log(decodedToken);
-    if (decodedToken.accessToken && decodedToken.expireTime){
+    console.log(token);
+    if (token && expiryTime){
         console.log("IF");
 
         dispatch(login({
-            accessToken:decodedToken.accessToken,
-            expireTime:decodedToken.expireTime}));
+            accessToken:token,
+            expiryTime:expiryTime}));
     }
     else{
         console.log("ELSE");
