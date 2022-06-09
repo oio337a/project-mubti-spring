@@ -1,13 +1,13 @@
 import React from "react";
 import styled from "styled-components";
 
-const Main = styled.div`
+export const Main = styled.div`
   height: 100vh;
   background-color: blue;
   background: url(../../public/img/test01.png) no-repeat center center fixed;
 `;
 
-const Button = styled.button`
+export const Button = styled.button`
   display: inline-block;
   position: relative;
   padding: 5px;
@@ -28,7 +28,7 @@ const Nav = styled.nav`
   width: 100%;
 `;
 
-function Header() {
+export function Header() {
   return (
     <Nav>
       <Button>로그인</Button>
@@ -37,7 +37,7 @@ function Header() {
   );
 }
 
-function Footer() {
+export function Footer() {
   return (
     <div
       style={{
@@ -49,5 +49,3 @@ function Footer() {
     </div>
   );
 }
-
-export { Main, Header, Footer, Button };

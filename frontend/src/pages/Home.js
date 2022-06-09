@@ -44,13 +44,7 @@ function View() {
 }
 
 function Home() {
-  return (
-    <Main>
-      <Header />
-      <View />
-      <Footer />
-    </Main>
-  );
+  return <Footer />;
 }
 
 export default Home;
