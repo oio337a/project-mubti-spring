@@ -18,8 +18,6 @@ function Redirect(){
     console.log(decodedToken);
     if (decodedToken.accessToken && decodedToken.expireTime){
         console.log("IF");
-        localStorage.setItem('accessToken', decodedToken.accessToken);
-        localStorage.setItem('expireTime', decodedToken.expireTime);
 
         dispatch(login({
             accessToken:decodedToken.accessToken,
