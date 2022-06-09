@@ -82,10 +82,11 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
 
         // refresh 토큰 설정
         long refreshTokenExpiry = appProperties.getAuth().getRefreshTokenExpiry();
+        Date expiry = new Date(now.getTime() + refreshTokenExpiry);
 
         AuthToken refreshToken = tokenProvider.createAuthToken(
                 appProperties.getAuth().getTokenSecret(),
-                new Date(now.getTime() + refreshTokenExpiry)
+                expiry
         );
 
         // 리프레쉬 토큰 DB 저장
@@ -105,7 +106,7 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
 
         // 리다이렉트 uri에 쿼리스트링으로 액세스 토큰 값을 응답해준다.
         return UriComponentsBuilder.fromUriString(targetUrl)
-                .queryParam("token", accessToken.getToken())
+                .queryParam("token", accessToken.getToken(), "expiry", expiry)
                 .build().toUriString();
     }
 
