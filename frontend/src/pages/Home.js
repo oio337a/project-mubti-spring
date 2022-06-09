@@ -22,6 +22,10 @@ const Button = styled.button`
   text-align: center;
   text-decoration: none;
   background-color: rgba(255, 255, 255, 0);
+  &:hover {
+    background-color: rgb(0, 0, 0);
+    color: rgb(255, 255, 255);
+  }
 `;
 
 const Container = styled.div`

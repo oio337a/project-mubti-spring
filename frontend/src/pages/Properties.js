@@ -1,6 +1,39 @@
 import { useState } from "react";
 import styles from "../css/properties.module.css";
+import styled from "styled-components";
 import { Header, Footer } from "./Home";
+
+const Container = styled.div`
+  display: flex;
+  height: 100vh;
+`;
+
+const Btn = styled.button`
+  min-width: 50px;
+  display: inline-block;
+  position: relative;
+  padding: 5px;
+  margin-left: 10px;
+  border: 1px solid rgb(0, 0, 0);
+  border-radius: 10px;
+  color: rgb(0, 0, 0);
+  text-align: center;
+  text-decoration: none;
+  background-color: rgba(255, 255, 255, 0);
+  &:hover {
+    background-color: rgb(0, 0, 0);
+    color: rgb(255, 255, 255);
+  }
+`;
+
+const Contents = styled.div`
+  display: flex;
+  border: 1px solid black;
+  align-items: center;
+  justify-content: center;
+  justify-items: center;
+  height: 50%;
+`;
 
 function Properties() {
   const [content, setContent] = useState();
@@ -34,23 +67,25 @@ function Properties() {
 
   console.log(content);
   return (
-    <div>
+    <Container>
       <Header />
       {MAIN_DATA.map((data) => {
         return (
-          <button
+          <Btn
             onClick={buttonValueSetting}
             name={data.text}
             className={styles.ghost_btn}
             key={data.id}
           >
             {data.text}
-          </button>
+          </Btn>
         );
       })}
-      {content && <div className={styles.content}>{select[content]}</div>}
+      {content && (
+        <Contents className={styles.content}>{select[content]}</Contents>
+      )}
       <Footer />
-    </div>
+    </Container>
   );
 }
 export default Properties;

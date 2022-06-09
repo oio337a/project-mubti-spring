@@ -3,7 +3,7 @@ import Home from "./pages/Home";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Board from "./pages/Board";
 import Login from "./pages/login";
-import Mubti from "./pages/Mubti";
+import Main from "./pages/Mubti_v2";
 
 function App() {
   const [message, setMessage] = useState([]);
@@ -21,7 +21,7 @@ function App() {
       {message.map((v, idx) => (
         <li key={`${idx}-${v}`}>{v}</li>
       ))}
-      <Mubti />
+      <Main />
     </>
     //   <Router>
     //       <Routes>
