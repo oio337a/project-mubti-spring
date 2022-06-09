@@ -7,9 +7,8 @@ const instance = axios.create({
     baseURL: "http://localhost:8080"
 })
 
-const dispatch = useDispatch();
-
 instance.interceptors.request.use((config) => {
+    const dispatch = useDispatch();
     const token = useSelector((state) => state.user.value);
     let timeNow = new Date;
 
@@ -31,3 +30,5 @@ instance.interceptors.request.use((config) => {
 
     return config;
 })
+
+export default instance;
