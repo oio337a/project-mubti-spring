@@ -15,7 +15,7 @@ instance.interceptors.request.use((config) => {
 
     if (token.accessToken){
         if (token.expiryTime < timeNow.getMilliseconds() - 30000){
-            axios.get("/refresh", {headers: {Authorization: `Bearer${token.accessToken}`}})
+            axios.get("/refresh", {headers: {Authorization: `Bearer ${token.accessToken}`}})
                 .then((res) => {
                 dispatch(login({
                     accessToken:res.accessToken,
