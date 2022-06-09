@@ -14,6 +14,7 @@ instance.interceptors.request.use((config) => {
     let timeNow = new Date;
 
     if (token.accessToken){
+        console.log("API IF");
         if (token.expiryTime < timeNow.getMilliseconds() - 30000){
             axios.get("/refresh", {headers: {Authorization: `Bearer ${token.accessToken}`}})
                 .then((res) => {
@@ -23,6 +24,9 @@ instance.interceptors.request.use((config) => {
 
             })
         }
+    }
+    else{
+        console.log("API ELSE");
     }
 
     return config;
