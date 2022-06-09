@@ -5,7 +5,7 @@ function Test(){
     console.log("!!!!!!!", user);
 
     return(
-        <div>hh 스토어에서 가져온 토큰 ㅎㅎ ->{user.token}</div>
+        <div>hh 스토어에서 가져온 토큰 ㅎㅎ ->{user.accessToken}, {user.expireTime}</div>
     )
 }
 

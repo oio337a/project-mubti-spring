@@ -20,9 +20,3 @@ root.render(
         </Provider>
     </React.StrictMode>
 );
-
-/*
-            <PersistGate loading={null} persistor={persistor}>
-                <App/>
-            </PersistGate>
- */
