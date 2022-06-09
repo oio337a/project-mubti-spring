@@ -13,6 +13,10 @@ import com.mubti.global.utils.CookieUtil;
 import com.mubti.global.utils.HeaderUtil;
 import io.jsonwebtoken.Claims;
 import lombok.RequiredArgsConstructor;
+import org.hibernate.type.IntegerType;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -22,6 +26,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.Base64;
 import java.util.Date;
 
 @RestController
@@ -93,7 +98,15 @@ public class AuthController {
             return ApiResponse.invalidAccessToken();
         }
 
+        // expired accessToken 확인
+        Date now = new Date();
         Claims claims = authToken.getExpiredTokenClaims();
+
+        long validTime = claims.getExpiration().getTime() - now.getTime();
+        if (validTime >= 30000) {
+            return ApiResponse.notExpiredTokenYet();
+        }
+
         String userId = claims.getSubject();
         RoleType roleType = RoleType.of(claims.get("role", String.class));
 
@@ -113,14 +126,13 @@ public class AuthController {
             return ApiResponse.invalidRefreshToken();
         }
 
-        Date now = new Date();
         AuthToken newAccessToken = tokenProvider.createAuthToken(
                 userId,
                 roleType.getCode(),
                 new Date(now.getTime() + appProperties.getAuth().getTokenExpiry())
         );
 
-        long validTime = authRefreshToken.getTokenClaims().getExpiration().getTime() - now.getTime();
+        validTime = authRefreshToken.getTokenClaims().getExpiration().getTime() - now.getTime();
 
         // refresh 토큰 기간이 3일 이하로 남은 경우, refresh 토큰 갱신
         if (validTime <= THREE_DAYS_MSEC) {
