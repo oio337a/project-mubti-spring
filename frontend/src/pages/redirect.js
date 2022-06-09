@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux"
 import { useEffect } from "react";
 import { login } from "../reducers/userReducer";
-import { Buffer } from 'buffer';
 
 function Redirect(){
     const dispatch = useDispatch();
