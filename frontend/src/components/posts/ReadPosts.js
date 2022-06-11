@@ -5,6 +5,7 @@ import {useState} from "react";
 
 function ReadPosts(){
     let navigator = useNavigate();
+    const token = useSelector((state) => state.user.value);
 
     const onClickNew = () => {
         navigator("/posts/write");
@@ -12,7 +13,7 @@ function ReadPosts(){
     //const posts = useSelector((state) => state.posts.value);
     //const posts = [];
     const [posts, setPosts] = useState([]);
-    PostsService.getBoards().then((res) => {
+    PostsService.getBoards(token).then((res) => {
         setPosts(res.data);
     })
 

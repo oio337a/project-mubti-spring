@@ -5,8 +5,8 @@ import {useSelector} from "react-redux";
 const BOARD_API_BASE_URL = "http://localhost:8080/posts";
 
 class PostsService {
-    getBoards() {
-        const token = useSelector((state) => state.user.value);
+    getBoards(token) {
+        console.log("!!", token);
         return axios.get(BOARD_API_BASE_URL, {headers: {Authorization: `Bearer ${token.accessToken}`}});
     }
 }
