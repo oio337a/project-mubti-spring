@@ -60,9 +60,9 @@ public class Posts {
     @NotNull
     private Long view;
 
-    @Column(name = "VOTE")
+    @Column(name = "LIKE")
     @NotNull
-    private Long vote;
+    private Long like;
 
     @OneToMany(mappedBy = "posts", cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
     private List<Comments> comments;
@@ -83,7 +83,7 @@ public class Posts {
         this.postContent = postContent;
         this.postDate = postDate;
         this.view = view == null ? 0 : view;
-        this.vote = vote == null ? 0 : vote;
+        this.like = vote == null ? 0 : like;
     }
 
     public void update(Posts post) {

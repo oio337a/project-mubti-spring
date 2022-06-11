@@ -12,12 +12,12 @@ public class ApiResponse<T> {
 
     private final static int SUCCESS = 200;
     private final static int CREATED = 201;
-    private final static int NO_CONTENT = 204;
+    private final static int DELETED = 204;
     private final static int NOT_FOUND = 400;
     private final static int FAILED = 500;
     private final static String SUCCESS_MESSAGE = "SUCCESS";
     private final static String CREATED_MESSAGE = "CREATED";
-    private final static String NO_CONTENT_MESSAGE = "NO_CONTENT";
+    private final static String DELETED_MESSAGE = "DELETED";
 
     private final static String NOT_FOUND_MESSAGE = "NOT FOUND";
     private final static String FAILED_MESSAGE = "서버에서 오류가 발생하였습니다.";
@@ -42,8 +42,8 @@ public class ApiResponse<T> {
         return new ApiResponse(new ApiResponseHeader(CREATED, CREATED_MESSAGE), map);
     }
 
-    public static <T> ApiResponse<T> no_content() {
-        return new ApiResponse(new ApiResponseHeader(NO_CONTENT, NO_CONTENT_MESSAGE), null);
+    public static <T> ApiResponse<T> deleted() {
+        return new ApiResponse(new ApiResponseHeader(DELETED, DELETED_MESSAGE), null);
     }
 
     public static <T> ApiResponse<T> fail() {
