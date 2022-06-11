@@ -93,9 +93,12 @@ public class AuthController {
             return ApiResponse.invalidAccessToken();
         }
 
-        // expired access token 인지 확인
+        // expired accessToken 확인
+        Date now = new Date();
         Claims claims = authToken.getExpiredTokenClaims();
-        if (claims == null) {
+
+        long validTime = claims.getExpiration().getTime() - now.getTime();
+        if (validTime >= 30000) {
             return ApiResponse.notExpiredTokenYet();
         }
 
@@ -118,14 +121,13 @@ public class AuthController {
             return ApiResponse.invalidRefreshToken();
         }
 
-        Date now = new Date();
         AuthToken newAccessToken = tokenProvider.createAuthToken(
                 userId,
                 roleType.getCode(),
                 new Date(now.getTime() + appProperties.getAuth().getTokenExpiry())
         );
 
-        long validTime = authRefreshToken.getTokenClaims().getExpiration().getTime() - now.getTime();
+        validTime = authRefreshToken.getTokenClaims().getExpiration().getTime() - now.getTime();
 
         // refresh 토큰 기간이 3일 이하로 남은 경우, refresh 토큰 갱신
         if (validTime <= THREE_DAYS_MSEC) {

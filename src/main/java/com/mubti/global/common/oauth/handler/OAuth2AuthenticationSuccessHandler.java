@@ -74,6 +74,7 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
         RoleType roleType = hasAuthority(authorities, RoleType.ADMIN.getCode()) ? RoleType.ADMIN : RoleType.USER; // 사용자 유형 가져오기
 
         Date now = new Date();
+
         AuthToken accessToken = tokenProvider.createAuthToken(
                 userInfo.getId(),
                 roleType.getCode(),
@@ -82,11 +83,10 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
 
         // refresh 토큰 설정
         long refreshTokenExpiry = appProperties.getAuth().getRefreshTokenExpiry();
-        Date expiry = new Date(now.getTime() + refreshTokenExpiry);
 
         AuthToken refreshToken = tokenProvider.createAuthToken(
                 appProperties.getAuth().getTokenSecret(),
-                expiry
+                new Date(now.getTime() + refreshTokenExpiry)
         );
 
         // 리프레쉬 토큰 DB 저장
@@ -107,7 +107,7 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
         // 리다이렉트 uri에 쿼리스트링으로 액세스 토큰 값을 응답해준다.
         return UriComponentsBuilder.fromUriString(targetUrl)
                 .queryParam("token", accessToken.getToken())
-                .queryParam("expiryTime", expiry.getTime())
+                .queryParam("expiryTime", now.getTime() + appProperties.getAuth().getTokenExpiry())
                 .build().toUriString();
     }
 
