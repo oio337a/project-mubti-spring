@@ -29,8 +29,32 @@ public class PostsController {
 
     @GetMapping("/{id}")
     public ApiResponse getPost(@PathVariable("id") long id) {
+        postsService.updateView(id);
         Posts post = postsService.getPost(id);
 
         return ApiResponse.success("post", post);
+    }
+
+    @PostMapping
+    public ApiResponse postPost(@RequestBody Posts post) {
+        Posts savedPost = postsService.save(post);
+
+        return ApiResponse.created("savedPost", savedPost);
+    }
+
+    @PutMapping("/{id}")
+    public ApiResponse putPost(@PathVariable("id") long id, @RequestBody Posts changedPost) {
+        Posts post = postsService.getPost(id);
+        post.update(changedPost);
+        Posts savedPost = postsService.save(post);
+
+        return ApiResponse.created("savedPost", savedPost);
+    }
+
+    @DeleteMapping("/{id}")
+    public ApiResponse deletePost(@PathVariable("id") long id) {
+        postsService.deleteById(id);
+
+        return ApiResponse.no_content();
     }
 }

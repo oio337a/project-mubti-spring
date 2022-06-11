@@ -27,9 +27,9 @@ import java.util.List;
 @Table(name = "POSTS")
 public class Posts {
     @Id
-    @Column(name = "POST_NUM")
+    @Column(name = "POST_SEQ")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long postNum;
+    private Long postSeq;
 
     @ManyToOne
     @JoinColumn(name = "USER_SEQ")
@@ -56,13 +56,13 @@ public class Posts {
     @NotNull
     private LocalDateTime postDate;
 
-    @Column(name = "VIEWS")
+    @Column(name = "VIEW")
     @NotNull
-    private Long views;
+    private Long view;
 
-    @Column(name = "VOTES")
+    @Column(name = "VOTE")
     @NotNull
-    private Long votes;
+    private Long vote;
 
     @OneToMany(mappedBy = "posts", cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
     private List<Comments> comments;
@@ -73,16 +73,22 @@ public class Posts {
             @NotNull PostCategory postCategory,
             @NotNull String postContent,
             @NotNull LocalDateTime postDate,
-            @NotNull Long views,
-            @NotNull Long votes
+            @NotNull Long view,
+            @NotNull Long vote
     ) {
-        this.postNum = null;
+        this.postSeq = null;
         this.user = user;
         this.postTitle = postTitle;
         this.postCategory = postCategory;
         this.postContent = postContent;
         this.postDate = postDate;
-        this.views = views == null ? 0 : views;
-        this.votes = votes == null ? 0 : votes;
+        this.view = view == null ? 0 : view;
+        this.vote = vote == null ? 0 : vote;
+    }
+
+    public void update(Posts post) {
+        this.postTitle = post.getPostTitle();
+        this.postContent = post.getPostContent();
+        this.postDate = post.getPostDate();
     }
 }
