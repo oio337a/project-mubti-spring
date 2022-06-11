@@ -1,4 +1,4 @@
-import Post from "../component/posts/Post";
+import Post from "../components/posts/Post";
 
 function ReadPost(){
     return(

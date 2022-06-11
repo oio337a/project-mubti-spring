@@ -1,4 +1,4 @@
-import WritePost from "../component/posts/WritePost.js"
+import WritePost from "../components/posts/WritePost.js"
 
 function Write()
 {

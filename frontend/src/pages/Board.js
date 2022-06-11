@@ -1,4 +1,4 @@
-import ReadPosts from "../component/posts/ReadPosts.js"
+import ReadPosts from "../components/posts/ReadPosts.js"
 
 function Board() {
     return (
