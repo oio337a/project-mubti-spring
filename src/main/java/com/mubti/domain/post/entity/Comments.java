@@ -25,7 +25,6 @@ public class Comments {
     @JoinColumn(name = "POST_NUM")
     private Posts posts;
 
-    @JsonIgnore
     @Id
     @Column(name = "COMMENT_NUM")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -46,12 +45,13 @@ public class Comments {
     private LocalDateTime commentDate;
 
     public Comments(
+            @NotNull Posts posts,
             @NotNull User user,
             @NotNull String commentContent,
             @NotNull LocalDateTime commentDate
     ) {
-        //this.posts = posts;
-        //this.commentNum = commentNum;
+        this.posts = posts;
+        this.commentNum = null;
         this.user = user;
         this.commentContent = commentContent;
         this.commentDate = commentDate;
