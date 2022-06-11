@@ -62,6 +62,9 @@ public class Posts {
     @NotNull
     private Long votes;
 
+    @OneToMany(mappedBy = "posts", cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
+    private List<Comments> comments;
+
     public Posts(
             @NotNull User user,
             @NotNull @Size(max = 128) String postTitle,
@@ -71,7 +74,7 @@ public class Posts {
             @NotNull Long views,
             @NotNull Long votes
     ) {
-        this.postNum = postNum;
+        this.postNum = null;
         this.user = user;
         this.postTitle = postTitle;
         this.postCategory = postCategory;

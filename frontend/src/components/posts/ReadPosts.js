@@ -16,7 +16,7 @@ function ReadPosts(){
     PostsService.getBoards(token).then((res) => {
         setPosts(res.data);
     })
-
+    console.log(posts);
     return (
       <div>
           <button onClick={onClickNew}>글 쓰기</button>
