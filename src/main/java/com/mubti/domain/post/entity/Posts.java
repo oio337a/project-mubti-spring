@@ -1,7 +1,9 @@
 package com.mubti.domain.post.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
@@ -21,9 +23,9 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 @Entity
+@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class)
 @Table(name = "POSTS")
 public class Posts {
-    @JsonIgnore
     @Id
     @Column(name = "POST_NUM")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
