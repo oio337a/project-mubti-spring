@@ -1,29 +1,35 @@
 import {useNavigate} from "react-router-dom";
 import PostsService from "../../service/PostsService";
 import {useSelector} from "react-redux";
-import {useState} from "react";
+import {useEffect, useState} from "react";
+import dateformat from "dateformat";
 
 function ReadPosts(){
     let navigator = useNavigate();
     const token = useSelector((state) => state.user.value);
+    let today = new Date;
 
     const onClickNew = () => {
         navigator("/posts/write");
     }
-    //const posts = useSelector((state) => state.posts.value);
-    //const posts = [];
+
     const [posts, setPosts] = useState([]);
-    PostsService.getBoards(token).then((res) => {
-        setPosts(res.data);
-    })
-    console.log(posts);
+    //const posts = [];
+    useEffect(() => {
+        PostsService.getBoards(token).then((res) => {
+            setPosts(res.data.body.posts);
+        })}, []);
+
+    console.log("hey", posts[0]);
     return (
       <div>
+
           <button onClick={onClickNew}>글 쓰기</button>
           <table>
               <thead>
                 <tr>
                     <th>Num</th>
+                    <th>category</th>
                     <th>title</th>
                     <th>writer</th>
                     <th>date</th>
@@ -33,14 +39,16 @@ function ReadPosts(){
               </thead>
               <tbody>
               {
-                    posts.map((post) =>
-                        <tr key = {post.num}>
-                            <td> {post.num}</td>
-                            <td> {post.title}</td>
-                            <td> {post.user}</td>
-                            <td> {post.date}</td>
+                    posts.map((post, index) =>
+                        <tr key = {index}>
+                            <td> {index}</td>
+                            <td> {post.postCategory}</td>
+                            <td> {post.postTitle}</td>
+                            <td> {post.user.userAlias}</td>
+                            <td> {dateformat(post.postDate, 'yy-m-dd') == dateformat(today, 'yy-m-dd')?
+                                dateformat(post.postDate, 'h:MM'):dateformat(post.postDate, 'yy-m-dd')}</td>
                             <td> {post.votes}</td>
-                            <td> {post.views}</td>
+                            <td> {post.views} [{post.comments.length}]</td>
                         </tr>
                     )
               }
