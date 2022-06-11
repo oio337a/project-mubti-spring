@@ -41,7 +41,7 @@ function ReadPosts(){
               {
                     posts.map((post, index) =>
                         <tr key = {index}>
-                            <td> {index}</td>
+                            <td> {post.postNum}</td>
                             <td> {post.postCategory}</td>
                             <td> {post.postTitle}</td>
                             <td> {post.user.userAlias}</td>
