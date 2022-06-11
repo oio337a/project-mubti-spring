@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-const initialStateValue = {accessToken: "", expireTime: ""};
+const initialStateValue = {accessToken: "", expiryTime: ""};
 
 const userSlice = createSlice({
     name: "user",

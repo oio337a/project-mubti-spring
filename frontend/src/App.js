@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
-import Home from "./component/Home";
+import Home from "./components/Home";
 import {BrowserRouter as Router, Routes, Route} from "react-router-dom";
-import Login from "./page/login.js";
-import Redirect from "./page/redirect.js";
-import Test from "./page/test.js";
-import Board from "./page/Board.js";
-import Write from "./page/Write";
-import ReadPost from "./page/ReadPost";
+import Login from "./pages/login.js";
+import Redirect from "./pages/redirect.js";
+import Test from "./pages/test.js";
+import Board from "./pages/Board.js"
+import Write from "./pages/Write.js"
+import ReadPost from "./pages/ReadPost.js"
 
 function App() {
   return (

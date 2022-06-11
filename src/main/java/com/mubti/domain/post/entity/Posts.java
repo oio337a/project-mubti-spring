@@ -1,6 +1,11 @@
 package com.mubti.domain.post.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import com.mubti.domain.user.entity.user.User;
 import lombok.*;
 
@@ -16,7 +21,7 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 @Entity
-@Table(name = "Posts")
+@Table(name = "POSTS")
 public class Posts {
     @JsonIgnore
     @Id
@@ -25,7 +30,7 @@ public class Posts {
     private Long postNum;
 
     @ManyToOne
-    @JoinColumn(name = "USER_NAME")
+    @JoinColumn(name = "USER_SEQ")
     private User user;
 
     @Column(name = "POST_TITLE", length = 128)
@@ -43,6 +48,9 @@ public class Posts {
     private String postContent;
 
     @Column(name = "POST_DATE")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS")
+    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
+    @JsonSerialize(using = LocalDateTimeSerializer.class)
     @NotNull
     private LocalDateTime postDate;
 
@@ -53,9 +61,6 @@ public class Posts {
     @Column(name = "VOTES")
     @NotNull
     private Long votes;
-
-    @OneToMany(mappedBy = "posts", cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
-    private List<Comments> comments;
 
     public Posts(
             @NotNull User user,
@@ -74,6 +79,5 @@ public class Posts {
         this.postDate = postDate;
         this.views = views == null ? 0 : views;
         this.votes = votes == null ? 0 : votes;
-        this.comments = comments;
     }
 }

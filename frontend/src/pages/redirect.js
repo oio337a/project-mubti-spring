@@ -3,27 +3,21 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux"
 import { useEffect } from "react";
 import { login } from "../reducers/userReducer";
-import { Buffer } from 'buffer';
 
 function Redirect(){
     const dispatch = useDispatch();
     let navigate = useNavigate();
 
     const token = queryString.parse(window.location.search).token;
+    const expiryTime = queryString.parse(window.location.search).expiryTime;
 
-    var base64Payload = token.split('.')[1];
-    var tokenPayload = Buffer.from(base64Payload, 'base64');
-    var decodedToken = JSON.parse(tokenPayload.toString())
-
-    console.log(decodedToken);
-    if (decodedToken.accessToken && decodedToken.expireTime){
+    console.log(token);
+    if (token && expiryTime){
         console.log("IF");
-        localStorage.setItem('accessToken', decodedToken.accessToken);
-        localStorage.setItem('expireTime', decodedToken.expireTime);
 
         dispatch(login({
-            accessToken:decodedToken.accessToken,
-            expireTime:decodedToken.expireTime}));
+            accessToken:token,
+            expiryTime:expiryTime}));
     }
     else{
         console.log("ELSE");
