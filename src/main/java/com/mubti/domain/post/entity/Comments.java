@@ -52,6 +52,7 @@ public class Comments {
     ) {
         //this.posts = posts;
         //this.commentNum = commentNum;
+        //
         this.user = user;
         this.commentContent = commentContent;
         this.commentDate = commentDate;
