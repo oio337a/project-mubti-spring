@@ -43,7 +43,7 @@ function ReadPosts(){
               <tbody>
               {
                     posts.map((post, index) =>
-                        <tr key = {index} onClick={onClickPost(post.postSeq)} >
+                        <tr key = {index}>
                             <td> {post.postSeq}</td>
                             <td> {post.postCategory}</td>
                             <td> {post.postTitle}</td>

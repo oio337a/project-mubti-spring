@@ -21,7 +21,7 @@ const Interceptor = ({children}) => {
                 let timeNow = new Date;
                 console.log("are you here?");
                 console.log(token.expiryTime, timeNow.getTime());
-                if (token.expiryTime < timeNow.getTime() + 30000){
+                if (true){
                     axios.get("http://localhost:8080/refresh", {headers: {Authorization: `Bearer ${token.accessToken}`}})
                         .then((res) => {
                             dispatch(login({
