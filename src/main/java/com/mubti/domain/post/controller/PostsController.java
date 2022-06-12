@@ -15,7 +15,6 @@ import java.util.List;
 public class PostsController {
 
     private final PostsService postsService;
-    private final UserService userService;
 
     @GetMapping
     public ApiResponse getAllPosts() {
@@ -26,9 +25,7 @@ public class PostsController {
 
     @GetMapping("/{id}")
     public ApiResponse getPost(@PathVariable("id") long id) {
-/*
         postsService.updateView(id);
-*/
         Posts post = postsService.getPost(id);
 
         return ApiResponse.success("post", post);

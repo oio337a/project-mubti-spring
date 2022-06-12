@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface PostsRepository extends JpaRepository<Posts, Long> {
     List<Posts> findAll();
-    /*@Modifying
-    @Query("update POSTS p set p.VIEW = p.VIEW + 1 where p.POST_SEQ = :id")
-    int updateView(Long id);*/
+    @Modifying
+    @Query("update Posts p set p.view = p.view + 1 where p.postSeq = :id")
+    int updateView(Long id);
 }
