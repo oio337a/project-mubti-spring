@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
-import { Main, Header, Footer, Button } from "../components/Tools";
-import MAIN_DATA from "../data/Type";
+import { Wraper, Header, Footer, Button } from "../components/Tools";
+import MAIN_DATA from "../data/PersonalType";
 
 const Container = styled.div``;
 const Category = styled.h2``;
@@ -13,7 +13,7 @@ const Select = styled.option``;
 
 function Info() {
   return (
-    <Main>
+    <Wraper>
       <Header />
       <Container>
         <Category>추가 정보 입력</Category>
@@ -36,7 +36,7 @@ function Info() {
         <Button>회원가입하기</Button>
       </Container>
       <Footer />
-    </Main>
+    </Wraper>
   );
 }
 
