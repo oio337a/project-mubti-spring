@@ -44,7 +44,7 @@ function Footer() {
         height: "10%",
       }}
     >
-      이곳은 풋 입니다.
+      풋
     </div>
   );
 }

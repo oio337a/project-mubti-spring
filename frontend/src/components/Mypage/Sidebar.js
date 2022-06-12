@@ -1,10 +1,9 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import Talking from "../Mypage/Talking";
-import Post from "../Mypage/Post";
-import Information from "../Mypage/Information";
-import Withdraw from "../Mypage/Withdraw";
-import Comments from "../Mypage/Comments";
+import Information from "./Information";
+import Talking from "./Talking";
+import Post from "./Post";
+import Withdraw from "./Withdraw";
 
 const Container = styled.div`
   display: flex;
@@ -19,6 +18,7 @@ const Side = styled.div`
   align-items: center;
   justify-content: center;
   justify-items: center;
+  min-width: 160px;
   width: 10rem;
   height: 100%;
 `;
@@ -50,16 +50,14 @@ function Sidebar() {
   const menus = [
     { name: "채팅 내역" },
     { name: "작성한 글" },
-    { name: "작성한 댓글" },
     { name: "개인정보 수정" },
     { name: "계정 탈퇴" },
   ];
   const selectComponent = {
     0: <Talking />,
     1: <Post />,
-    2: <Comments />,
-    3: <Information />,
-    4: <Withdraw />,
+    2: <Information />,
+    3: <Withdraw />,
   };
   const [content, setContent] = useState();
 

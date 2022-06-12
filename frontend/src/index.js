@@ -6,7 +6,7 @@ import { Provider } from "react-redux";
 import { persistStore } from "redux-persist";
 import { PersistGate } from "redux-persist/integration/react";
 import store from "./reducers/store";
-import Properties from "./pages/Properties";
+import Mypage from "./pages/Mypage";
 
 const persistor = persistStore(store);
 
@@ -16,7 +16,7 @@ root.render(
   <React.StrictMode>
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
-        <Properties />
+        <Mypage />
       </PersistGate>
     </Provider>
   </React.StrictMode>
