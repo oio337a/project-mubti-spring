@@ -1,14 +1,21 @@
 import axios from 'axios';
 import api from "../utils/api";
-import {useSelector} from "react-redux";
-
-const BOARD_API_BASE_URL = "http://localhost:8080/api/v1/posts";
 
 class PostsService {
-    getBoards(token) {
-        console.log("!!", token);
-        return axios.get(BOARD_API_BASE_URL, {headers: {Authorization: `Bearer ${token.accessToken}`}});
+    getBoards() {
+        return api({
+            url: "/posts",
+            method: "get",
+        })
     }
+
+    getPost(id) {
+        return api({
+            url: `/posts/${id}`,
+            method: "get",
+        })
+    }
+
 }
 
 export default new PostsService();

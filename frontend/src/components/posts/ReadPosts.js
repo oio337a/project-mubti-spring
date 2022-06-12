@@ -16,11 +16,11 @@ function ReadPosts(){
     const [posts, setPosts] = useState([]);
     //const posts = [];
     useEffect(() => {
-        PostsService.getBoards(token).then((res) => {
+        PostsService.getBoards().then((res) => {
             setPosts(res.data.body.posts);
         })}, []);
 
-    console.log("hey", posts[0]);
+    console.log("hey", posts);
     return (
       <div>
 
@@ -41,14 +41,14 @@ function ReadPosts(){
               {
                     posts.map((post, index) =>
                         <tr key = {index}>
-                            <td> {post.postNum}</td>
+                            <td> {post.postSeq}</td>
                             <td> {post.postCategory}</td>
                             <td> {post.postTitle}</td>
                             <td> {post.user.userAlias}</td>
                             <td> {dateformat(post.postDate, 'yy-m-dd') == dateformat(today, 'yy-m-dd')?
                                 dateformat(post.postDate, 'h:MM'):dateformat(post.postDate, 'yy-m-dd')}</td>
-                            <td> {post.votes}</td>
-                            <td> {post.views} [{post.comments.length}]</td>
+                            <td> {post.vote}</td>
+                            <td> {post.view} [{post.comments.length}]</td>
                         </tr>
                     )
               }

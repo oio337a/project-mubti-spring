@@ -6,9 +6,11 @@ import Test from "./pages/test.js";
 import Board from "./pages/Board.js"
 import Write from "./pages/Write.js"
 import ReadPost from "./pages/ReadPost.js"
+import {Interceptor} from "./utils/api";
 
 function App() {
   return (
+      <Interceptor>
       <Router>
         <Routes>
             <Route path="/" element={<h1>hello</h1>} />
@@ -20,6 +22,7 @@ function App() {
             <Route path="/posts/write" element={<Write />} />
         </Routes>
       </Router>
+      </Interceptor>
   );
 }
 
