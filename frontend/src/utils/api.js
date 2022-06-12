@@ -20,8 +20,9 @@ const Interceptor = ({children}) => {
 
                 let timeNow = new Date;
                 console.log("are you here?");
-                if (token.expiryTime < timeNow.getMilliseconds() + 30000){
-                    axios.get("/refresh", {headers: {Authorization: `Bearer ${token.accessToken}`}})
+                console.log(token.expiryTime, timeNow.getTime());
+                if (token.expiryTime < timeNow.getTime() + 30000){
+                    axios.get("http://localhost:8080/refresh", {headers: {Authorization: `Bearer ${token.accessToken}`}})
                         .then((res) => {
                             dispatch(login({
                                 accessToken:res.token,
@@ -37,6 +38,7 @@ const Interceptor = ({children}) => {
                 return error;
             }
         );
+
         //return () => instance.interceptors.request.eject(interceptor);
     }, [])
     return children;

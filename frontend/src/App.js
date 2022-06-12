@@ -18,7 +18,7 @@ function App() {
             <Route path="/oauth/redirect" element={<Redirect />} />
             <Route path="/test" element={<Test />} />
             <Route path="/posts" element={<Board />} />
-            <Route path="/posts/:id" element={<ReadPost />} />
+            <Route path="/posts/*" element={<ReadPost />} />
             <Route path="/posts/write" element={<Write />} />
         </Routes>
       </Router>

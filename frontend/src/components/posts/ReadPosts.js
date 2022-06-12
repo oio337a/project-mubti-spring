@@ -1,4 +1,4 @@
-import {useNavigate} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import PostsService from "../../service/PostsService";
 import {useSelector} from "react-redux";
 import {useEffect, useState} from "react";
@@ -20,7 +20,10 @@ function ReadPosts(){
             setPosts(res.data.body.posts);
         })}, []);
 
-    console.log("hey", posts);
+    const onClickPost = (num) => {
+        navigator(`/posts/${num}`);
+    }
+
     return (
       <div>
 
@@ -40,7 +43,7 @@ function ReadPosts(){
               <tbody>
               {
                     posts.map((post, index) =>
-                        <tr key = {index}>
+                        <tr key = {index} onClick={onClickPost(post.postSeq)} >
                             <td> {post.postSeq}</td>
                             <td> {post.postCategory}</td>
                             <td> {post.postTitle}</td>
