@@ -15,7 +15,7 @@ public class PostsService {
     private final PostsRepository postsRepository;
 
     public List<Posts> getAllPosts(){
-        return postsRepository.findAll(Sort.by(Sort.Direction.DESC, "POST_NUM"));
+        return postsRepository.findAll(Sort.by(Sort.Direction.DESC, "postNum"));
     }
 
     public Posts getPost(long id){
