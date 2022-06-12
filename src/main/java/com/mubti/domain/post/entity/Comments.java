@@ -22,13 +22,13 @@ import java.time.LocalDateTime;
 @Table(name = "COMMENTS")
 public class Comments {
     @ManyToOne
-    @JoinColumn(name = "POST_NUM")
+    @JoinColumn(name = "POST_SEQ")
     private Posts posts;
 
     @Id
-    @Column(name = "COMMENT_NUM")
+    @Column(name = "COMMENT_SEQ")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long commentNum;
+    private Long commentSeq;
 
     @ManyToOne
     @JoinColumn(name = "USER_SEQ")
@@ -51,7 +51,7 @@ public class Comments {
             @NotNull LocalDateTime commentDate
     ) {
         this.posts = posts;
-        this.commentNum = null;
+        this.commentSeq = null;
         this.user = user;
         this.commentContent = commentContent;
         this.commentDate = commentDate;

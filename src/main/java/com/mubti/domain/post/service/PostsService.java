@@ -15,16 +15,22 @@ public class PostsService {
     private final PostsRepository postsRepository;
 
     public List<Posts> getAllPosts(){
-        return postsRepository.findAll(Sort.by(Sort.Direction.DESC, "postNum"));
+        return postsRepository.findAll(Sort.by(Sort.Direction.DESC, "postSeq"));
     }
 
     public Posts getPost(long id){
         return postsRepository.findById(id).get();
     }
-    /*
-    @Transactional
-    public Long save(PostsSaveRequestDto requestDto){
-        return postsRepository.save(requestDto.toEntity()).getId();
+
+    public Posts save(Posts post) {
+        return postsRepository.save(post);
     }
-*/
+
+    public void deleteById(long id) {
+        postsRepository.deleteById(id);
+    }
+
+    public void updateView(long id) {
+        postsRepository.updateView(id);
+    }
 }
