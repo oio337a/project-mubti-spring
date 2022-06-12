@@ -1,20 +1,12 @@
 package com.mubti.domain.post.controller;
 
-import com.mubti.domain.post.entity.Like;
 import com.mubti.domain.post.entity.Posts;
 import com.mubti.domain.post.service.PostsService;
-import com.mubti.domain.user.entity.user.User;
 import com.mubti.domain.user.service.UserService;
 import com.mubti.global.common.response.ApiResponse;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -34,7 +26,9 @@ public class PostsController {
 
     @GetMapping("/{id}")
     public ApiResponse getPost(@PathVariable("id") long id) {
+/*
         postsService.updateView(id);
+*/
         Posts post = postsService.getPost(id);
 
         return ApiResponse.success("post", post);
@@ -63,9 +57,4 @@ public class PostsController {
         return ApiResponse.deleted();
     }
 
-    @PostMapping("/{id}/like")
-    public ApiResponse postLike(@RequestBody Like like) {
-
-        return ApiResponse.deleted();
-    }
 }

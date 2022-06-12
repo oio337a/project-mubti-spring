@@ -29,8 +29,8 @@ public class PostsService {
     public void deleteById(long id) {
         postsRepository.deleteById(id);
     }
-
+/*
     public void updateView(long id) {
         postsRepository.updateView(id);
-    }
+    }*/
 }
