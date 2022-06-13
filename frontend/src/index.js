@@ -16,7 +16,7 @@ root.render(
   <React.StrictMode>
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
-        <Properties />
+        <App />
       </PersistGate>
     </Provider>
   </React.StrictMode>
