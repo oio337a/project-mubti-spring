@@ -1,6 +1,12 @@
 import {useState} from "react";
 import Questions from "./Questions";
+import styled from "styled-components";
 
+const Container = styled.div`
+  display: flex;
+  height: 100%;
+  weight: 100%;
+`;
 
 function Test() {
     const [pressed, setPressed] = useState(false);

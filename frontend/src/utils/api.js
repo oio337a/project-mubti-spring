@@ -1,29 +1,49 @@
 import axios from 'axios';
-import { useSelector } from "react-redux";
-import { useDispatch } from "react-redux"
+import { useSelector, useDispatch } from "react-redux";
 import { login } from "../reducers/userReducer";
+import {useEffect} from "react";
+
+const BASE_URL = "http://localhost:8080/api/v1";
 
 const instance = axios.create({
-    baseURL: "http://localhost:8080"
+    baseURL: BASE_URL
 })
 
-const dispatch = useDispatch();
-
-instance.interceptors.request.use((config) => {
+const Interceptor = ({children}) => {
+    const dispatch = useDispatch();
     const token = useSelector((state) => state.user.value);
     let timeNow = new Date;
 
-    if (token.accessToken){
-        if (token.expiryTime < timeNow.getMilliseconds() - 30000){
-            axios.get("/refresh", {headers: {Authorization: `Bearer ${token.accessToken}`}})
-                .then((res) => {
-                dispatch(login({
-                    accessToken:res.accessToken,
-                    expiryTime:res.expiryTime}));
+    useEffect(() => {
+        console.log("API IF");
+        const interceptor = instance.interceptors.request.use(
+            function (config) {
 
-            })
-        }
-    }
+                let timeNow = new Date;
+                console.log("are you here?");
+                console.log(token.expiryTime, timeNow.getTime());
+                if (true){
+                    axios.get("http://localhost:8080/refresh", {headers: {Authorization: `Bearer ${token.accessToken}`}})
+                        .then((res) => {
+                            dispatch(login({
+                                accessToken:res.token,
+                                expiryTime:res.expiryTime}));
+                        })
+                }
+                config.headers.Authorization = `Bearer ${token.accessToken}`;
 
-    return config;
-})
+                return config;
+            },
+            function (error) {
+                console.log("API ERROR", error);
+                return error;
+            }
+        );
+
+        //return () => instance.interceptors.request.eject(interceptor);
+    }, [])
+    return children;
+}
+
+export default instance;
+export {Interceptor};

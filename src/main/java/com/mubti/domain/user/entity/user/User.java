@@ -41,7 +41,7 @@ public class User {
     @Size(max = 15)
     private String userAlias;
 
-    @Column(name = "MBTI_TYPE", length = 4, unique = true)
+    @Column(name = "MBTI_TYPE", length = 4)
     @Size(max = 4)
     private String mbtiType;
 
