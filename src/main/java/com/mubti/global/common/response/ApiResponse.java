@@ -14,6 +14,7 @@ public class ApiResponse<T> {
     private final static int CREATED = 201;
     private final static int DELETED = 204;
     private final static int NOT_FOUND = 400;
+    private final static int UNAUTHORIZED = 401;
     private final static int FAILED = 500;
     private final static String SUCCESS_MESSAGE = "SUCCESS";
     private final static String CREATED_MESSAGE = "CREATED";
@@ -51,14 +52,14 @@ public class ApiResponse<T> {
     }
 
     public static <T> ApiResponse<T> invalidAccessToken() {
-        return new ApiResponse(new ApiResponseHeader(FAILED, INVALID_ACCESS_TOKEN), null);
+        return new ApiResponse(new ApiResponseHeader(UNAUTHORIZED, INVALID_ACCESS_TOKEN), null);
     }
 
     public static <T> ApiResponse<T> invalidRefreshToken() {
-        return new ApiResponse(new ApiResponseHeader(FAILED, INVALID_REFRESH_TOKEN), null);
+        return new ApiResponse(new ApiResponseHeader(UNAUTHORIZED, INVALID_REFRESH_TOKEN), null);
     }
 
     public static <T> ApiResponse<T> notExpiredTokenYet() {
-        return new ApiResponse(new ApiResponseHeader(FAILED, NOT_EXPIRED_TOKEN_YET), null);
+        return new ApiResponse(new ApiResponseHeader(UNAUTHORIZED, NOT_EXPIRED_TOKEN_YET), null);
     }
 }

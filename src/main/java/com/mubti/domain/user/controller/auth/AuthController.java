@@ -35,6 +35,7 @@ public class AuthController {
     private final UserRefreshTokenRepository userRefreshTokenRepository;
 
     private final static long THREE_DAYS_MSEC = 259200000;
+    private final static long THIRTY_SECONDS_MSEC = 3000;
     private final static String REFRESH_TOKEN = "refresh_token";
 
     @PostMapping("/login")
@@ -98,7 +99,7 @@ public class AuthController {
         Claims claims = authToken.getExpiredTokenClaims();
 
         long validTime = claims.getExpiration().getTime() - now.getTime();
-        if (validTime >= 30000) {
+        if (validTime >= THIRTY_SECONDS_MSEC) {
             return ApiResponse.notExpiredTokenYet();
         }
 
@@ -111,22 +112,15 @@ public class AuthController {
                 .orElse((null));
         AuthToken authRefreshToken = tokenProvider.convertAuthToken(refreshToken);
 
-        if (authRefreshToken.validate()) {
+        if (!authRefreshToken.validate()) {
             return ApiResponse.invalidRefreshToken();
         }
-        System.out.println("@@@@@@ userId : " + userId);
-        System.out.println("@@@@@@ refreshToken : " + refreshToken);
+
         // userId refresh token 으로 DB 확인
         UserRefreshToken userRefreshToken = userRefreshTokenRepository.findByUserIdAndRefreshToken(userId, refreshToken);
         if (userRefreshToken == null) {
             return ApiResponse.invalidRefreshToken();
         }
-        System.out.println("@@@@통과");
-        AuthToken newAccessToken = tokenProvider.createAuthToken(
-                userId,
-                roleType.getCode(),
-                new Date(now.getTime() + appProperties.getAuth().getTokenExpiry())
-        );
 
         validTime = authRefreshToken.getTokenClaims().getExpiration().getTime() - now.getTime();
 
@@ -147,6 +141,13 @@ public class AuthController {
             CookieUtil.deleteCookie(request, response, REFRESH_TOKEN);
             CookieUtil.addCookie(response, REFRESH_TOKEN, authRefreshToken.getToken(), cookieMaxAge);
         }
+
+        // access 토큰 재발급
+        AuthToken newAccessToken = tokenProvider.createAuthToken(
+                userId,
+                roleType.getCode(),
+                new Date(now.getTime() + appProperties.getAuth().getTokenExpiry())
+        );
 
         return ApiResponse.success("token", newAccessToken.getToken());
     }

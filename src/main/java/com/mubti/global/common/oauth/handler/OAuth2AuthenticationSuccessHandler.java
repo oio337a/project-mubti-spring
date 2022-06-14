@@ -106,7 +106,6 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
         // 리다이렉트 uri에 쿼리스트링으로 액세스 토큰 값을 응답해준다.
         return UriComponentsBuilder.fromUriString(targetUrl)
                 .queryParam("token", accessToken.getToken())
-                .queryParam("expiryTime", now.getTime() + appProperties.getAuth().getTokenExpiry())
                 .build().toUriString();
     }
 
