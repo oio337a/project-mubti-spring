@@ -30,7 +30,7 @@ public class AuthController {
     private final UserRefreshTokenRepository userRefreshTokenRepository;
 
     private final static long THREE_DAYS_MSEC = 259200000;
-    private final static long THIRTY_SECONDS_MSEC = 3000;
+    private final static long THIRTY_SECONDS_MSEC = 30000;
     private final static String REFRESH_TOKEN = "refresh_token";
 
     @GetMapping("/refresh")
