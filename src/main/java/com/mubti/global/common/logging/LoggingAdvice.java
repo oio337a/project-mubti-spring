@@ -33,16 +33,17 @@ public class LoggingAdvice {
     }
 
     @AfterReturning(pointcut = "execution(* com.mubti.domain..*Controller.*(..))",
-                    returning = "result")
-    public void afterReturningLog(JoinPoint joinPoint, Object result) throws Throwable{
+                    returning = "apiResponseObject")
+    public void afterReturningLog(JoinPoint joinPoint, Object apiResponseObject) throws Throwable{
+        ApiResponse apiResponse = (ApiResponse) apiResponseObject;
+
+        Map<String, Object> apiResponseMap = new HashMap<>();
+        apiResponseMap.put("header", objectByMap(apiResponse.getHeader()));
+        apiResponseMap.put("body", objectByMap(apiResponse.getBody()));
+
         JSONObject jsonObject = new JSONObject();
-        HashMap<String, Object> resultMap = new HashMap<>();
 
-        ApiResponse apiResponse = (ApiResponse) result;
-        resultMap.put("header", objectByMap(apiResponse.getHeader()));
-        resultMap.put("body", objectByMap(apiResponse.getBody()));
-
-        log.info("response: " + jsonObject.toJSONString(resultMap));
+        log.info("response: " + jsonObject.toJSONString(apiResponseMap));
     }
 
     @AfterThrowing(pointcut = "execution(* com.mubti.domain..*Controller.*(..))",
@@ -107,7 +108,7 @@ public class LoggingAdvice {
         Object[] args = joinPoint.getArgs();
 
         for (int i = 0; i < parameterNames.length; i++) {
-            params.put(parameterNames[i], args[i]);
+            params.put(parameterNames[i], args[i].toString());
         }
         return params;
     }
