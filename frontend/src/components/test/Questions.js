@@ -1,6 +1,35 @@
 import TestQuestions from "../../data/TestQuestions";
 import {useState} from "react";
 import {useNavigate} from "react-router-dom";
+import styled from "styled-components";
+
+const Question = styled.div`
+  display: inline-block;
+  position: relative;
+  padding: 5px;
+  margin-left: 10px;
+  margin-bottom: 10px;
+  border: 1px solid rgb(0, 0, 0);
+  border-radius: 10px;
+  color: rgb(0, 0, 0);
+  text-align: center;
+  text-decoration: none;
+  background-color: rgba(255, 255, 255, 0);
+`;
+
+const Item = styled.button`
+  display: inline-block;
+  position: relative;
+  padding: 5px;
+  margin-left: 10px;
+  margin-bottom: 10px;
+  border: 1px solid rgb(0, 0, 0);
+  border-radius: 10px;
+  color: rgb(0, 0, 0);
+  text-align: center;
+  text-decoration: none;
+  background-color: rgba(255, 255, 255, 0);
+`;
 
 function Questions(){
     let navigator = useNavigate();
@@ -46,9 +75,9 @@ function Questions(){
 
     return (
       <div>
-          <div>{TestQuestions[qNum].Q}</div>
-          <button onClick={(e) => onClickButton(1, e)}>{TestQuestions[qNum].A1}</button>
-          <button onClick={(e) => onClickButton(2, e)}>{TestQuestions[qNum].A2}</button>
+          <Question>{TestQuestions[qNum].Q}</Question>
+          <Item onClick={(e) => onClickButton(1, e)}>{TestQuestions[qNum].A1}</Item>
+          <Item onClick={(e) => onClickButton(2, e)}>{TestQuestions[qNum].A2}</Item>
       </div>
     );
 }

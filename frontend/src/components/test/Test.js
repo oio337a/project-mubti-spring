@@ -8,6 +8,20 @@ const Container = styled.div`
   weight: 100%;
 `;
 
+const Item = styled.button`
+  display: inline-block;
+  position: relative;
+  padding: 5px;
+  margin-left: 10px;
+  margin-bottom: 10px;
+  border: 1px solid rgb(0, 0, 0);
+  border-radius: 10px;
+  color: rgb(0, 0, 0);
+  text-align: center;
+  text-decoration: none;
+  background-color: rgba(255, 255, 255, 0);
+`;
+
 function Test() {
     const [pressed, setPressed] = useState(false);
 
@@ -15,9 +29,9 @@ function Test() {
         setPressed(true);
     }
     return (
-        <div>
-            {pressed ? <Questions /> : <button onClick={onClick} >유형 검사 시작</button>}
-        </div>
+        <Container>
+            {pressed ? <Questions /> : <Item onClick={onClick} >유형 검사 시작</Item>}
+        </Container>
     );
 }
 
