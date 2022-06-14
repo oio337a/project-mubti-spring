@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { login } from "../reducers/userReducer";
 import {useEffect} from "react";
 
-const BASE_URL = "http://localhost:8080/api/v1";
+const BASE_URL = "http://localhost:8080";
 
 const instance = axios.create({
     baseURL: BASE_URL,
@@ -17,7 +17,6 @@ const Interceptor = ({children}) => {
     let timeNow = new Date;
 
     useEffect(() => {
-        console.log("API IF");
 
         instance.interceptors.request.use(
             function (config) {
@@ -25,7 +24,7 @@ const Interceptor = ({children}) => {
                 let timeNow = new Date;
                 console.log(token.expiryTime, timeNow.getTime());
 
-                if (true){
+                if (token.expiryTime < timeNow.getTime() + 30000){
                     axios.get("http://localhost:8080/auth/refresh", {withCredentials: true, headers: {Authorization: `Bearer ${token.accessToken}`}})
                         .then((res) => {
                             dispatch(login({
@@ -58,11 +57,10 @@ const Interceptor = ({children}) => {
                 switch (status){
                     case 401 : {
                         alert("로그인해야 이용 가능");
-                        window.history.back();
+                        window.location.href("http://localhost:8080/login");
                         break;
                     }
                 }
-
                 return Promise.reject(error);
             }
         )
