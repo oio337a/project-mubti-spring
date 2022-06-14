@@ -1,5 +1,5 @@
 import React from 'react';
-import { configureStore, getDefaultMiddleware } from '@reduxjs/toolkit';
+import { configureStore, getDefaultMiddleware } from "@reduxjs/toolkit";
 import userReducer from "./userReducer";
 import postReducer from "./postReducer";
 import postListReducer from "./postListReducer";
@@ -7,7 +7,7 @@ import { persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 
 const persistConfig = {
-    key: 'root',
+    key: "root",
     storage,
 };
 

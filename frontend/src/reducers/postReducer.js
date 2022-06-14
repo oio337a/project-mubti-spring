@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice } from "@reduxjs/toolkit";
 
 const initialStateValue = {category: "", title: "", content: "", views: 0, votes: 0};
 
