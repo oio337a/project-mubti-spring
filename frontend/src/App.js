@@ -11,17 +11,17 @@ import {Interceptor} from "./utils/api";
 function App() {
   return (
       <Interceptor>
-      <Router>
-        <Routes>
-            <Route path="/" element={<h1>hello</h1>} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/oauth/redirect" element={<Redirect />} />
-            <Route path="/test" element={<Test />} />
-            <Route path="/posts" element={<Board />} />
-            <Route path="/posts/*" element={<ReadPost />} />
-            <Route path="/posts/write" element={<Write />} />
-        </Routes>
-      </Router>
+          <Router>
+              <Routes>
+                  <Route path="/" element={<h1>hello</h1>} />
+                  <Route path="/login" element={<Login />} />
+                  <Route path="/oauth/redirect" element={<Redirect />} />
+                  <Route path="/test" element={<Test />} />
+                  <Route path="/posts" element={<Board />} />
+                  <Route path="/posts/*" element={<ReadPost />} />
+                  <Route path="/posts/write" element={<Write />} />
+              </Routes>
+          </Router>
       </Interceptor>
   );
 }
