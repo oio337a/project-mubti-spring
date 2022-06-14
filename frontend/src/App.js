@@ -12,6 +12,7 @@ import TestResult from "./pages/TestResult";
 import ReadPost from "./pages/ReadPost";
 import Write from "./pages/Write";
 import {Interceptor} from "./utils/api";
+import Board from "./pages/Board";
 
 function App() {
   return (
@@ -22,8 +23,8 @@ function App() {
               <Route path="/login" element={<Login />} />
               <Route path="/oauth/redirect" element={<Redirect />} />
               <Route path="/mypage" element={<Mypage />} />
-              <Route path="/post" element={<Post />} />
-              <Route path="/posts/*" element={<ReadPost />} />
+              <Route path="/posts" element={<Board />} />
+              <Route path="/posts/:id" element={<ReadPost />} />
               <Route path="/posts/write" element={<Write />} />
               <Route path="/infomation" element={<Information />} />
               <Route path="/withdraw" element={<Withdraw />} />
