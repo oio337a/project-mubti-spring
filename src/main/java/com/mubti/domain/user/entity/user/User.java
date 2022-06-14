@@ -87,4 +87,9 @@ public class User {
         this.modifiedAt = modifiedAt;
         this.savedReport = 0;
     }
+
+    public void update(User user) {
+        this.userAlias = user.getUserAlias();
+        this.mbtiType = user.getMbtiType();
+    }
 }

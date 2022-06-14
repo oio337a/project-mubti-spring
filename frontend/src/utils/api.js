@@ -6,7 +6,8 @@ import {useEffect} from "react";
 const BASE_URL = "http://localhost:8080/api/v1";
 
 const instance = axios.create({
-    baseURL: BASE_URL
+    baseURL: BASE_URL,
+    withCredentials: true
 })
 
 const Interceptor = ({children}) => {
@@ -21,8 +22,9 @@ const Interceptor = ({children}) => {
                 let timeNow = new Date;
                 console.log("are you here?");
                 console.log(token.expiryTime, timeNow.getTime());
-                if (true){
-                    axios.get("http://localhost:8080/refresh", {headers: {Authorization: `Bearer ${token.accessToken}`}})
+
+                if (token.expiryTime < timeNow.getTime() + 30000){
+                    axios.get("http://localhost:8080/auth/refresh", {headers: {Authorization: `Bearer ${token.accessToken}`}})
                         .then((res) => {
                             dispatch(login({
                                 accessToken:res.token,

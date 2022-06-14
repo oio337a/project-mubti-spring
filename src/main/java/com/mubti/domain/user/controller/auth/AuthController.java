@@ -25,6 +25,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.Date;
 
 @RestController
+@RequestMapping("/auth")
 @RequiredArgsConstructor
 public class AuthController {
 
@@ -88,7 +89,7 @@ public class AuthController {
         // access token 확인
         String accessToken = HeaderUtil.getAccessToken(request);
         AuthToken authToken = tokenProvider.convertAuthToken(accessToken);
-        if (!authToken.validate()) {
+        if (!authToken.refreshValidate()) {
             return ApiResponse.invalidAccessToken();
         }
 
@@ -113,13 +114,14 @@ public class AuthController {
         if (authRefreshToken.validate()) {
             return ApiResponse.invalidRefreshToken();
         }
-
+        System.out.println("@@@@@@ userId : " + userId);
+        System.out.println("@@@@@@ refreshToken : " + refreshToken);
         // userId refresh token 으로 DB 확인
         UserRefreshToken userRefreshToken = userRefreshTokenRepository.findByUserIdAndRefreshToken(userId, refreshToken);
         if (userRefreshToken == null) {
             return ApiResponse.invalidRefreshToken();
         }
-
+        System.out.println("@@@@통과");
         AuthToken newAccessToken = tokenProvider.createAuthToken(
                 userId,
                 roleType.getCode(),

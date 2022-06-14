@@ -49,6 +49,10 @@ public class AuthToken {
         return this.getTokenClaims() != null;
     }
 
+    public boolean refreshValidate() {
+        return this.getExpiredTokenClaims() != null;
+    }
+
     public Claims getTokenClaims() {
         try {
             return Jwts.parserBuilder()
@@ -77,10 +81,18 @@ public class AuthToken {
                     .build()
                     .parseClaimsJws(token)
                     .getBody();
+        } catch (SecurityException e) {
+            log.info("Invalid JWT signature.");
+        } catch (MalformedJwtException e) {
+            log.info("Invalid JWT token.");
         } catch (ExpiredJwtException e) {
-            return e.getClaims();
-        } finally {
             log.info("Expired JWT token.");
+            return e.getClaims();
+        } catch (UnsupportedJwtException e) {
+            log.info("Unsupported JWT token.");
+        } catch (IllegalArgumentException e) {
+            log.info("JWT token compact of handler are invalid.");
         }
+        return null;
     }
 }
