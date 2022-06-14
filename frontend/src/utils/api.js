@@ -26,7 +26,7 @@ const Interceptor = ({children}) => {
                 console.log(token.expiryTime, timeNow.getTime());
 
                 if (true){
-                    axios.get("http://localhost:8080/refresh", {withCredentials: true}, {headers: {Authorization: `Bearer ${token.accessToken}`}})
+                    axios.get("http://localhost:8080/auth/refresh", {withCredentials: true, headers: {Authorization: `Bearer ${token.accessToken}`}})
                         .then((res) => {
                             dispatch(login({
                                 accessToken:res.token,
