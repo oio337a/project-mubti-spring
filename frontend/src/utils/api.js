@@ -12,6 +12,7 @@ const instance = axios.create({
 const Interceptor = ({children}) => {
     const dispatch = useDispatch();
     const token = useSelector((state) => state.user.value);
+    let timeNow = new Date;
 
     useEffect(() => {
         console.log("API IF");

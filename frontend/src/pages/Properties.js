@@ -1,12 +1,7 @@
 import { useState } from "react";
-import { Main, Header, Footer } from "../components/Tools";
-import MAIN_DATA from "../data/Type";
+import { Wraper, Header, Footer } from "../components/Tools";
+import MAIN_DATA from "../data/PersonalType";
 import styled from "styled-components";
-
-const Container = styled.div`
-  display: flex;
-  height: 100vh;
-`;
 
 const Btn = styled.button`
   min-width: 50px;
@@ -44,8 +39,8 @@ function Properties() {
   };
 
   const select = {
-    ISTJ: "ISTJ:",
-    ISFJ: "ISFJ:",
+    ISTJ: "안녕하세요.",
+    ISFJ: "하하하",
     INFJ: "INFJ:",
     INTJ: "INTJ:",
 
@@ -67,7 +62,7 @@ function Properties() {
 
   console.log(content);
   return (
-    <Main>
+    <Wraper>
       <Header />
       {MAIN_DATA.map((data) => {
         return (
@@ -78,7 +73,7 @@ function Properties() {
       })}
       {content && <Contents>{select[content]}</Contents>}
       <Footer />
-    </Main>
+    </Wraper>
   );
 }
 export default Properties;

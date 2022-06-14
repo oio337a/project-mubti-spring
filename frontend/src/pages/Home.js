@@ -1,7 +1,5 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { Main, Header, Footer } from "../components/Tools";
-import { Link } from "react-router-dom";
 
 const Button = styled.button`
   display: inline-block;
@@ -44,7 +42,11 @@ function View() {
 }
 
 function Home() {
-  return <Footer />;
+  return (
+    <div>
+      <View />
+    </div>
+  );
 }
 
 export default Home;
