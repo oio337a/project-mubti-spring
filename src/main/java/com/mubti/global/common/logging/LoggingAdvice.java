@@ -9,6 +9,7 @@ import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.*;
 import org.aspectj.lang.reflect.CodeSignature;
 import org.aspectj.lang.reflect.MethodSignature;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.*;
 
@@ -33,25 +34,29 @@ public class LoggingAdvice {
     }
 
     @AfterReturning(pointcut = "execution(* com.mubti.domain..*Controller.*(..))",
-                    returning = "apiResponseObject")
-    public void afterReturningLog(JoinPoint joinPoint, Object apiResponseObject) throws Throwable{
-        ApiResponse apiResponse = (ApiResponse) apiResponseObject;
+                    returning = "result")
+    public void afterReturningLog(JoinPoint joinPoint, Object result) throws Throwable{
+        ObjectMapper mapper = new ObjectMapper();
+        Map<String, Object> header = new HashMap<>();
+        Map<String, Object> responseMap = new HashMap<>();
 
-        Map<String, Object> apiResponseMap = new HashMap<>();
-        apiResponseMap.put("header", objectByMap(apiResponse.getHeader()));
-        apiResponseMap.put("body", objectByMap(apiResponse.getBody()));
+        ResponseEntity responseEntity = (ResponseEntity) result;
 
-        JSONObject jsonObject = new JSONObject();
+        header.put("statusCode", responseEntity.getStatusCode().toString());
+        Object body = responseEntity.getBody();
 
-        log.info("response: " + jsonObject.toJSONString(apiResponseMap));
+        responseMap.put("header", header);
+        responseMap.put("body", body);
+
+        log.info("response: " + mapper.writerWithDefaultPrettyPrinter().writeValueAsString(responseMap));
     }
 
     @AfterThrowing(pointcut = "execution(* com.mubti.domain..*Controller.*(..))",
                    throwing = "ex")
     public void afterThrowingLog(JoinPoint joinPoint, Throwable ex) {
         String signatureString = joinPoint.getSignature().getName();
-        System.out.println("[" + signatureString + "] 메서드 실행 중 예외 발생");
-        System.out.println("[" + signatureString + "] 예외 = " + ex);
+        log.info("[" + signatureString + "] 메서드 실행 중 예외 발생");
+        log.info("[" + signatureString + "] 예외 = " + ex);
     }
 
     @Around("execution(* com.mubti.domain..*Controller.*(..))")
@@ -62,14 +67,6 @@ public class LoggingAdvice {
 
         log.info("execution time: " + (endTime - startTime) + "ms");
         return result;
-    }
-
-    private Map<String, Object> objectByMap(Object object)
-    {
-        if (object == null)
-            return null;
-        ObjectMapper objectMapper = new ObjectMapper();
-        return objectMapper.convertValue(object, HashMap.class);
     }
 
     private String getRequestUrl(JoinPoint joinPoint, Class clazz) {

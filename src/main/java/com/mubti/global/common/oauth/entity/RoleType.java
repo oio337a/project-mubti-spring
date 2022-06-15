@@ -8,7 +8,8 @@ import java.util.Arrays;
 @Getter
 @AllArgsConstructor
 public enum RoleType {
-    USER("ROLE_USER", "일반 사용자 권한"),
+    INCOMPLETE_USER("ROLE_INCOMPLETE_USER", "추가 정보 미입력 사용자 권한"),
+    COMPLETE_USER("ROLE_COMPLETE_USER", "추가 정보 입력 사용자 권한"),
     ADMIN("ROLE_ADMIN", "관리자 권한"),
     GUEST("GUEST", "게스트 권한");
 

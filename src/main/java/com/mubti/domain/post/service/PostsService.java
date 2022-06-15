@@ -18,7 +18,7 @@ public class PostsService {
         return postsRepository.findAll(Sort.by(Sort.Direction.DESC, "postSeq"));
     }
 
-    public Posts getPost(long id){
+    public Posts findById(long id){
         return postsRepository.findById(id).get();
     }
 

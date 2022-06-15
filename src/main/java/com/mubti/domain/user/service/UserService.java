@@ -10,8 +10,12 @@ import org.springframework.stereotype.Service;
 public class UserService {
     private final UserRepository userRepository;
 
-    public User getUser(String userId) {
+    public User findByUserId(String userId) {
         return userRepository.findByUserId(userId);
+    }
+
+    public User findByUserAlias(String findByUserAlias) {
+        return userRepository.findByUserAlias(findByUserAlias);
     }
 
     public User save(User user) {

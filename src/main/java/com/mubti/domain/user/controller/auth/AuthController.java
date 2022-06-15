@@ -1,7 +1,7 @@
 package com.mubti.domain.user.controller.auth;
 
 import com.mubti.domain.user.entity.user.UserRefreshToken;
-import com.mubti.global.common.response.ApiResponse;
+import com.mubti.domain.user.repository.UserRepository;
 import com.mubti.domain.user.repository.UserRefreshTokenRepository;
 import com.mubti.global.config.properties.AppProperties;
 import com.mubti.global.common.oauth.entity.RoleType;
@@ -11,7 +11,8 @@ import com.mubti.global.utils.CookieUtil;
 import com.mubti.global.utils.HeaderUtil;
 import io.jsonwebtoken.Claims;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.Cookie;
@@ -20,39 +21,32 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.Date;
 
 @RestController
-@RequestMapping("/auth")
+@RequestMapping("/token")
 @RequiredArgsConstructor
 public class AuthController {
 
     private final AppProperties appProperties;
     private final AuthTokenProvider tokenProvider;
-    private final AuthenticationManager authenticationManager;
+    private final UserRepository userRepository;
     private final UserRefreshTokenRepository userRefreshTokenRepository;
 
     private final static long THREE_DAYS_MSEC = 259200000;
-    private final static long THIRTY_SECONDS_MSEC = 30000;
     private final static String REFRESH_TOKEN = "refresh_token";
 
     @GetMapping("/refresh")
-    public ApiResponse refreshToken (HttpServletRequest request, HttpServletResponse response) {
+    public ResponseEntity refreshToken(HttpServletRequest request, HttpServletResponse response) {
         // access token 확인
         String accessToken = HeaderUtil.getAccessToken(request);
         AuthToken authToken = tokenProvider.convertAuthToken(accessToken);
+
         if (!authToken.refreshValidate()) {
-            return ApiResponse.invalidAccessToken();
+            return new ResponseEntity(HttpStatus.UNAUTHORIZED);
         }
 
-        // expired accessToken 확인
-        Date now = new Date();
         Claims claims = authToken.getExpiredTokenClaims();
 
-        long validTime = claims.getExpiration().getTime() - now.getTime();
-        if (validTime >= THIRTY_SECONDS_MSEC) {
-            return ApiResponse.notExpiredTokenYet();
-        }
-
         String userId = claims.getSubject();
-        RoleType roleType = RoleType.of(claims.get("role", String.class));
+        RoleType roleType = userRepository.findRoleTypeByUserId(userId);
 
         // refresh token
         String refreshToken = CookieUtil.getCookie(request, REFRESH_TOKEN)
@@ -61,16 +55,17 @@ public class AuthController {
         AuthToken authRefreshToken = tokenProvider.convertAuthToken(refreshToken);
 
         if (!authRefreshToken.validate()) {
-            return ApiResponse.invalidRefreshToken();
+            return new ResponseEntity(HttpStatus.UNAUTHORIZED);
         }
 
         // userId refresh token 으로 DB 확인
         UserRefreshToken userRefreshToken = userRefreshTokenRepository.findByUserIdAndRefreshToken(userId, refreshToken);
         if (userRefreshToken == null) {
-            return ApiResponse.invalidRefreshToken();
+            return new ResponseEntity(HttpStatus.UNAUTHORIZED);
         }
 
-        validTime = authRefreshToken.getTokenClaims().getExpiration().getTime() - now.getTime();
+        Date now = new Date();
+        long validTime = authRefreshToken.getTokenClaims().getExpiration().getTime() - now.getTime();
 
         // refresh 토큰 기간이 3일 이하로 남은 경우, refresh 토큰 갱신
         if (validTime <= THREE_DAYS_MSEC) {
@@ -97,6 +92,6 @@ public class AuthController {
                 new Date(now.getTime() + appProperties.getAuth().getTokenExpiry())
         );
 
-        return ApiResponse.success("token", newAccessToken.getToken());
+        return new ResponseEntity(newAccessToken.getToken(), HttpStatus.OK);
     }
 }
