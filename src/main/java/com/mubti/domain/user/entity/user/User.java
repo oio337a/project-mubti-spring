@@ -91,5 +91,6 @@ public class User {
     public void update(User user) {
         this.userAlias = user.getUserAlias();
         this.mbtiType = user.getMbtiType();
+        this.roleType = RoleType.COMPLETE_USER;
     }
 }

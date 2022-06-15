@@ -52,6 +52,7 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
                         " account. Please use your " + savedUser.getProviderType() + " account to login."
                 );
             }
+            updateUser(savedUser);
         } else {
             savedUser = createUser(userInfo, providerType);
         }
@@ -64,11 +65,18 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
         User user = new User(
                 userInfo.getId(),
                 providerType,
-                RoleType.USER,
+                RoleType.INCOMPLETE_USER,
                 now,
                 now
         );
 
         return userRepository.saveAndFlush(user);
+    }
+
+    private void updateUser(User user) {
+        LocalDateTime now = LocalDateTime.now();
+        user.setModifiedAt(now);
+
+        userRepository.saveAndFlush(user);
     }
 }

@@ -1,7 +1,6 @@
 package com.mubti.domain.user.controller.user;
 
 import com.mubti.domain.user.entity.user.User;
-import com.mubti.global.common.response.ApiResponse;
 import com.mubti.domain.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -13,29 +12,29 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/users")
 @RequiredArgsConstructor
 public class UserController {
-
     private final UserService userService;
 
     @GetMapping
-    public ApiResponse getUser() {
+    public ResponseEntity getUser() {
         org.springframework.security.core.userdetails.User principal = (org.springframework.security.core.userdetails.User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         User user = userService.findByUserId(principal.getUsername());
 
-        return ApiResponse.success("user", user);
+        return new ResponseEntity(user, HttpStatus.OK);
     }
 
     @PutMapping
-    public ApiResponse putUser(@RequestBody User changedUser) {
+    public ResponseEntity putUser(@RequestBody User changeUser) {
         org.springframework.security.core.userdetails.User principal = (org.springframework.security.core.userdetails.User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         User user = userService.findByUserId(principal.getUsername());
-        user.update(changedUser);
+        user.update(changeUser);
+
         User savedUser = userService.save(user);
 
-        return ApiResponse.created("savedUser", savedUser);
+        return new ResponseEntity(savedUser, HttpStatus.CREATED);
     }
 
-    @GetMapping("/alias/{alias}")
-    public ResponseEntity checkUserAlias(@PathVariable("alias") String userAlias) {
+    @GetMapping("/alias/{id}/check")
+    public ResponseEntity checkUserAlias(@PathVariable("id") String userAlias) {
         ResponseEntity responseEntity;
 
         User user = userService.findByUserAlias(userAlias);

@@ -15,6 +15,8 @@ import com.mubti.global.common.oauth.token.AuthTokenProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.BeanIds;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -55,10 +57,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .authorizeRequests() // requestMatchers를 구현하여 요청의 접근을 제한할 수 있다.
                 .requestMatchers(CorsUtils::isPreFlightRequest).permitAll() // Preflight 요청은 모두 허용한다.
-                .antMatchers("/**").hasAnyAuthority(RoleType.USER.getCode()) // USER 권한을 가지는 사용자만 접근 가능
-                .antMatchers("/**/admin/**").hasAnyAuthority(RoleType.ADMIN.getCode()) // ADMIN 권한을 가지는 사용자만 접근 가능
-                .antMatchers("/auth/refresh").permitAll()
+                .antMatchers(HttpMethod.GET, "/posts").permitAll()
+                .antMatchers("/token/refresh").permitAll()
                 .antMatchers("/users/alias/**").permitAll()
+                .antMatchers("/**").hasAnyAuthority(RoleType.COMPLETE_USER.getCode()) // USER 권한을 가지는 사용자만 접근 가능
+                .antMatchers("/**/admin/**").hasAnyAuthority(RoleType.ADMIN.getCode()) // ADMIN 권한을 가지는 사용자만 접근 가능
                 .anyRequest().authenticated() // 나머지 요청은 전부 인증 필요
                 .and()
                 .oauth2Login() // oauth2.0 설정

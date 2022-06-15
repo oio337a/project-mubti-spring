@@ -2,11 +2,16 @@ package com.mubti.domain.post.controller;
 
 import com.mubti.domain.post.entity.Posts;
 import com.mubti.domain.post.service.PostsService;
+import com.mubti.domain.user.repository.UserRepository;
 import com.mubti.domain.user.service.UserService;
+import com.mubti.global.common.oauth.entity.RoleType;
 import com.mubti.global.common.oauth.repository.OAuth2AuthorizationRequestBasedOnCookieRepository;
 import com.mubti.global.common.response.ApiResponse;
 import com.mubti.global.utils.CookieUtil;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -17,45 +22,44 @@ import java.util.List;
 @RequiredArgsConstructor
 @RequestMapping("/posts")
 public class PostsController {
-
     private final PostsService postsService;
 
     @GetMapping
-    public ApiResponse getAllPosts(HttpServletRequest request) {
+    public ResponseEntity getAllPosts() {
         List<Posts> posts = postsService.getAllPosts();
 
-        return ApiResponse.success("posts", posts);
+        return new ResponseEntity(posts, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
-    public ApiResponse getPost(@PathVariable("id") long id) {
+    public ResponseEntity getPost(@PathVariable("id") long id) {
         postsService.updateView(id);
-        Posts post = postsService.getPost(id);
+        Posts post = postsService.findById(id);
 
-        return ApiResponse.success("post", post);
+        return new ResponseEntity(post, HttpStatus.OK);
     }
 
     @PostMapping
-    public ApiResponse postPost(@RequestBody Posts post) {
+    public ResponseEntity postPost(@RequestBody Posts post) {
         Posts savedPost = postsService.save(post);
 
-        return ApiResponse.created("savedPost", savedPost);
+        return new ResponseEntity(savedPost, HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
-    public ApiResponse putPost(@PathVariable("id") long id, @RequestBody Posts changedPost) {
-        Posts post = postsService.getPost(id);
-        post.update(changedPost);
+    public ResponseEntity putPost(@PathVariable("id") long id, @RequestBody Posts changePost) {
+        Posts post = postsService.findById(id);
+        post.update(changePost);
         Posts savedPost = postsService.save(post);
 
-        return ApiResponse.created("savedPost", savedPost);
+        return new ResponseEntity(savedPost, HttpStatus.CREATED);
     }
 
     @DeleteMapping("/{id}")
-    public ApiResponse deletePost(@PathVariable("id") long id) {
+    public ResponseEntity deletePost(@PathVariable("id") long id) {
         postsService.deleteById(id);
 
-        return ApiResponse.deleted();
+        return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
 
 }

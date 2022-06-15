@@ -71,10 +71,9 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
         OAuth2UserInfo userInfo = OAuth2UserInfoFactory.getOAuth2UserInfo(providerType, user.getAttributes()); // 공급자에 맞는 유저 정보 객체 반환
         Collection<? extends GrantedAuthority> authorities = ((OidcUser) authentication.getPrincipal()).getAuthorities();
 
-        RoleType roleType = hasAuthority(authorities, RoleType.ADMIN.getCode()) ? RoleType.ADMIN : RoleType.USER; // 사용자 유형 가져오기
+        RoleType roleType = hasAuthority(authorities); // 사용자 유형 가져오기
 
         Date now = new Date();
-
         AuthToken accessToken = tokenProvider.createAuthToken(
                 userInfo.getId(),
                 roleType.getCode(),
@@ -114,17 +113,25 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
         authorizationRequestRepository.removeAuthorizationRequestCookies(request, response);
     }
 
-    private boolean hasAuthority(Collection<? extends GrantedAuthority> authorities, String authority) {
+    private RoleType hasAuthority(Collection<? extends GrantedAuthority> authorities) {
+        RoleType roleType = RoleType.GUEST;
+
         if (authorities == null) {
-            return false;
+            return roleType;
         }
 
         for (GrantedAuthority grantedAuthority : authorities) {
-            if (authority.equals(grantedAuthority.getAuthority())) {
-                return true;
+            if (RoleType.INCOMPLETE_USER.equals(grantedAuthority.getAuthority())) {
+                roleType = RoleType.INCOMPLETE_USER;
+            }
+            if (RoleType.COMPLETE_USER.equals(grantedAuthority.getAuthority())) {
+                roleType = RoleType.COMPLETE_USER;
+            }
+            if (RoleType.ADMIN.equals(grantedAuthority.getAuthority())) {
+                roleType = RoleType.ADMIN;
             }
         }
-        return false;
+        return roleType;
     }
 
     private boolean isAuthorizedRedirectUri(String uri) {

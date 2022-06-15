@@ -15,7 +15,7 @@ public class UserService {
     }
 
     public User findByUserAlias(String findByUserAlias) {
-        return userRepository.findByUserId(findByUserAlias);
+        return userRepository.findByUserAlias(findByUserAlias);
     }
 
     public User save(User user) {
