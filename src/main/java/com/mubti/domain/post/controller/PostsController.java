@@ -25,9 +25,9 @@ public class PostsController {
         return new ResponseEntity(posts, HttpStatus.OK);
     }
 
-    @GetMapping("/{category}")
+    @GetMapping
     public ResponseEntity getCategoricalPosts(@PageableDefault(page = 0, size = 10, sort = "postSeq", direction = Sort.Direction.DESC) Pageable pageable,
-                                              @PathVariable("category") String category) {
+                                              @RequestParam(value = "category", required = false, defaultValue = "") String category) {
         Page<Posts> posts = postsService.findAllByPostCategory(pageable, category);
 
         return new ResponseEntity(posts, HttpStatus.OK);
