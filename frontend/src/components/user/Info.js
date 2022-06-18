@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import styled from "styled-components";
 import { Wraper, Header, Footer} from "../Tools";
 import MAIN_DATA from "../../data/PersonalType";
@@ -43,7 +43,19 @@ function Info() {
     const [checked, setChecked] = useState(true);
     const [newToken, setNewToken] = useState("");
 
-    const onClickBtn = () => {
+    useEffect(() => {
+        if (newToken != "") {
+            const [expiryTime, role] = parseToken(newToken);
+            dispatch(login({
+                accessToken: newToken,
+                expiryTime: expiryTime * 1000,
+                role: role
+            }));
+            navigator("/");
+        }
+    }, [newToken]);
+
+    const onClickBtn = async () => {
         if (checked == false) {
             setAlias("");
             alert("중복된 닉네임");
@@ -55,19 +67,11 @@ function Info() {
             alert("유형을 선택하세요.");
         }
         else {
-            UserService.saveInfo(type, alias)
-                .then(() => {
-                    issueToken(token.accessToken)
-                        .then((res) => {console.log("##", res);setNewToken(res.data);});
-                    const [expiryTime, role] = parseToken(newToken);
-
-                    dispatch(login({
-                        accessToken: newToken,
-                        expiryTime: expiryTime * 1000,
-                        role: role
-                    }));
-                    navigator("/");
-                })
+            await UserService.saveInfo(type, alias);
+            setNewToken(
+                await issueToken(token.accessToken)
+                    .then((res) => res.data)
+            );
         }
     }
 
@@ -100,7 +104,7 @@ function Info() {
                 <Content>
                     <Text>MBTI</Text>
                     <InputMbti onChange={onChangeType} >
-                        <Select name={"default"} selected>TYPE</Select>
+                        <Select name={"default"}>TYPE</Select>
                         {MAIN_DATA.map((data, index) => (
                             <Select name={data.text} key = {index}>
                                 {data.text}

@@ -9,6 +9,7 @@ import parseToken from "../utils/parseToken";
 
 function Redirect(){
     const dispatch = useDispatch();
+    let navigator = useNavigate();
 
     const token = queryString.parse(window.location.search).token;
 
@@ -24,7 +25,13 @@ function Redirect(){
     }
 
     useEffect(() => {
-        window.history.go(-2);
+        console.log(role);
+        if (role == "ROLE_INCOMPLETE_USER")
+            navigator("/user/create");
+
+        else {
+            window.history.go(-2);
+        }
     }, []);
 
     return(

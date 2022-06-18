@@ -15,8 +15,6 @@ const Interceptor = ({children}) => {
     const dispatch = useDispatch();
     const token = useSelector((state) => state.user.value);
 
-    if (token.role == "INCOMPLET_USER") window.location.replace("http://localhost:3000/user/create");
-
     useReIssueToken(token);
 
     useEffect(() => {
