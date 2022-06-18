@@ -14,10 +14,11 @@ function ReadPosts(){
     }
 
     const [posts, setPosts] = useState([]);
-    //const posts = [];
+
+
     useEffect(() => {
         PostsService.getBoards().then((res) => {
-            setPosts(res.data.body.posts);
+            setPosts(res.data);
         })}, []);
 
     const onClickPost = (num) => {

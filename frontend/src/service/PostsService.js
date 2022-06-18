@@ -1,16 +1,16 @@
 import axios from 'axios';
-import api from "../utils/api";
+import userRequestApi from "../utils/userRequestApi";
 
 class PostsService {
     getBoards() {
-        return api({
+        return userRequestApi({
             url: "/posts",
             method: "get",
         })
     }
 
     getPost(id) {
-        return api({
+        return userRequestApi({
             url: `/posts/${id}`,
             method: "get",
         })

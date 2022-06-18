@@ -1,7 +1,7 @@
 import {useSelector} from "react-redux";
 import {useEffect, useState} from "react";
 import axios from "axios";
-import api from "../utils/api";
+import api from "../utils/userRequestApi";
 
 function Test(){
     const user = useSelector((state) => state.user.value);
