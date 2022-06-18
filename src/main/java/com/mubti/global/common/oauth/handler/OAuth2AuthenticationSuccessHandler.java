@@ -121,13 +121,13 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
         }
 
         for (GrantedAuthority grantedAuthority : authorities) {
-            if (RoleType.INCOMPLETE_USER.equals(grantedAuthority.getAuthority())) {
+            if (RoleType.INCOMPLETE_USER.getCode().equals(grantedAuthority.getAuthority())) {
                 roleType = RoleType.INCOMPLETE_USER;
             }
-            if (RoleType.COMPLETE_USER.equals(grantedAuthority.getAuthority())) {
+            if (RoleType.COMPLETE_USER.getCode().equals(grantedAuthority.getAuthority())) {
                 roleType = RoleType.COMPLETE_USER;
             }
-            if (RoleType.ADMIN.equals(grantedAuthority.getAuthority())) {
+            if (RoleType.ADMIN.getCode().equals(grantedAuthority.getAuthority())) {
                 roleType = RoleType.ADMIN;
             }
         }

@@ -2,20 +2,10 @@ package com.mubti.domain.post.controller;
 
 import com.mubti.domain.post.entity.Posts;
 import com.mubti.domain.post.service.PostsService;
-import com.mubti.domain.user.repository.UserRepository;
-import com.mubti.domain.user.service.UserService;
-import com.mubti.global.common.oauth.entity.RoleType;
-import com.mubti.global.common.oauth.repository.OAuth2AuthorizationRequestBasedOnCookieRepository;
-import com.mubti.global.common.response.ApiResponse;
-import com.mubti.global.utils.CookieUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 @RestController
