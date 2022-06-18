@@ -6,7 +6,7 @@ import com.mubti.domain.user.repository.UserRepository;
 import com.mubti.domain.user.service.UserService;
 import com.mubti.global.common.oauth.entity.RoleType;
 import com.mubti.global.common.oauth.repository.OAuth2AuthorizationRequestBasedOnCookieRepository;
-import com.mubti.global.common.response.ApiResponse;
+//import com.mubti.global.common.response.ApiResponse;
 import com.mubti.global.utils.CookieUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
