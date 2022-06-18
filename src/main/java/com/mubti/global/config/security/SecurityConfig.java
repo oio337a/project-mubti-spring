@@ -57,9 +57,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .authorizeRequests() // requestMatchers를 구현하여 요청의 접근을 제한할 수 있다.
                 .requestMatchers(CorsUtils::isPreFlightRequest).permitAll() // Preflight 요청은 모두 허용한다.
-                .antMatchers(HttpMethod.GET, "/posts").permitAll()
-                .antMatchers("/token/refresh").permitAll()
-                .antMatchers("/users/alias/**").permitAll()
+                .antMatchers(HttpMethod.GET, "/posts/**").permitAll()
+                .antMatchers("/token/refresh").hasAnyAuthority(RoleType.INCOMPLETE_USER.getCode(), RoleType.COMPLETE_USER.getCode())
+                .antMatchers("/users/**").hasAnyAuthority(RoleType.INCOMPLETE_USER.getCode(), RoleType.COMPLETE_USER.getCode())
                 .antMatchers("/**").hasAnyAuthority(RoleType.COMPLETE_USER.getCode()) // USER 권한을 가지는 사용자만 접근 가능
                 .antMatchers("/**/admin/**").hasAnyAuthority(RoleType.ADMIN.getCode()) // ADMIN 권한을 가지는 사용자만 접근 가능
                 .anyRequest().authenticated() // 나머지 요청은 전부 인증 필요
