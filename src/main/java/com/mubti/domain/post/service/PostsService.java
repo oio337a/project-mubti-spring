@@ -28,10 +28,12 @@ public class PostsService {
         return postsRepository.findById(id).get();
     }
 
+    @Transactional
     public Posts save(Posts post) {
         return postsRepository.save(post);
     }
 
+    @Transactional
     public void deleteById(long id) {
         postsRepository.deleteById(id);
     }
