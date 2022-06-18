@@ -3,6 +3,10 @@ package com.mubti.domain.post.controller;
 import com.mubti.domain.post.entity.Posts;
 import com.mubti.domain.post.service.PostsService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,8 +19,16 @@ public class PostsController {
     private final PostsService postsService;
 
     @GetMapping
-    public ResponseEntity getAllPosts() {
-        List<Posts> posts = postsService.getAllPosts();
+    public ResponseEntity getAllPosts(@PageableDefault(page = 0, size = 10, sort = "postSeq", direction = Sort.Direction.DESC) Pageable pageable) {
+        Page<Posts> posts = postsService.findALl(pageable);
+
+        return new ResponseEntity(posts, HttpStatus.OK);
+    }
+
+    @GetMapping("/{category}")
+    public ResponseEntity getCategoricalPosts(@PageableDefault(page = 0, size = 10, sort = "postSeq", direction = Sort.Direction.DESC) Pageable pageable,
+                                              @PathVariable("category") String category) {
+        Page<Posts> posts = postsService.findAllByPostCategory(pageable, category);
 
         return new ResponseEntity(posts, HttpStatus.OK);
     }
