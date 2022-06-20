@@ -2,6 +2,8 @@ package com.mubti.domain.post.controller;
 
 import com.mubti.domain.post.entity.Posts;
 import com.mubti.domain.post.service.PostsService;
+import com.mubti.domain.user.entity.user.User;
+import com.mubti.domain.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -9,6 +11,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
@@ -17,6 +20,7 @@ import java.util.List;
 @RequestMapping("/posts")
 public class PostsController {
     private final PostsService postsService;
+    private final UserService userService;
 
     @GetMapping
     public ResponseEntity getAllPosts(@PageableDefault(page = 0, size = 10, sort = "postSeq", direction = Sort.Direction.DESC) Pageable pageable) {
@@ -25,6 +29,7 @@ public class PostsController {
         return new ResponseEntity(posts, HttpStatus.OK);
     }
 
+/*
     @GetMapping
     public ResponseEntity getPostsByCategory(@PageableDefault(page = 0, size = 10, sort = "postSeq", direction = Sort.Direction.DESC) Pageable pageable,
                                               @RequestParam(value = "category", required = false, defaultValue = "") String category) {
@@ -41,6 +46,7 @@ public class PostsController {
 
         return new ResponseEntity(posts, HttpStatus.OK);
     }
+*/
 
     @GetMapping("/{id}")
     public ResponseEntity getPost(@PathVariable("id") long id) {
@@ -52,6 +58,10 @@ public class PostsController {
 
     @PostMapping
     public ResponseEntity postPost(@RequestBody Posts post) {
+        org.springframework.security.core.userdetails.User principal = (org.springframework.security.core.userdetails.User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User user = userService.findByUserId(principal.getUsername());
+
+        post.setUser(user);
         Posts savedPost = postsService.save(post);
 
         return new ResponseEntity(savedPost, HttpStatus.CREATED);

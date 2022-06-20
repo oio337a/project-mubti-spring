@@ -9,6 +9,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -20,11 +21,11 @@ public class PostsService {
         return postsRepository.findAll(pageable);
     }
 
-    public Page<Posts> findAllByPostCategory(Pageable pageable, String category) {
+   /* public Page<Posts> findAllByPostCategory(Pageable pageable, String category) {
         return postsRepository.findAllByPostCategory(pageable, category);
-    }
+    }*/
 
-    public Page<Posts> findAllByTargetAndKeyword(Pageable pageable, String target, String keyword) {
+/*    public Page<Posts> findAllByTargetAndKeyword(Pageable pageable, String target, String keyword) {
         Page<Posts> posts;
 
         switch(target) {
@@ -47,7 +48,7 @@ public class PostsService {
                 posts = postsRepository.findAllByPostTitleAndPostContentContaining(pageable, keyword);
         }
         return posts;
-    }
+    }*/
 
     public Posts findById(long id){
         return postsRepository.findById(id).get();
