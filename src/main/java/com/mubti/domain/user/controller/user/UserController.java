@@ -23,6 +23,7 @@ public class UserController {
     public ResponseEntity getUser() {
         org.springframework.security.core.userdetails.User principal = (org.springframework.security.core.userdetails.User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         String userId = principal.getUsername();
+
         UserResponseDto user = userService.getUser(userId);
 
         return new ResponseEntity(user, HttpStatus.OK);
@@ -32,6 +33,7 @@ public class UserController {
     public ResponseEntity putUser(@RequestBody UserRequestDto userRequestDto) {
         org.springframework.security.core.userdetails.User principal = (org.springframework.security.core.userdetails.User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         User user = userRepository.findByUserId(principal.getUsername());
+
         user.setUserInfo(userRequestDto);
 
         UserResponseDto savedUser = userService.modifyUser(user);

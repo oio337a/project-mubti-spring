@@ -29,7 +29,7 @@ public class Posts {
     private Long postSeq;
 
     @ManyToOne
-    @JoinColumn(name = "USER_ID")
+    @JoinColumn(name = "USER_SEQ")
     private User user;
 
     @Column(name = "POST_TITLE", length = 128)

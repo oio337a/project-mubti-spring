@@ -11,6 +11,7 @@ import java.util.List;
 @Data
 public class PostResponseDto {
     private long postSeq;
+    private String userId;
     private String userAlias;
     private String postTitle;
     private PostCategoryType postCategoryType;
@@ -23,6 +24,7 @@ public class PostResponseDto {
     public PostResponseDto(Posts postList) {
         this.postSeq = postList.getPostSeq();
         this.userAlias = postList.getUser().getUserAlias();
+        this.userId = postList.getUser().getUserId();
         this.postTitle = postList.getPostTitle();
         this.postCategoryType = postList.getPostCategoryType();
         this.postContent = postList.getPostContent();

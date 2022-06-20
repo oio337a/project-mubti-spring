@@ -56,22 +56,28 @@ public class PostsService {
         return posts;
     }*/
 
+    public PostResponseDto getPost(long id) {
+        Posts post = postsRepository.findById(id).get();
+        if (post != null) {
+            postsRepository.updateView(id);
+        }
+
+        return new PostResponseDto(post);
+    }
     public Posts findById(long id){
         return postsRepository.findById(id).get();
     }
 
     @Transactional
-    public Posts save(Posts post) {
-        return postsRepository.save(post);
+    public PostResponseDto registerPost(PostRequestDto postRequestDto) {
+        Posts post = postRequestDto.toEntity();
+        Posts savedPost = postsRepository.save(post);
+
+        return new PostResponseDto(savedPost);
     }
 
     @Transactional
     public void deleteById(long id) {
         postsRepository.deleteById(id);
-    }
-
-    @Transactional
-    public void updateView(long id) {
-        postsRepository.updateView(id);
     }
 }
