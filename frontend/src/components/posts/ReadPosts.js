@@ -14,12 +14,15 @@ function ReadPosts(){
     }
 
     const [posts, setPosts] = useState([]);
+    const [currentPage, setCurrentPage] = useState(1);
 
 
     useEffect(() => {
         PostsService.getBoards().then((res) => {
             setPosts(res.data);
         })}, []);
+
+    console.log("POSTS", posts);
 
     const onClickPost = (num, e) => {
         navigator(`/posts/${num}`);

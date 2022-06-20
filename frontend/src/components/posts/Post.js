@@ -13,7 +13,6 @@ function Post(){
 
     const getPost = async () => {
         const response = await PostsService.getPost(params);
-        console.log(response,"!!!!", response.data);
         await setPost(response.data);
         await setComments(response.data.comments);
         await setLoading(true);
@@ -22,8 +21,6 @@ function Post(){
     useEffect(() => {
         getPost();
     }, []);
-
-    console.log("SDSD", post);
 
     const onClickVote = () => {
         //PostsService.
@@ -49,6 +46,3 @@ function Post(){
 }
 
 export default Post;
-/*
-<div>user {post.user.userAlias}</div>
-<ReadComments comments={comments}/>*/
