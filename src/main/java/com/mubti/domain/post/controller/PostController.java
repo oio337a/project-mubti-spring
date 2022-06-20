@@ -1,7 +1,8 @@
 package com.mubti.domain.post.controller;
 
+import com.mubti.domain.post.entity.CategoryType;
+import com.mubti.domain.post.entity.SearchType;
 import com.mubti.domain.post.service.PostService;
-import com.mubti.domain.post.service.impl.PostServiceImpl;
 import com.mubti.domain.post.dto.PostRequestDto;
 import com.mubti.domain.post.dto.PostResponseDto;
 import lombok.RequiredArgsConstructor;
@@ -21,30 +22,15 @@ public class PostController {
     private final PostService postsService;
 
     @GetMapping
-    public ResponseEntity getPostList(@PageableDefault(page = 0, size = 10, sort = "postSeq", direction = Sort.Direction.DESC) Pageable pageable) {
-        Page<PostResponseDto> postList = postsService.getPostList(pageable);
-
-        return new ResponseEntity(postList, HttpStatus.OK);
+    public ResponseEntity getPostList(@PageableDefault(page = 0, size = 10, sort = "postSeq", direction = Sort.Direction.DESC) Pageable pageable,
+                                      @RequestParam(value = "category_type", required = false, defaultValue = "") CategoryType categoryType,
+                                      @RequestParam(value = "search_type", required = false, defaultValue = "") SearchType searchType,
+                                      @RequestParam(value = "keyword", required = false, defaultValue = "") String keyword) {
+        if (categoryType != null) {
+            return new ResponseEntity(postsService.getPostListByCategory(pageable, categoryType), HttpStatus.OK);
+        }
+        return new ResponseEntity(postsService.getPostList(pageable), HttpStatus.OK);
     }
-
-/*
-    @GetMapping
-    public ResponseEntity getPostsByCategory(@PageableDefault(page = 0, size = 10, sort = "postSeq", direction = Sort.Direction.DESC) Pageable pageable,
-                                              @RequestParam(value = "category", required = false, defaultValue = "") String category) {
-        Page<Post> posts = postsService.findAllByPostCategory(pageable, category);
-
-        return new ResponseEntity(posts, HttpStatus.OK);
-    }
-
-    @GetMapping
-    public ResponseEntity getPostsByTargetAndKeyword(@PageableDefault(page = 0, size = 10, sort = "postSeq", direction = Sort.Direction.DESC) Pageable pageable,
-                                                     @RequestParam(value = "target", required = false, defaultValue = "") String target,
-                                                     @RequestParam(value = "keyword", required = false, defaultValue = "") String keyword) {
-        Page<Post> posts = postsService.findAllByTargetAndKeyword(pageable, target, keyword);
-
-        return new ResponseEntity(posts, HttpStatus.OK);
-    }
-*/
 
     @GetMapping("/{id}")
     public ResponseEntity getPost(@PathVariable("id") long id) {

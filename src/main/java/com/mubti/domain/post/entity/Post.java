@@ -39,7 +39,7 @@ public class Post {
     @Column(name = "POST_CATEROTY", length = 4)
     @Enumerated(EnumType.STRING)
     @NotNull
-    private PostCategoryType postCategoryType;
+    private CategoryType categoryType;
 
     @Column(name = "POST_CONTENT", columnDefinition = "TEXT")
     @NotNull

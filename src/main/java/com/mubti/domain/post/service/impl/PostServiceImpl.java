@@ -1,6 +1,7 @@
 package com.mubti.domain.post.service.impl;
 
 import com.mubti.domain.post.entity.Post;
+import com.mubti.domain.post.entity.CategoryType;
 import com.mubti.domain.post.repository.PostRepository;
 import com.mubti.domain.post.dto.PostRequestDto;
 import com.mubti.domain.post.dto.PostResponseDto;
@@ -26,9 +27,12 @@ public class PostServiceImpl implements PostService {
         return postList.map(post -> new PostResponseDto(post));
     }
 
-   /* public Page<Post> findAllByPostCategory(Pageable pageable, String category) {
-        return postsRepository.findAllByPostCategory(pageable, category);
-    }*/
+    @Override
+    public Page<PostResponseDto> getPostListByCategory(Pageable pageable, CategoryType categoryType) {
+        Page<Post> postList = postsRepository.findAllByCategoryTypeContaining(pageable, categoryType);
+
+        return postList.map(post -> new PostResponseDto(post));
+    }
 
 /*    public Page<Post> findAllByTargetAndKeyword(Pageable pageable, String target, String keyword) {
         Page<Post> posts;
