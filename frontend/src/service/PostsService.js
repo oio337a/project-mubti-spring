@@ -9,6 +9,13 @@ class PostsService {
         })
     }
 
+    getPagedPosts(page) {
+        return userRequestApi({
+            url: `/posts?page=${page}`,
+            method: "get"
+        })
+    }
+
     getPost(id) {
         return userRequestApi({
             url: `/posts/${id}`,

@@ -9,10 +9,9 @@ import ReadPost from "./pages/ReadPost";
 import Write from "./pages/Write";
 import CreateUser from "./pages/CreateUser";
 import {Interceptor} from "./utils/userRequestApi";
-
 import Board from "./pages/Board";
 import Main from "./pages/Main";
-
+import ModifyPost from "./pages/ModifyPost";
 
 function App() {
     return (
@@ -26,6 +25,7 @@ function App() {
                     <Route path="/posts" element={<Board/>}/>
                     <Route path="/posts/:id" element={<ReadPost/>}/>
                     <Route path="/posts/write" element={<Write/>}/>
+                    <Route path="/posts/:id/write" element={ModifyPost} />
                     <Route path="/test" element={<TestPage/>}/>
                     <Route path="/test/result" element={<TestResult/>}/>
                     <Route path="/user/create" element={< CreateUser/>}/>

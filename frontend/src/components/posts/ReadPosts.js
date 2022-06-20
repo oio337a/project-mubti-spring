@@ -15,17 +15,23 @@ function ReadPosts(){
 
     const [posts, setPosts] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
-
+    const [maxPage, setMaxPage] = useState(0);
 
     useEffect(() => {
         PostsService.getBoards().then((res) => {
-            setPosts(res.data);
+            setPosts(res.data.content);
+            setMaxPage(parseInt((res.data.totalElements)/10) + 1);
         })}, []);
-
-    console.log("POSTS", posts);
 
     const onClickPost = (num, e) => {
         navigator(`/posts/${num}`);
+    }
+
+    const onClickPage = (e, page) => {
+        setCurrentPage(page);
+        PostsService.getPagedPosts(page - 1).then((res) => {
+            setPosts(res.data.content);
+        })
     }
 
     return (
@@ -61,6 +67,17 @@ function ReadPosts(){
               }
               </tbody>
           </table>
+          <div>
+              <div>
+                  {currentPage < 3 ? null : <button onClick={(e) => onClickPage(e, 1)}>1</button>}
+                  {currentPage < 3  ? null : <div>...</div>}
+                  {currentPage == 1 ? null : <button onClick={(e) => onClickPage(e, currentPage - 1)}>{currentPage - 1}</button>}
+                  <button onClick={(e) => onClickPage(e, currentPage)}>{currentPage} </button>
+                  {maxPage > 2 ? ((currentPage + 1 > maxPage ? null : <button onClick={(e) => onClickPage(e, currentPage + 1)}>{currentPage + 1}</button>)) : null}
+                  {maxPage - currentPage < 3 ? null : <div>...</div>}
+                  {maxPage - currentPage < 2  ? null : <button onClick={(e) => onClickPage(e, maxPage)}>{maxPage}</button>}
+              </div>
+          </div>
       </div>
     );
 }
