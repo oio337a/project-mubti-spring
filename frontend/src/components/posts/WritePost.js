@@ -3,6 +3,22 @@ import { useNavigate } from 'react-router-dom';
 import { types } from "./mbtiTypes.js";
 import { useDispatch } from "react-redux";
 import { savePost } from "../../reducers/postReducer";
+/*
+import { CKEditor } from "@ckeditor/ckeditor5-react";
+import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
+//import SimpleUploadAdapter from "@ckeditor/ckeditor5-upload/src/adapters/simpleuploadadapter";
+ */
+/*
+import { createReactEditorJS } from 'react-editor-js'
+import Header from "@editorjs/header";
+import Paragraph from "@editorjs/paragraph";
+import CheckList from "@editorjs/checklist";
+import { EDITOR_JS_TOOLS }  from "../../utils/tools";
+
+const ReactEditorJS = createReactEditorJS();
+*/
+
+import Editor from '../EditorComponent';
 
 function WritePost()
 {
@@ -16,11 +32,14 @@ function WritePost()
     const onTitleChanged = (event) => {
         setTitle(event.target.value);
     };
-    const onContentChanged = (event) => {
-        setContent(event.target.value);
-    };
+
     const onUndo = () => {
         navigate("/posts");
+    };
+
+    const onChangeContent = (e) => {
+        console.log(e);
+        setContent(e);
     };
     const onSubmit = () => {
         dispatch(savePost({category: category, title: title, content: content}));
@@ -56,13 +75,7 @@ function WritePost()
                 value={title}
                 onChange={onTitleChanged}
             />
-            <input
-                type="text"
-                id="content"
-                placeholder="Content"
-                value={content}
-                onChange={onContentChanged}
-            />
+            <Editor value={content} onChange={onChangeContent}/>
             <button onClick={onUndo}>취소</button>
             <button onClick={onSubmit}>등록</button>
         </div>
