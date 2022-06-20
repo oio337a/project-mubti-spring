@@ -13,9 +13,10 @@ function Post(){
 
     const getPost = async () => {
         const response = await PostsService.getPost(params);
+        console.log(response,"!!!!", response.data);
         await setPost(response.data);
-        await setComments(post.comments);
-        setLoading(true);
+        await setComments(response.data.comments);
+        await setLoading(true);
     }
 
     useEffect(() => {
