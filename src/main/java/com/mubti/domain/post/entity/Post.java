@@ -20,8 +20,8 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 @Entity
-@Table(name = "POSTS")
-public class Posts {
+@Table(name = "POST")
+public class Post {
     @Id
     @Column(name = "POST_SEQ")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -60,11 +60,15 @@ public class Posts {
     @NotNull
     private Long vote;
 
-    @OneToMany(mappedBy = "posts", cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
-    private List<Comments> comments;
+    @OneToMany(mappedBy = "post", cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
+    private List<Comment> comment;
 
     public void updateTitleAndContent(PostRequestDto post) {
         this.postTitle = post.getPostTitle();
         this.postContent = post.getPostContent();
+    }
+
+    public void updateView() {
+        this.view += 1;
     }
 }

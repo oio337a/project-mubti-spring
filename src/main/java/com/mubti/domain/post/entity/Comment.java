@@ -18,11 +18,11 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Builder
 @Entity
-@Table(name = "COMMENTS")
-public class Comments {
+@Table(name = "COMMENT")
+public class Comment {
     @ManyToOne
     @JoinColumn(name = "POST_SEQ")
-    private Posts posts;
+    private Post post;
 
     @Id
     @Column(name = "COMMENT_SEQ")
@@ -43,13 +43,13 @@ public class Comments {
     @NotNull
     private LocalDateTime commentDate;
 
-    public Comments(
-            @NotNull Posts posts,
+    public Comment(
+            @NotNull Post post,
             @NotNull User user,
             @NotNull String commentContent,
             @NotNull LocalDateTime commentDate
     ) {
-        this.posts = posts;
+        this.post = post;
         this.commentSeq = null;
         this.user = user;
         this.commentContent = commentContent;

@@ -73,7 +73,7 @@ public class User {
     @NotNull
     private int savedReport;
 
-    public void updateUserInfo(UserRequestDto userRequestDto) {
+    public void updateInfo(UserRequestDto userRequestDto) {
         this.userAlias = userRequestDto.getUserAlias();
         this.mbtiType = userRequestDto.getMbtiType();
         this.roleType = RoleType.COMPLETE_USER;

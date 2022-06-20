@@ -1,12 +1,8 @@
 package com.mubti.domain.post.controller;
 
-import com.mubti.domain.post.entity.Posts;
-import com.mubti.domain.post.repository.PostsRepository;
-import com.mubti.domain.post.service.PostsService;
+import com.mubti.domain.post.service.impl.PostServiceImpl;
 import com.mubti.domain.post.dto.PostRequestDto;
 import com.mubti.domain.post.dto.PostResponseDto;
-import com.mubti.domain.user.entity.User;
-import com.mubti.domain.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -20,10 +16,8 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/posts")
-public class PostsController {
-    private final PostsService postsService;
-    private final PostsRepository postsRepository;
-    private final UserRepository userRepository;
+public class PostController {
+    private final PostServiceImpl postsService;
 
     @GetMapping
     public ResponseEntity getPostList(@PageableDefault(page = 0, size = 10, sort = "postSeq", direction = Sort.Direction.DESC) Pageable pageable) {
@@ -36,7 +30,7 @@ public class PostsController {
     @GetMapping
     public ResponseEntity getPostsByCategory(@PageableDefault(page = 0, size = 10, sort = "postSeq", direction = Sort.Direction.DESC) Pageable pageable,
                                               @RequestParam(value = "category", required = false, defaultValue = "") String category) {
-        Page<Posts> posts = postsService.findAllByPostCategory(pageable, category);
+        Page<Post> posts = postsService.findAllByPostCategory(pageable, category);
 
         return new ResponseEntity(posts, HttpStatus.OK);
     }
@@ -45,7 +39,7 @@ public class PostsController {
     public ResponseEntity getPostsByTargetAndKeyword(@PageableDefault(page = 0, size = 10, sort = "postSeq", direction = Sort.Direction.DESC) Pageable pageable,
                                                      @RequestParam(value = "target", required = false, defaultValue = "") String target,
                                                      @RequestParam(value = "keyword", required = false, defaultValue = "") String keyword) {
-        Page<Posts> posts = postsService.findAllByTargetAndKeyword(pageable, target, keyword);
+        Page<Post> posts = postsService.findAllByTargetAndKeyword(pageable, target, keyword);
 
         return new ResponseEntity(posts, HttpStatus.OK);
     }
@@ -61,28 +55,23 @@ public class PostsController {
     @PostMapping
     public ResponseEntity postPost(@RequestBody PostRequestDto postRequestDto) {
         org.springframework.security.core.userdetails.User principal = (org.springframework.security.core.userdetails.User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        User loginUser = userRepository.findByUserId(principal.getUsername());
+        String userId = principal.getUsername();
 
-        postRequestDto.setUser(loginUser);
+        postsService.postPost(userId, postRequestDto);
 
-        PostResponseDto savedPost = postsService.registerPost(postRequestDto);
-
-        return new ResponseEntity(savedPost, HttpStatus.CREATED);
+        return new ResponseEntity(HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity putPost(@PathVariable("id") long id, @RequestBody PostRequestDto postRequestDto) {
-        Posts post = postsRepository.findById(id).get();
-        post.updateTitleAndContent(postRequestDto);
+        postsService.putPost(id, postRequestDto);
 
-        PostResponseDto savedPost = postsService.modifyPost(post);
-
-        return new ResponseEntity(savedPost, HttpStatus.CREATED);
+        return new ResponseEntity(HttpStatus.CREATED);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity deletePost(@PathVariable("id") long id) {
-        postsService.deleteById(id);
+        postsService.deletePost(id);
 
         return new ResponseEntity(HttpStatus.NO_CONTENT);
     }

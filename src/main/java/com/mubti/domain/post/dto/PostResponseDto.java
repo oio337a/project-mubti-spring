@@ -1,8 +1,8 @@
 package com.mubti.domain.post.dto;
 
-import com.mubti.domain.post.entity.Comments;
+import com.mubti.domain.post.entity.Comment;
+import com.mubti.domain.post.entity.Post;
 import com.mubti.domain.post.entity.PostCategoryType;
-import com.mubti.domain.post.entity.Posts;
 import lombok.Data;
 
 import java.time.LocalDateTime;
@@ -19,9 +19,9 @@ public class PostResponseDto {
     private LocalDateTime postDate;
     private Long view;
     private Long vote;
-    private List<Comments> comments;
+    private List<Comment> comment;
 
-    public PostResponseDto(Posts post) {
+    public PostResponseDto(Post post) {
         this.postSeq = post.getPostSeq();
         this.userAlias = post.getUser().getUserAlias();
         this.userId = post.getUser().getUserId();
@@ -31,6 +31,6 @@ public class PostResponseDto {
         this.postDate = post.getPostDate();
         this.view = post.getView();
         this.vote = post.getVote();
-        this.comments = post.getComments();
+        this.comment = post.getComment();
     }
 }

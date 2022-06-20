@@ -69,6 +69,6 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
                 .modifiedAt(now)
                 .build();
 
-        return userRepository.saveAndFlush(user);
+        return userRepository.save(user);
     }
 }

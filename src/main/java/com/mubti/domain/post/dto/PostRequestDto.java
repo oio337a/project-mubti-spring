@@ -1,7 +1,7 @@
 package com.mubti.domain.post.dto;
 
+import com.mubti.domain.post.entity.Post;
 import com.mubti.domain.post.entity.PostCategoryType;
-import com.mubti.domain.post.entity.Posts;
 import com.mubti.domain.user.entity.User;
 import lombok.Data;
 
@@ -14,8 +14,8 @@ public class PostRequestDto {
     private PostCategoryType postCategoryType;
     private String postContent;
 
-    public Posts toEntity(){
-        return Posts.builder()
+    public Post toEntity(){
+        return Post.builder()
                 .postSeq(null)
                 .user(user)
                 .postTitle(postTitle)
@@ -24,7 +24,7 @@ public class PostRequestDto {
                 .postDate(LocalDateTime.now())
                 .view(0L)
                 .vote(0L)
-                .comments(null)
+                .comment(null)
                 .build();
     }
 }

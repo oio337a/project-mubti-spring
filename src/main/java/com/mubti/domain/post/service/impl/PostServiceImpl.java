@@ -1,9 +1,12 @@
-package com.mubti.domain.post.service;
+package com.mubti.domain.post.service.impl;
 
-import com.mubti.domain.post.entity.Posts;
-import com.mubti.domain.post.repository.PostsRepository;
+import com.mubti.domain.post.entity.Post;
+import com.mubti.domain.post.repository.PostRepository;
 import com.mubti.domain.post.dto.PostRequestDto;
 import com.mubti.domain.post.dto.PostResponseDto;
+import com.mubti.domain.post.service.PostService;
+import com.mubti.domain.user.entity.User;
+import com.mubti.domain.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -12,20 +15,23 @@ import org.springframework.transaction.annotation.Transactional;
 
 @RequiredArgsConstructor
 @Service
-public class PostsService {
-    private final PostsRepository postsRepository;
+public class PostServiceImpl implements PostService {
+    private final PostRepository postsRepository;
+    private final UserRepository userRepository;
 
+    @Override
     public Page<PostResponseDto> getPostList(Pageable pageable){
-        Page<Posts> postList = postsRepository.findAll(pageable);
-        return postList.map(posts -> new PostResponseDto(posts));
+        Page<Post> postList = postsRepository.findAll(pageable);
+
+        return postList.map(post -> new PostResponseDto(post));
     }
 
-   /* public Page<Posts> findAllByPostCategory(Pageable pageable, String category) {
+   /* public Page<Post> findAllByPostCategory(Pageable pageable, String category) {
         return postsRepository.findAllByPostCategory(pageable, category);
     }*/
 
-/*    public Page<Posts> findAllByTargetAndKeyword(Pageable pageable, String target, String keyword) {
-        Page<Posts> posts;
+/*    public Page<Post> findAllByTargetAndKeyword(Pageable pageable, String target, String keyword) {
+        Page<Post> posts;
 
         switch(target) {
             case "title_content" :
@@ -49,32 +55,37 @@ public class PostsService {
         return posts;
     }*/
 
+    @Override
+    @Transactional
     public PostResponseDto getPost(long id) {
-        Posts post = postsRepository.findById(id).get();
+        Post post = postsRepository.findById(id).get();
         if (post != null) {
-            postsRepository.updateView(id);
+            post.updateView();
         }
 
         return new PostResponseDto(post);
     }
 
+    @Override
     @Transactional
-    public PostResponseDto registerPost(PostRequestDto postRequestDto) {
-        Posts post = postRequestDto.toEntity();
-        Posts savedPost = postsRepository.save(post);
+    public void postPost(String userId, PostRequestDto postRequestDto) {
+        User user = userRepository.findByUserId(userId);
+        postRequestDto.setUser(user);
+        Post post = postRequestDto.toEntity();
 
-        return new PostResponseDto(savedPost);
+        postsRepository.save(post);
     }
 
+    @Override
     @Transactional
-    public PostResponseDto modifyPost(Posts post) {
-        Posts savedPost = postsRepository.save(post);
-
-        return new PostResponseDto(savedPost);
+    public void putPost(long id, PostRequestDto postRequestDto) {
+        Post post = postsRepository.findById(id).get();
+        post.updateTitleAndContent(postRequestDto);
     }
 
+    @Override
     @Transactional
-    public void deleteById(long id) {
+    public void deletePost(long id) {
         postsRepository.deleteById(id);
     }
 }
