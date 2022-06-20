@@ -21,16 +21,16 @@ public class PostResponseDto {
     private Long vote;
     private List<Comments> comments;
 
-    public PostResponseDto(Posts postList) {
-        this.postSeq = postList.getPostSeq();
-        this.userAlias = postList.getUser().getUserAlias();
-        this.userId = postList.getUser().getUserId();
-        this.postTitle = postList.getPostTitle();
-        this.postCategoryType = postList.getPostCategoryType();
-        this.postContent = postList.getPostContent();
-        this.postDate = postList.getPostDate();
-        this.view = postList.getView();
-        this.vote = postList.getVote();
-        this.comments = postList.getComments();
+    public PostResponseDto(Posts post) {
+        this.postSeq = post.getPostSeq();
+        this.userAlias = post.getUser().getUserAlias();
+        this.userId = post.getUser().getUserId();
+        this.postTitle = post.getPostTitle();
+        this.postCategoryType = post.getPostCategoryType();
+        this.postContent = post.getPostContent();
+        this.postDate = post.getPostDate();
+        this.view = post.getView();
+        this.vote = post.getVote();
+        this.comments = post.getComments();
     }
 }
