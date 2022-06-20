@@ -1,6 +1,6 @@
 package com.mubti.global.common.oauth.service;
 
-import com.mubti.domain.user.entity.user.User;
+import com.mubti.domain.user.entity.User;
 import com.mubti.domain.user.repository.UserRepository;
 import com.mubti.global.common.oauth.entity.ProviderType;
 import com.mubti.global.common.oauth.entity.RoleType;
@@ -16,7 +16,6 @@ import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
 import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 
@@ -62,13 +61,13 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 
     private User createUser(OAuth2UserInfo userInfo, ProviderType providerType) {
         LocalDateTime now = LocalDateTime.now();
-        User user = new User(
-                userInfo.getId(),
-                providerType,
-                RoleType.INCOMPLETE_USER,
-                now,
-                now
-        );
+        User user = User.builder()
+                .userId(userInfo.getId())
+                .providerType(providerType)
+                .roleType(RoleType.INCOMPLETE_USER)
+                .createdAt(now)
+                .modifiedAt(now)
+                .build();
 
         return userRepository.saveAndFlush(user);
     }

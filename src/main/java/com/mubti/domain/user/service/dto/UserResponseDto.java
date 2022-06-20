@@ -1,6 +1,6 @@
 package com.mubti.domain.user.service.dto;
 
-import com.mubti.domain.user.entity.user.User;
+import com.mubti.domain.user.entity.User;
 import com.mubti.global.common.oauth.entity.ProviderType;
 import lombok.Data;
 

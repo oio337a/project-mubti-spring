@@ -1,7 +1,10 @@
 package com.mubti.domain.user.controller.user;
 
-import com.mubti.domain.user.entity.user.User;
+import com.mubti.domain.user.entity.User;
+import com.mubti.domain.user.repository.UserRepository;
 import com.mubti.domain.user.service.UserService;
+import com.mubti.domain.user.service.dto.UserRequestDto;
+import com.mubti.domain.user.service.dto.UserResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,22 +16,25 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class UserController {
     private final UserService userService;
+    private final UserRepository userRepository;
+
 
     @GetMapping
     public ResponseEntity getUser() {
         org.springframework.security.core.userdetails.User principal = (org.springframework.security.core.userdetails.User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        User user = userService.findByUserId(principal.getUsername());
+        String userId = principal.getUsername();
+        UserResponseDto user = userService.getUser(userId);
 
         return new ResponseEntity(user, HttpStatus.OK);
     }
 
     @PutMapping
-    public ResponseEntity putUser(@RequestBody User changeUser) {
+    public ResponseEntity putUser(@RequestBody UserRequestDto userRequestDto) {
         org.springframework.security.core.userdetails.User principal = (org.springframework.security.core.userdetails.User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        User user = userService.findByUserId(principal.getUsername());
-        user.update(changeUser);
+        User user = userRepository.findByUserId(principal.getUsername());
+        user.setUserInfo(userRequestDto);
 
-        User savedUser = userService.save(user);
+        UserResponseDto savedUser = userService.modifyUser(user);
 
         return new ResponseEntity(savedUser, HttpStatus.CREATED);
     }
@@ -37,7 +43,7 @@ public class UserController {
     public ResponseEntity checkUserAlias(@PathVariable("id") String userAlias) {
         ResponseEntity responseEntity;
 
-        User user = userService.findByUserAlias(userAlias);
+        User user = userRepository.findByUserAlias(userAlias);
         if (user != null)
             responseEntity = new ResponseEntity(HttpStatus.CONFLICT);
         else

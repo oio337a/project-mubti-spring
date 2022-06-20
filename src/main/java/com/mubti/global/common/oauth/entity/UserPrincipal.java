@@ -1,6 +1,6 @@
 package com.mubti.global.common.oauth.entity;
 
-import com.mubti.domain.user.entity.user.User;
+import com.mubti.domain.user.entity.User;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

@@ -1,10 +1,11 @@
-package com.mubti.domain.user.entity.user;
+package com.mubti.domain.user.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
+import com.mubti.domain.user.service.dto.UserRequestDto;
 import com.mubti.global.common.oauth.entity.ProviderType;
 import com.mubti.global.common.oauth.entity.RoleType;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -72,24 +73,9 @@ public class User {
     @NotNull
     private int savedReport;
 
-    public User(
-            @Size(max = 64) String userId,
-            @NotNull ProviderType providerType,
-            @NotNull RoleType roleType,
-            @NotNull LocalDateTime createdAt,
-            @NotNull LocalDateTime modifiedAt
-    ) {
-        this.userId = userId;
-        this.providerType = providerType;
-        this.roleType = roleType;
-        this.createdAt = createdAt;
-        this.modifiedAt = modifiedAt;
-        this.savedReport = 0;
-    }
-
-    public void update(User user) {
-        this.userAlias = user.getUserAlias();
-        this.mbtiType = user.getMbtiType();
+    public void setUserInfo(UserRequestDto userRequestDto) {
+        this.userAlias = userRequestDto.getUserAlias();
+        this.mbtiType = userRequestDto.getMbtiType();
         this.roleType = RoleType.COMPLETE_USER;
         this.modifiedAt = LocalDateTime.now();
     }

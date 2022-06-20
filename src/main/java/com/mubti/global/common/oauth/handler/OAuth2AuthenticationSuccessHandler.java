@@ -1,6 +1,6 @@
 package com.mubti.global.common.oauth.handler;
 
-import com.mubti.domain.user.entity.user.UserRefreshToken;
+import com.mubti.domain.user.entity.UserRefreshToken;
 import com.mubti.domain.user.repository.UserRefreshTokenRepository;
 import com.mubti.global.common.oauth.entity.ProviderType;
 import com.mubti.global.common.oauth.entity.RoleType;
