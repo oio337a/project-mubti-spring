@@ -2,7 +2,6 @@ package com.mubti.domain.post.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
@@ -32,7 +31,7 @@ public class Posts {
     private Long postSeq;
 
     @ManyToOne
-    @JoinColumn(name = "USER_SEQ")
+    @JoinColumn(name = "USER_ID")
     private User user;
 
     @Column(name = "POST_TITLE", length = 128)
@@ -43,7 +42,7 @@ public class Posts {
     @Column(name = "POST_CATEROTY", length = 4)
     @Enumerated(EnumType.STRING)
     @NotNull
-    private PostCategory postCategory;
+    private PostCategoryType postCategoryType;
 
     @Column(name = "POST_CONTENT", columnDefinition = "TEXT")
     @NotNull
@@ -70,20 +69,17 @@ public class Posts {
     public Posts(
             @NotNull User user,
             @NotNull @Size(max = 128) String postTitle,
-            @NotNull PostCategory postCategory,
-            @NotNull String postContent,
-            @NotNull LocalDateTime postDate,
-            @NotNull Long view,
-            @NotNull Long vote
+            @NotNull PostCategoryType postCategoryType,
+            @NotNull String postContent
     ) {
         this.postSeq = null;
         this.user = user;
         this.postTitle = postTitle;
-        this.postCategory = postCategory;
+        this.postCategoryType = postCategoryType;
         this.postContent = postContent;
-        this.postDate = postDate;
-        this.view = view == null ? 0 : view;
-        this.vote = vote == null ? 0 : vote;
+        this.postDate = LocalDateTime.now();
+        this.view = 0L;
+        this.vote = 0L;
     }
 
     public void update(Posts post) {

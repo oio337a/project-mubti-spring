@@ -26,9 +26,18 @@ public class PostsController {
     }
 
     @GetMapping
-    public ResponseEntity getCategoricalPosts(@PageableDefault(page = 0, size = 10, sort = "postSeq", direction = Sort.Direction.DESC) Pageable pageable,
+    public ResponseEntity getPostsByCategory(@PageableDefault(page = 0, size = 10, sort = "postSeq", direction = Sort.Direction.DESC) Pageable pageable,
                                               @RequestParam(value = "category", required = false, defaultValue = "") String category) {
         Page<Posts> posts = postsService.findAllByPostCategory(pageable, category);
+
+        return new ResponseEntity(posts, HttpStatus.OK);
+    }
+
+    @GetMapping
+    public ResponseEntity getPostsByTargetAndKeyword(@PageableDefault(page = 0, size = 10, sort = "postSeq", direction = Sort.Direction.DESC) Pageable pageable,
+                                                     @RequestParam(value = "target", required = false, defaultValue = "") String target,
+                                                     @RequestParam(value = "keyword", required = false, defaultValue = "") String keyword) {
+        Page<Posts> posts = postsService.findAllByTargetAndKeyword(pageable, target, keyword);
 
         return new ResponseEntity(posts, HttpStatus.OK);
     }

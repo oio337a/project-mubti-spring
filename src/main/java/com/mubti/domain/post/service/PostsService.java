@@ -20,8 +20,33 @@ public class PostsService {
         return postsRepository.findAll(pageable);
     }
 
-    public Page<Posts> findAllByPostCategory(Pageable pageable, String category){
+    public Page<Posts> findAllByPostCategory(Pageable pageable, String category) {
         return postsRepository.findAllByPostCategory(pageable, category);
+    }
+
+    public Page<Posts> findAllByTargetAndKeyword(Pageable pageable, String target, String keyword) {
+        Page<Posts> posts;
+
+        switch(target) {
+            case "title_content" :
+                posts = postsRepository.findAllByPostTitleAndPostContentContaining(pageable, keyword);
+                break;
+            case "title" :
+                posts = postsRepository.findAllByPostTitleContaining(pageable, keyword);
+                break;
+            case "content" :
+                posts = postsRepository.findALlByPostContentContaining(pageable, keyword);
+                break;
+            case "alias" :
+                posts = postsRepository.findAllByUserAliasContaining(pageable, keyword);
+                break;
+            case "" :
+                posts = postsRepository.findAll(pageable);
+                break;
+            default :
+                posts = postsRepository.findAllByPostTitleAndPostContentContaining(pageable, keyword);
+        }
+        return posts;
     }
 
     public Posts findById(long id){
