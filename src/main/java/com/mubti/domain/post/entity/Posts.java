@@ -1,12 +1,11 @@
 package com.mubti.domain.post.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
+import com.mubti.domain.post.dto.PostRequestDto;
 import com.mubti.domain.user.entity.User;
 import lombok.*;
 
@@ -64,9 +63,8 @@ public class Posts {
     @OneToMany(mappedBy = "posts", cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
     private List<Comments> comments;
 
-    public void update(Posts post) {
+    public void updateTitleAndContent(PostRequestDto post) {
         this.postTitle = post.getPostTitle();
         this.postContent = post.getPostContent();
-        this.postDate = post.getPostDate();
     }
 }

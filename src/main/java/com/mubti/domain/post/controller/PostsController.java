@@ -1,13 +1,12 @@
 package com.mubti.domain.post.controller;
 
 import com.mubti.domain.post.entity.Posts;
+import com.mubti.domain.post.repository.PostsRepository;
 import com.mubti.domain.post.service.PostsService;
-import com.mubti.domain.post.service.dto.PostRequestDto;
-import com.mubti.domain.post.service.dto.PostResponseDto;
+import com.mubti.domain.post.dto.PostRequestDto;
+import com.mubti.domain.post.dto.PostResponseDto;
 import com.mubti.domain.user.entity.User;
 import com.mubti.domain.user.repository.UserRepository;
-import com.mubti.domain.user.service.UserService;
-import com.mubti.domain.user.service.dto.UserResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -23,6 +22,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/posts")
 public class PostsController {
     private final PostsService postsService;
+    private final PostsRepository postsRepository;
     private final UserRepository userRepository;
 
     @GetMapping
@@ -61,25 +61,25 @@ public class PostsController {
     @PostMapping
     public ResponseEntity postPost(@RequestBody PostRequestDto postRequestDto) {
         org.springframework.security.core.userdetails.User principal = (org.springframework.security.core.userdetails.User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        String userId = principal.getUsername();
+        User loginUser = userRepository.findByUserId(principal.getUsername());
 
-        User user = userRepository.findByUserId(userId);
-        postRequestDto.setUser(user);
+        postRequestDto.setUser(loginUser);
 
         PostResponseDto savedPost = postsService.registerPost(postRequestDto);
 
         return new ResponseEntity(savedPost, HttpStatus.CREATED);
     }
 
-    /*@PutMapping("/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity putPost(@PathVariable("id") long id, @RequestBody PostRequestDto postRequestDto) {
-        Posts post = postsService.findById(id);
-        post.update(changePost);
-        Posts savedPost = postsService.save(post);
+        Posts post = postsRepository.findById(id).get();
+        post.updateTitleAndContent(postRequestDto);
+
+        PostResponseDto savedPost = postsService.modifyPost(post);
 
         return new ResponseEntity(savedPost, HttpStatus.CREATED);
     }
-*/
+
     @DeleteMapping("/{id}")
     public ResponseEntity deletePost(@PathVariable("id") long id) {
         postsService.deleteById(id);

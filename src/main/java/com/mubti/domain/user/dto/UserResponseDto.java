@@ -1,4 +1,4 @@
-package com.mubti.domain.user.service.dto;
+package com.mubti.domain.user.dto;
 
 import com.mubti.domain.user.entity.User;
 import com.mubti.global.common.oauth.entity.ProviderType;

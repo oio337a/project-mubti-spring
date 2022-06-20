@@ -3,8 +3,8 @@ package com.mubti.domain.user.controller.user;
 import com.mubti.domain.user.entity.User;
 import com.mubti.domain.user.repository.UserRepository;
 import com.mubti.domain.user.service.UserService;
-import com.mubti.domain.user.service.dto.UserRequestDto;
-import com.mubti.domain.user.service.dto.UserResponseDto;
+import com.mubti.domain.user.dto.UserRequestDto;
+import com.mubti.domain.user.dto.UserResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,21 +22,19 @@ public class UserController {
     @GetMapping
     public ResponseEntity getUser() {
         org.springframework.security.core.userdetails.User principal = (org.springframework.security.core.userdetails.User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        String userId = principal.getUsername();
+        UserResponseDto loginUser = userService.getUser(principal.getUsername());
 
-        UserResponseDto user = userService.getUser(userId);
-
-        return new ResponseEntity(user, HttpStatus.OK);
+        return new ResponseEntity(loginUser, HttpStatus.OK);
     }
 
     @PutMapping
     public ResponseEntity putUser(@RequestBody UserRequestDto userRequestDto) {
         org.springframework.security.core.userdetails.User principal = (org.springframework.security.core.userdetails.User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        User user = userRepository.findByUserId(principal.getUsername());
+        User loginUser = userRepository.findByUserId(principal.getUsername());
 
-        user.setUserInfo(userRequestDto);
+        loginUser.updateUserInfo(userRequestDto);
 
-        UserResponseDto savedUser = userService.modifyUser(user);
+        UserResponseDto savedUser = userService.modifyUser(loginUser);
 
         return new ResponseEntity(savedUser, HttpStatus.CREATED);
     }

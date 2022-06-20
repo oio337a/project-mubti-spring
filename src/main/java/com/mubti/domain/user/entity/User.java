@@ -5,7 +5,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
-import com.mubti.domain.user.service.dto.UserRequestDto;
+import com.mubti.domain.user.dto.UserRequestDto;
 import com.mubti.global.common.oauth.entity.ProviderType;
 import com.mubti.global.common.oauth.entity.RoleType;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -73,7 +73,7 @@ public class User {
     @NotNull
     private int savedReport;
 
-    public void setUserInfo(UserRequestDto userRequestDto) {
+    public void updateUserInfo(UserRequestDto userRequestDto) {
         this.userAlias = userRequestDto.getUserAlias();
         this.mbtiType = userRequestDto.getMbtiType();
         this.roleType = RoleType.COMPLETE_USER;

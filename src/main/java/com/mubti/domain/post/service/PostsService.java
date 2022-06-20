@@ -2,20 +2,13 @@ package com.mubti.domain.post.service;
 
 import com.mubti.domain.post.entity.Posts;
 import com.mubti.domain.post.repository.PostsRepository;
-import com.mubti.domain.post.service.dto.PostRequestDto;
-import com.mubti.domain.post.service.dto.PostResponseDto;
+import com.mubti.domain.post.dto.PostRequestDto;
+import com.mubti.domain.post.dto.PostResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
-import org.springframework.security.core.parameters.P;
-import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequestEntityConverter;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.time.LocalDateTime;
-import java.util.List;
 
 @RequiredArgsConstructor
 @Service
@@ -64,13 +57,17 @@ public class PostsService {
 
         return new PostResponseDto(post);
     }
-    public Posts findById(long id){
-        return postsRepository.findById(id).get();
-    }
 
     @Transactional
     public PostResponseDto registerPost(PostRequestDto postRequestDto) {
         Posts post = postRequestDto.toEntity();
+        Posts savedPost = postsRepository.save(post);
+
+        return new PostResponseDto(savedPost);
+    }
+
+    @Transactional
+    public PostResponseDto modifyPost(Posts post) {
         Posts savedPost = postsRepository.save(post);
 
         return new PostResponseDto(savedPost);

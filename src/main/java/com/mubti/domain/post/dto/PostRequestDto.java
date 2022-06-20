@@ -1,4 +1,4 @@
-package com.mubti.domain.post.service.dto;
+package com.mubti.domain.post.dto;
 
 import com.mubti.domain.post.entity.PostCategoryType;
 import com.mubti.domain.post.entity.Posts;
