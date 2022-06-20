@@ -7,7 +7,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
-import com.mubti.domain.user.entity.user.User;
+import com.mubti.domain.user.entity.User;
 import lombok.*;
 
 import javax.persistence.*;
@@ -17,12 +17,10 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Getter
-@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 @Entity
-@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class)
 @Table(name = "POSTS")
 public class Posts {
     @Id
@@ -65,21 +63,6 @@ public class Posts {
 
     @OneToMany(mappedBy = "posts", cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
     private List<Comments> comments;
-
-    public Posts(
-            @NotNull User user,
-            @NotNull @Size(max = 128) String postTitle,
-            @NotNull PostCategoryType postCategoryType,
-            @NotNull String postContent
-    ) {
-        this.postSeq = null;
-        this.user = user;
-        this.postTitle = postTitle;
-        this.postCategoryType = postCategoryType;
-        this.postContent = postContent;
-        this.view = 0L;
-        this.vote = 0L;
-    }
 
     public void update(Posts post) {
         this.postTitle = post.getPostTitle();
