@@ -9,10 +9,9 @@ import com.mubti.global.common.oauth.entity.ProviderType;
 import com.mubti.global.common.oauth.entity.RoleType;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -20,7 +19,7 @@ import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 
 @Getter
-@Setter
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
@@ -74,7 +73,7 @@ public class User {
     private int savedReport;
 
     public User(
-            @NotNull @Size(max = 64) String userId,
+            @Size(max = 64) String userId,
             @NotNull ProviderType providerType,
             @NotNull RoleType roleType,
             @NotNull LocalDateTime createdAt,
@@ -92,5 +91,6 @@ public class User {
         this.userAlias = user.getUserAlias();
         this.mbtiType = user.getMbtiType();
         this.roleType = RoleType.COMPLETE_USER;
+        this.modifiedAt = LocalDateTime.now();
     }
 }
