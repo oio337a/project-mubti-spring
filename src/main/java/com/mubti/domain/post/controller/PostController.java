@@ -1,5 +1,6 @@
 package com.mubti.domain.post.controller;
 
+import com.mubti.domain.post.service.PostService;
 import com.mubti.domain.post.service.impl.PostServiceImpl;
 import com.mubti.domain.post.dto.PostRequestDto;
 import com.mubti.domain.post.dto.PostResponseDto;
@@ -17,7 +18,7 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 @RequestMapping("/posts")
 public class PostController {
-    private final PostServiceImpl postsService;
+    private final PostService postsService;
 
     @GetMapping
     public ResponseEntity getPostList(@PageableDefault(page = 0, size = 10, sort = "postSeq", direction = Sort.Direction.DESC) Pageable pageable) {

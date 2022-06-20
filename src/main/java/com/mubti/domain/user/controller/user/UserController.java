@@ -1,5 +1,6 @@
 package com.mubti.domain.user.controller.user;
 
+import com.mubti.domain.user.service.UserService;
 import com.mubti.domain.user.service.impl.UserServiceImpl;
 import com.mubti.domain.user.dto.UserRequestDto;
 import com.mubti.domain.user.dto.UserResponseDto;
@@ -13,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/users")
 @RequiredArgsConstructor
 public class UserController {
-    private final UserServiceImpl userService;
+    private final UserService userService;
 
     @GetMapping
     public ResponseEntity getUser() {
