@@ -21,7 +21,7 @@ function ReadPosts(){
             setPosts(res.data);
         })}, []);
 
-    const onClickPost = (num) => {
+    const onClickPost = (num, e) => {
         navigator(`/posts/${num}`);
     }
 
@@ -44,7 +44,7 @@ function ReadPosts(){
               <tbody>
               {
                     posts.map((post, index) =>
-                        <tr key = {index}>
+                        <tr key = {index} onClick={(e) => onClickPost(post.postSeq, e)}>
                             <td> {post.postSeq}</td>
                             <td> {post.postCategory}</td>
                             <td> {post.postTitle}</td>

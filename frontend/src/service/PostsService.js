@@ -16,6 +16,19 @@ class PostsService {
         })
     }
 
+    savePost(category, content, title, id) {
+        return userRequestApi({
+            url: `/posts`,
+            method: "post",
+            data: {
+                post_cateroty: category,
+                post_content: content,
+                post_title: title,
+                userId: id
+            }
+        })
+    }
+
 }
 
 export default new PostsService();

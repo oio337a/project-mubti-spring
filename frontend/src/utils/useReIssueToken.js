@@ -29,22 +29,14 @@ function useReIssueToken (){
                 .then((res) => {
                     issueToken(token.accessToken)
                         .then((res) => {console.log("%%", res);setNewToken(res.data);});
-                    /*const newToken = res.data;
 
-                    const base64Payload = newToken.split('.')[1];
-                    const payload = Buffer.from(base64Payload, 'base64');
-                    const result = JSON.parse(payload.toString());
-
-                    const expiryTime = result.exp;
-                    const role = result.role;
-
-                    */
-                    const [expiryTime, role] = parseToken(newToken);
+                    const [expiryTime, role, id] = parseToken(newToken);
 
                     dispatch(login({
                         accessToken: newToken,
                         expiryTime: expiryTime * 1000,
-                        role: role
+                        role: role,
+                        id: id
                     }));
                 })
                 .finally(() => {

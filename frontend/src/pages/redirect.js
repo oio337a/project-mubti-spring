@@ -13,7 +13,7 @@ function Redirect(){
 
     const token = queryString.parse(window.location.search).token;
 
-    const [expiryTime, role] = parseToken(token);
+    const [expiryTime, role, id] = parseToken(token);
 
     console.log("hey!!", expiryTime, role);
 
@@ -21,7 +21,9 @@ function Redirect(){
         dispatch(login({
             accessToken: token,
             expiryTime: expiryTime * 1000,
-            role: role}));
+            role: role,
+            id: id
+        }));
     }
 
     useEffect(() => {
@@ -30,7 +32,7 @@ function Redirect(){
             navigator("/user/create");
 
         else {
-            window.history.go(-2);
+            //window.history.go(-2);
         }
     }, []);
 

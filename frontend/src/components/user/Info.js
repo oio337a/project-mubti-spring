@@ -45,11 +45,12 @@ function Info() {
 
     useEffect(() => {
         if (newToken != "") {
-            const [expiryTime, role] = parseToken(newToken);
+            const [expiryTime, role, id] = parseToken(newToken);
             dispatch(login({
                 accessToken: newToken,
                 expiryTime: expiryTime * 1000,
-                role: role
+                role: role,
+                id: id
             }));
             navigator("/");
         }
