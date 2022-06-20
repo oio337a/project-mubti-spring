@@ -77,7 +77,6 @@ public class Posts {
         this.postTitle = postTitle;
         this.postCategoryType = postCategoryType;
         this.postContent = postContent;
-        this.postDate = LocalDateTime.now();
         this.view = 0L;
         this.vote = 0L;
     }
