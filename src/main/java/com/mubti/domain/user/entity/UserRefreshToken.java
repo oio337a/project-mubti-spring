@@ -1,4 +1,4 @@
-package com.mubti.domain.user.entity.user;
+package com.mubti.domain.user.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;

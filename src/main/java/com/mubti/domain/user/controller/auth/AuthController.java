@@ -1,6 +1,6 @@
 package com.mubti.domain.user.controller.auth;
 
-import com.mubti.domain.user.entity.user.UserRefreshToken;
+import com.mubti.domain.user.entity.UserRefreshToken;
 import com.mubti.domain.user.repository.UserRepository;
 import com.mubti.domain.user.repository.UserRefreshTokenRepository;
 import com.mubti.global.config.properties.AppProperties;
