@@ -75,9 +75,8 @@ public class PostServiceImpl implements PostService {
     public void postPost(String userId, PostRequestDto postRequestDto) {
         User user = userRepository.findByUserId(userId);
         postRequestDto.setUser(user);
-        Post post = postRequestDto.toEntity();
 
-        postsRepository.save(post);
+        postsRepository.save(postRequestDto.toEntity());
     }
 
     @Override
