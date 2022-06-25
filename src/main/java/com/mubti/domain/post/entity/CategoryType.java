@@ -3,7 +3,7 @@ package com.mubti.domain.post.entity;
 import lombok.Getter;
 
 @Getter
-public enum PostCategoryType {
+public enum CategoryType {
     ENFJ,
     ENFP,
     ENTJ,

@@ -1,12 +1,11 @@
 package com.mubti.domain.post.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
+import com.mubti.domain.post.dto.PostRequestDto;
 import com.mubti.domain.user.entity.User;
 import lombok.*;
 
@@ -21,15 +20,15 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 @Entity
-@Table(name = "POSTS")
-public class Posts {
+@Table(name = "POST")
+public class Post {
     @Id
     @Column(name = "POST_SEQ")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long postSeq;
 
     @ManyToOne
-    @JoinColumn(name = "USER_ID")
+    @JoinColumn(name = "USER_SEQ")
     private User user;
 
     @Column(name = "POST_TITLE", length = 128)
@@ -40,7 +39,7 @@ public class Posts {
     @Column(name = "POST_CATEROTY", length = 4)
     @Enumerated(EnumType.STRING)
     @NotNull
-    private PostCategoryType postCategoryType;
+    private CategoryType categoryType;
 
     @Column(name = "POST_CONTENT", columnDefinition = "TEXT")
     @NotNull
@@ -61,12 +60,15 @@ public class Posts {
     @NotNull
     private Long vote;
 
-    @OneToMany(mappedBy = "posts", cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
-    private List<Comments> comments;
+    @OneToMany(mappedBy = "post", cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
+    private List<Comment> comment;
 
-    public void update(Posts post) {
+    public void updateTitleAndContent(PostRequestDto post) {
         this.postTitle = post.getPostTitle();
         this.postContent = post.getPostContent();
-        this.postDate = post.getPostDate();
+    }
+
+    public void updateView() {
+        this.view += 1;
     }
 }
