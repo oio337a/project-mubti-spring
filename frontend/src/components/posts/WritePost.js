@@ -8,7 +8,7 @@ import {useSelector} from "react-redux";
 function WritePost()
 {
     const navigate = useNavigate();
-    const id = useSelector((state) => state.user.value.id);
+    //const id = useSelector((state) => state.user.value.id);
 
     const [category, setCateroty] = useState("-선택-");
     const [title, setTitle] = useState("");
@@ -31,7 +31,7 @@ function WritePost()
         else if (content.length == 0) alert("내용을 입력하세요.");
         else if (category == "-선택-") alert("카테고리를 선택하세요.");
         else {
-            PostsService.savePost(category, content, title, id);
+            PostsService.savePost(category, content, title);
             navigate("/posts");
         }
     };

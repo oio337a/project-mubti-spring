@@ -3,8 +3,6 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux"
 import { useEffect } from "react";
 import { login } from "../reducers/userReducer";
-import {Buffer} from "buffer";
-import useParseToken from "../utils/useParseToken";
 import parseToken from "../utils/parseToken";
 
 function Redirect(){

@@ -1,4 +1,3 @@
-import React from 'react';
 import { configureStore, getDefaultMiddleware } from "@reduxjs/toolkit";
 import userReducer from "./userReducer";
 import postReducer from "./postReducer";
@@ -10,12 +9,13 @@ const persistConfig = {
     storage,
 };
 
-const persistedReducer = persistReducer(persistConfig, userReducer);
+const userPersistedReducer = persistReducer(persistConfig, userReducer);
+const postPersistedReducer = persistReducer(persistConfig, postReducer);
 
 export default configureStore({
     reducer: {
-        user: persistedReducer,
-        post: postReducer,
+        user: userPersistedReducer,
+        post: postPersistedReducer,
     },
     middleware: getDefaultMiddleware({
         serializableCheck: false,

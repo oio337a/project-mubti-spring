@@ -1,6 +1,5 @@
 import axios from 'axios';
-import { useSelector, useDispatch } from "react-redux";
-import { login } from "../reducers/userReducer";
+import { useSelector } from "react-redux";
 import {useEffect} from "react";
 import useReIssueToken from "./useReIssueToken";
 
@@ -12,8 +11,7 @@ const instance = axios.create({
 })
 
 const Interceptor = ({children}) => {
-    const dispatch = useDispatch();
-    const token = useSelector((state) => state.user.value);
+    const token = useSelector((state) => state.user.userReducer.value);
 
     useReIssueToken(token);
 
@@ -63,6 +61,9 @@ const Interceptor = ({children}) => {
                             alert("로그인해야 이용 가능");
                             window.location.href("http://localhost:8080/login");
                             break;
+                        }
+                        default : {
+                            console.log("interceptors.response.error", status);
                         }
                     }
                     return Promise.reject(error);

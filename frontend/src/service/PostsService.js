@@ -2,7 +2,7 @@ import axios from 'axios';
 import userRequestApi from "../utils/userRequestApi";
 
 class PostsService {
-    getBoards() {
+    getBoard() {
         return userRequestApi({
             url: "/posts",
             method: "get",
@@ -23,7 +23,7 @@ class PostsService {
         })
     }
 
-    savePost(category, content, title, id) {
+    savePost(category, content, title) {
         return userRequestApi({
             url: `/posts`,
             method: "post",
@@ -31,7 +31,18 @@ class PostsService {
                 post_cateroty: category,
                 post_content: content,
                 post_title: title,
-                userId: id
+            }
+        })
+    }
+
+    modifyPost(id, category, content, title) {
+        return userRequestApi({
+            url: `/posts/${id}`,
+            method: "post",
+            data: {
+                post_cateroty: category,
+                post_content: content,
+                post_title: title,
             }
         })
     }

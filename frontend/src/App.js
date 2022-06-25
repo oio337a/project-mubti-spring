@@ -22,10 +22,10 @@ function App() {
                     <Route path="/login" element={<Login/>}/>
                     <Route path="/oauth/redirect" element={<Redirect/>}/>
                     <Route path="/mypage" element={<Mypage/>}/>
-                    <Route path="/posts" element={<Board/>}/>
+                    <Route path="/posts/pages/:id" element={<Board/>}/>
                     <Route path="/posts/:id" element={<ReadPost/>}/>
                     <Route path="/posts/write" element={<Write/>}/>
-                    <Route path="/posts/:id/write" element={ModifyPost} />
+                    <Route path="/posts/:id/write" element={<ModifyPost />} />
                     <Route path="/test" element={<TestPage/>}/>
                     <Route path="/test/result" element={<TestResult/>}/>
                     <Route path="/user/create" element={< CreateUser/>}/>

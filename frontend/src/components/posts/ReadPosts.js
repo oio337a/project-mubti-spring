@@ -1,12 +1,11 @@
-import {Link, useNavigate} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 import PostsService from "../../service/PostsService";
-import {useSelector} from "react-redux";
 import {useEffect, useState} from "react";
 import dateformat from "dateformat";
 
 function ReadPosts(){
     let navigator = useNavigate();
-    const token = useSelector((state) => state.user.value);
+
     let today = new Date;
 
     const onClickNew = () => {
@@ -14,14 +13,18 @@ function ReadPosts(){
     }
 
     const [posts, setPosts] = useState([]);
-    const [currentPage, setCurrentPage] = useState(1);
+    const [currentPage, setCurrentPage] = useState(useParams().id);
     const [maxPage, setMaxPage] = useState(0);
 
+    const getBoard = async () => {
+        const response = await PostsService.getBoard();
+        setPosts(response.data.content);
+        setMaxPage(parseInt((response.data.totalElements - 1)/10) + 1);
+    }
+
     useEffect(() => {
-        PostsService.getBoards().then((res) => {
-            setPosts(res.data.content);
-            setMaxPage(parseInt((res.data.totalElements)/10) + 1);
-        })}, []);
+            getBoard();
+        }, []);
 
     const onClickPost = (num, e) => {
         navigator(`/posts/${num}`);
@@ -29,6 +32,7 @@ function ReadPosts(){
 
     const onClickPage = (e, page) => {
         setCurrentPage(page);
+        window.history.pushState("","", `http://localhost:3000/posts/pages/${page}`)
         PostsService.getPagedPosts(page - 1).then((res) => {
             setPosts(res.data.content);
         })
@@ -55,10 +59,10 @@ function ReadPosts(){
                     posts.map((post, index) =>
                         <tr key = {index} onClick={(e) => onClickPost(post.postSeq, e)}>
                             <td> {post.postSeq}</td>
-                            <td> {post.postCategory}</td>
+                            <td> {post.postCategoryType}</td>
                             <td> {post.postTitle}</td>
-                            <td> {post.user.userAlias}</td>
-                            <td> {dateformat(post.postDate, 'yy-m-dd') == dateformat(today, 'yy-m-dd')?
+                            <td> {post.userAlias}</td>
+                            <td> {dateformat(post.postDate, 'yy-m-dd') === dateformat(today, 'yy-m-dd')?
                                 dateformat(post.postDate, 'h:MM'):dateformat(post.postDate, 'yy-m-dd')}</td>
                             <td> {post.vote}</td>
                             <td> {post.view} [{post.comments.length}]</td>
@@ -70,12 +74,12 @@ function ReadPosts(){
           <div>
               <div>
                   {currentPage < 3 ? null : <button onClick={(e) => onClickPage(e, 1)}>1</button>}
-                  {currentPage < 3  ? null : <div>...</div>}
-                  {currentPage == 1 ? null : <button onClick={(e) => onClickPage(e, currentPage - 1)}>{currentPage - 1}</button>}
+                  {currentPage < 4  ? null : <div>...</div>}
+                  {currentPage === 1 ? null : <button onClick={(e) => onClickPage(e, currentPage - 1)}>{currentPage - 1}</button>}
                   <button onClick={(e) => onClickPage(e, currentPage)}>{currentPage} </button>
-                  {maxPage > 2 ? ((currentPage + 1 > maxPage ? null : <button onClick={(e) => onClickPage(e, currentPage + 1)}>{currentPage + 1}</button>)) : null}
+                  {maxPage <= currentPage + 1 ? null : <button onClick={(e) => onClickPage(e, currentPage + 1)}>{currentPage + 1}</button>}
                   {maxPage - currentPage < 3 ? null : <div>...</div>}
-                  {maxPage - currentPage < 2  ? null : <button onClick={(e) => onClickPage(e, maxPage)}>{maxPage}</button>}
+                  {maxPage === currentPage ? null : <button onClick={(e) => onClickPage(e, maxPage)}>{maxPage}</button>}
               </div>
           </div>
       </div>

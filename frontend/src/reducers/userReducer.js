@@ -7,9 +7,11 @@ const userSlice = createSlice({
     initialState: { value: initialStateValue},
     reducers:{
         login: (state, action) => {
-            state.value = action.payload
+            console.log("ASD",state, action)
+                state.userReducer.value = action.payload
         },
         logout: (state) => {
+            console.log("SDSDSD",state)
             state.value = initialStateValue;
         }
     },

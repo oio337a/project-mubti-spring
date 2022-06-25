@@ -1,16 +1,14 @@
-import {useNavigate, useParams} from "react-router-dom";
+import {useParams} from "react-router-dom";
 import {useEffect, useState} from "react";
 import PostsService from "../../service/PostsService";
 import dateformat from "dateformat";
 import ReadComments from "./ReadComments";
 import {useDispatch, useSelector} from "react-redux";
-import {login} from "../../reducers/userReducer";
 import {savePost} from "../../reducers/postReducer";
 
 function Post(){
     const params = useParams().id;
     const userId = useSelector((state) => state.user.value.id);
-    const navigator = useNavigate();
     const dispatch = useDispatch();
 
     const [post, setPost] = useState([]);
@@ -18,10 +16,14 @@ function Post(){
     const [loading, setLoading] = useState(false);
 
     const getPost = async () => {
-        const response = await PostsService.getPost(params);
-        await setPost(response.data);
-        await setComments(response.data.comments);
-        await setLoading(true);
+        try{
+            const response = await PostsService.getPost(params);
+            console.log(response);
+            await setPost(response.data);
+            await setComments(response.data.comments);
+            await setLoading(true);
+        }
+        catch (e){}
     }
 
     useEffect(() => {
@@ -38,24 +40,25 @@ function Post(){
 
     const onClickModify = () => {
         dispatch(savePost({
-            category: post.postCategory,
+            category: post.postCategoryType,
             title: post.postTitle,
             content: post.postContent
         }));
-        navigator(`posts/${post.postSeq}/write`);
+        window.location.replace(`http://localhost:3000/posts/${post.postSeq}/write`);
+        //navigator(`posts/${post.postSeq}/write`);
     }
 
     return (
         <div>
             {loading ?
                 <div>
-                    {(userId == post.user.userId ?
+                    {(userId === post.user.userId ?
                         <div>
                             <button onClick={onClickModify}>수정</button>
                             <button onClick={onClickDelete}>삭제</button>
                         </div>
-                    : null)}
-                    <div>category {post.postCategory}</div>
+                        : <div>{userId}와 {post.user.userId}</div> )}
+                    <div>category {post.postCategoryType}</div>
                     <div>title {post.postTitle}</div>
                     <div>date {dateformat(post.postDate, 'yyyy/mm/dd')}</div>
                     <div>view {post.view}</div>

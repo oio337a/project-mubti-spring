@@ -7,11 +7,11 @@ const postSilce = createSlice({
     initialState: { value: initialStateValue},
     reducers: {
         savePost: (state, action) => {
-            state.value = action.payload
+            state.postReducer.value = action.payload
         }
     },
 })
 
-export const { savePost, readPost } = postSilce.actions;
+export const { savePost } = postSilce.actions;
 
 export default postSilce.reducer;

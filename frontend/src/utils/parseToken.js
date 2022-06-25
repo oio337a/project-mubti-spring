@@ -6,8 +6,6 @@ function parseToken(token){
     const payload = Buffer.from(base64Payload, 'base64');
     const result = JSON.parse(payload.toString());
 
-    console.log(result);
-
     const expiryTime = result.exp;
     const role = result.role;
     const id = result.sub;
