@@ -100,18 +100,19 @@ public class PostServiceImpl implements PostService {
 
     @Override
     @Transactional
-    public ResponseEntity checkPostVote(String userId, long postSeq) {
+    public ResponseEntity postVote(String userId, long postSeq) {
         Vote vote = voteRepository.findByUserIdAndPostSeq(userId, postSeq);
         if (vote != null) {
             return new ResponseEntity(HttpStatus.CONFLICT);
         }
+        Post post = postRepository.findById(postSeq).get();
+        post.updateVote();
 
         vote = Vote.builder()
                 .voteSeq(null)
                 .userId(userId)
                 .postSeq(postSeq)
                 .build();
-
         voteRepository.save(vote);
 
         return new ResponseEntity(HttpStatus.CREATED);

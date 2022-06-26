@@ -75,4 +75,8 @@ public class Post {
     public void updateView() {
         this.view += 1;
     }
+    public void updateVote() {
+        this.vote += 1;
+    }
+
 }
