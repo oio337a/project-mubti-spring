@@ -15,5 +15,5 @@ public interface PostService {
     void postPost(String userId, PostRequestDto postRequestDto);
     void putPost(long id, PostRequestDto postRequestDto);
     void deletePost(long id);
-    ResponseEntity checkPostVote(String userId, long postSeq);
+    ResponseEntity postVote(String userId, long postSeq);
 }
