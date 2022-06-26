@@ -1,4 +1,4 @@
-import {useNavigate, useParams} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import PostsService from "../../service/PostsService";
 import {useEffect, useState} from "react";
 import dateformat from "dateformat";
@@ -17,7 +17,7 @@ function ReadPosts(){
     }
 
     const queryStrings = queryString.parse(window.location.search);
-    const page = queryStrings.page == undefined ? 1 : queryStrings.page;
+    const page = queryStrings.page === undefined ? 1 : queryStrings.page;
     console.log(page);
 
     const [posts, setPosts] = useState([]);

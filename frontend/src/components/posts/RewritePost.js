@@ -26,9 +26,9 @@ function RewritePost({id}){
         setContent(e);
     };
     const onSubmit = () => {
-        if (title.length == 0) alert("제목을 입력하세요.");
-        else if (content.length == 0) alert("내용을 입력하세요.");
-        else if (category == "-선택-") alert("카테고리를 선택하세요.");
+        if (title.length === 0) alert("제목을 입력하세요.");
+        else if (content.length === 0) alert("내용을 입력하세요.");
+        else if (category === "-선택-") alert("카테고리를 선택하세요.");
         else {
             PostsService.modifyPost(id, category, content, title);
             navigate(`/posts/${id}`);

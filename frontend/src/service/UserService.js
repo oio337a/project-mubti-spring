@@ -1,7 +1,4 @@
-import axios from "axios";
 import userRequestApi from "../utils/userRequestApi";
-
-const BASE_URL = "http://localhost:8080";
 
 class UserService {
     saveInfo(type, alias) {

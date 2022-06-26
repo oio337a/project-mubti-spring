@@ -1,31 +1,30 @@
-import axios from 'axios';
 import userRequestApi from "../utils/userRequestApi";
 
 class PostsService {
     getBoard() {
         return userRequestApi({
-            url: "/post",
+            url: "/posts",
             method: "get",
         })
     }
 
     getPagedPosts(page) {
         return userRequestApi({
-            url: `/post?page=${page}`,
+            url: `/posts?page=${page}`,
             method: "get"
         })
     }
 
     getPost(id) {
         return userRequestApi({
-            url: `/post/${id}`,
+            url: `/posts/${id}`,
             method: "get",
         })
     }
 
     savePost(category, content, title) {
         return userRequestApi({
-            url: `/post`,
+            url: `/posts`,
             method: "post",
             data: {
                 categoryType: category,
@@ -38,7 +37,7 @@ class PostsService {
     modifyPost(id, category, content, title) {
         console.log(content, title);
         return userRequestApi({
-            url: `/post/${id}`,
+            url: `/posts/${id}`,
             method: "put",
             data: {
                 categoryType: category,
@@ -50,11 +49,17 @@ class PostsService {
 
     deletePost(id) {
         return userRequestApi({
-            url: `/post/${id}`,
+            url: `/posts/${id}`,
             method: "delete",
         })
     }
 
+    clickVote(id){
+        return userRequestApi({
+            url:`/posts/${id}/vote`,
+            method: "post"
+        })
+    }
 }
 
 export default new PostsService();

@@ -32,7 +32,13 @@ function Post(){
     }, []);
 
     const onClickVote = () => {
-        //PostsService.
+        PostsService.clickVote(post.postSeq)
+            .then((res) => {
+                if (res.status === 200) console.log("VOTE!!");})
+            .catch(e => {
+                console.log(e);
+                if(e.response.status === 409) alert("중복");
+            })
     }
 
     const onClickDelete = () => {
