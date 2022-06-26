@@ -114,6 +114,6 @@ public class PostServiceImpl implements PostService {
 
         voteRepository.save(vote);
 
-        return new ResponseEntity(HttpStatus.OK);
+        return new ResponseEntity(HttpStatus.CREATED);
     }
 }
