@@ -69,6 +69,7 @@ public class Post {
     public void updateTitleAndContent(PostRequestDto post) {
         this.postTitle = post.getPostTitle();
         this.postContent = post.getPostContent();
+        this.categoryType = post.getCategoryType();
     }
 
     public void updateView() {
