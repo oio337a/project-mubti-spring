@@ -21,12 +21,12 @@ public class PostResponseDto {
     private String postTitle;
     private CategoryType categoryType;
     private String postContent;
-    private LocalDateTime postDate;
-    private Long view;
-    private Long vote;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS")
     @JsonDeserialize(using = LocalDateTimeDeserializer.class)
     @JsonSerialize(using = LocalDateTimeSerializer.class)
+    private LocalDateTime postDate;
+    private Long view;
+    private Long vote;
     private List<Comment> comment;
 
     public PostResponseDto(Post post) {
