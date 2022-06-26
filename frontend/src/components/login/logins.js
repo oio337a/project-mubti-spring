@@ -1,4 +1,5 @@
 import LoginBtn from "./login_btn";
+import React from "react";
 
 function Logins(){
     const providers = ["naver", "kakao", "google"];

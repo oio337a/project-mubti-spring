@@ -4,10 +4,11 @@ import {useState} from "react";
 import PostsService from "../../service/PostsService";
 import {types} from "./mbtiTypes";
 import Editor from "../EditorComponent";
+import React from "react";
 
 function RewritePost({id}){
     const navigate = useNavigate();
-    const post = useSelector((state) => state.post.postReducer.value);
+    const post = useSelector((state) => state.root.post.value);
 
     const [category, setCateroty] = useState(post.category);
     const [title, setTitle] = useState(post.title);
@@ -29,7 +30,7 @@ function RewritePost({id}){
         else if (content.length == 0) alert("내용을 입력하세요.");
         else if (category == "-선택-") alert("카테고리를 선택하세요.");
         else {
-            PostsService.modifyPost(id, content, title);
+            PostsService.modifyPost(id, category, content, title);
             navigate(`/posts/${id}`);
         }
     };

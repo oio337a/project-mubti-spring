@@ -3,19 +3,23 @@ import userReducer from "./userReducer";
 import postReducer from "./postReducer";
 import { persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
+import { combineReducers } from "redux";
 
 const persistConfig = {
     key: "root",
     storage,
 };
 
-const userPersistedReducer = persistReducer(persistConfig, userReducer);
-const postPersistedReducer = persistReducer(persistConfig, postReducer);
+const rootReducer = combineReducers({
+    user: userReducer,
+    post: postReducer
+})
+
+const rootPersistedReducer = persistReducer(persistConfig, rootReducer);
 
 export default configureStore({
     reducer: {
-        user: userPersistedReducer,
-        post: postPersistedReducer,
+        root: rootPersistedReducer,
     },
     middleware: getDefaultMiddleware({
         serializableCheck: false,

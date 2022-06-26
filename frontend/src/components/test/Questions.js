@@ -2,6 +2,7 @@ import TestQuestions from "../../data/TestQuestions";
 import {useState} from "react";
 import {useNavigate} from "react-router-dom";
 import styled from "styled-components";
+import React from "react";
 
 const Question = styled.div`
   display: inline-block;

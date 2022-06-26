@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Wraper, Header, Footer } from "../components/Tools";
 import MAIN_DATA from "../data/PersonalType";
 import styled from "styled-components";
+import React from "react";
 
 const Btn = styled.button`
   min-width: 50px;

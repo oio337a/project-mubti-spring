@@ -10,7 +10,7 @@ axios.defaults.withCredentials = true;
 
 function useReIssueToken (){
     const dispatch = useDispatch();
-    const token = useSelector((state) => state.user.userReducer.value);
+    const token = useSelector((state) => state.root.user.value);
 
     let timeNow = new Date;
 

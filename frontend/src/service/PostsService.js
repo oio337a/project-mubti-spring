@@ -28,20 +28,22 @@ class PostsService {
             url: `/post`,
             method: "post",
             data: {
-                post_cateroty: category,
-                post_content: content,
-                post_title: title,
+                categoryType: category,
+                postContent: content,
+                postTitle: title,
             }
         })
     }
 
-    modifyPost(id, content, title) {
+    modifyPost(id, category, content, title) {
+        console.log(content, title);
         return userRequestApi({
             url: `/post/${id}`,
             method: "put",
             data: {
-                post_content: content,
-                post_title: title,
+                categoryType: category,
+                postContent: content,
+                postTitle: title,
             }
         })
     }

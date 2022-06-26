@@ -7,7 +7,7 @@ const postSilce = createSlice({
     initialState: { value: initialStateValue},
     reducers: {
         savePost: (state, action) => {
-            state.postReducer.value = action.payload
+            state.value = action.payload
         }
     },
 })

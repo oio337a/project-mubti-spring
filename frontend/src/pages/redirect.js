@@ -4,6 +4,7 @@ import {useDispatch} from "react-redux"
 import {useEffect, useState} from "react";
 import { login } from "../reducers/userReducer";
 import parseToken from "../utils/parseToken";
+import React from "react";
 
 function Redirect(){
     const dispatch = useDispatch();
@@ -33,40 +34,15 @@ function Redirect(){
                 navigator("/user/create");
 
             else {
-                //window.history.go(-2);
+                window.history.go(-2);
             }
         }
     }, [loading]);
 
     useEffect(() => {
         storeToken();
-        /*
-        if (token && expiryTime) {
-            dispatch(login({
-                accessToken: token,
-                expiryTime: expiryTime * 1000,
-                role: role,
-                id: id
-            }));
-            if (role == "ROLE_INCOMPLETE_USER")
-                navigator("/user/create");
-
-            else {
-                window.history.go(-2);
-            }
-        }*/
     }, [token]);
-/*
-    useEffect(() => {
-        console.log(role);
-        if (role == "ROLE_INCOMPLETE_USER")
-            navigator("/user/create");
 
-        else {
-            window.history.go(-2);
-        }
-    }, []);
-*/
     return(
       <div>
           hi

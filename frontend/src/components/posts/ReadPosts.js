@@ -3,6 +3,7 @@ import PostsService from "../../service/PostsService";
 import {useEffect, useState} from "react";
 import dateformat from "dateformat";
 import queryString from "query-string";
+import React from "react";
 
 const BASE_URL="http://localhost:3000/posts";
 
@@ -15,7 +16,10 @@ function ReadPosts(){
         navigator("/posts/write");
     }
 
-    const page = queryString.parse(window.location.search).page;
+    const queryStrings = queryString.parse(window.location.search);
+    const page = queryStrings.page == undefined ? 1 : queryStrings.page;
+    console.log(page);
+
     const [posts, setPosts] = useState([]);
     const [currentPage, setCurrentPage] = useState(page);
     const [maxPage, setMaxPage] = useState(0);
@@ -64,7 +68,7 @@ function ReadPosts(){
                     posts.map((post, index) =>
                         <tr key = {index} onClick={(e) => onClickPost(post.postSeq, e)}>
                             <td> {post.postSeq}</td>
-                            <td> {post.postCategoryType}</td>
+                            <td> {post.categoryType}</td>
                             <td> {post.postTitle}</td>
                             <td> {post.userAlias}</td>
                             <td> {dateformat(post.postDate, 'yy-m-dd') === dateformat(today, 'yy-m-dd')?

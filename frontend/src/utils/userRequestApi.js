@@ -11,17 +11,16 @@ const instance = axios.create({
 })
 
 const Interceptor = ({children}) => {
-    const token = useSelector((state) => state.user.userReducer.value);
+    const token = useSelector((state) => state.root.user.value);
 
     useReIssueToken();
 
-    console.log("API", token);
+    console.log("!!API", token);
 
     useEffect(() => {
         const requestInterceptor = instance.interceptors.request.use(
             function (config) {
                 try {
-                    console.log("!!!!!!!!!!!!!!!!!!!!config", config)
                     config.headers.Authorization = `Bearer ${token.accessToken}`;
 
                     return config;

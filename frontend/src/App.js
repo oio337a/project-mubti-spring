@@ -15,7 +15,7 @@ import ModifyPost from "./pages/ModifyPost";
 
 function App() {
     return (
-        //<Interceptor>
+        <Interceptor>
             <Router>
                 <Routes>
                     <Route path="/" element={<Main/>}/>
@@ -31,7 +31,7 @@ function App() {
                     <Route path="/user/create" element={< CreateUser/>}/>
                 </Routes>
             </Router>
-        //</Interceptor>
+        </Interceptor>
   );
 }
 

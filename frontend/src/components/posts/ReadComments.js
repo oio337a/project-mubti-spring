@@ -1,5 +1,6 @@
 import dateformat from "dateformat";
 import {useEffect, useState} from "react";
+import React from "react";
 
 function ReadComments({allComments}){
     //const [currentPage, setCurrentPage] = useState(1);

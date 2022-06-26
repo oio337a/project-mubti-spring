@@ -1,6 +1,6 @@
 import {useSelector} from "react-redux";
 import {useEffect, useState} from "react";
-import axios from "axios";
+import React from "react";
 import api from "../utils/userRequestApi";
 
 function Test(){

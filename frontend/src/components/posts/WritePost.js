@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { types } from "./mbtiTypes.js";
 import Editor from '../EditorComponent';
 import PostsService from "../../service/PostsService";
-import {useSelector} from "react-redux";
+import React from "react";
 
 function WritePost()
 {

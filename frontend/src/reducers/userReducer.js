@@ -4,10 +4,10 @@ const initialStateValue = {accessToken: "", expiryTime: "", role: "", id: ""};
 
 const userSlice = createSlice({
     name: "user",
-    initialState: { value: initialStateValue},
+    initialState: { value: initialStateValue },
     reducers:{
         login: (state, action) => {
-                state.userReducer.value = action.payload
+                state.value = action.payload;
         },
         logout: (state) => {
             state.userReducer.value = initialStateValue;

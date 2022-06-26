@@ -1,9 +1,7 @@
-import { useNavigate } from 'react-router-dom';
+import React from "react";
 
 function LoginBtn({provider}){
-    let navigate = useNavigate();
-
-    return (
+return (
         <div>
             <a href={`http://localhost:8080/oauth2/authorization/${provider}?redirect_uri=http://localhost:3000/oauth/redirect`}>
                 <img
