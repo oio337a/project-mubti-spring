@@ -55,7 +55,7 @@ public class PostController {
         return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
 
-    @GetMapping("/{postSeq}/vote/check")
+    @PostMapping("/{postSeq}/vote")
     public ResponseEntity checkPostVote(@PathVariable("postSeq") long postSeq) {
         org.springframework.security.core.userdetails.User principal = (org.springframework.security.core.userdetails.User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         String userId = principal.getUsername();
