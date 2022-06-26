@@ -57,11 +57,11 @@ public class PostController {
     }
 
     @PostMapping("/{postSeq}/vote")
-    public ResponseEntity checkPostVote(@PathVariable("postSeq") long postSeq) {
+    public ResponseEntity postVote(@PathVariable("postSeq") long postSeq) {
         org.springframework.security.core.userdetails.User principal = (org.springframework.security.core.userdetails.User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         String userId = principal.getUsername();
 
-        ResponseEntity responseEntity = postsService.checkPostVote(userId, postSeq);
+        ResponseEntity responseEntity = postsService.postVote(userId, postSeq);
 
         return responseEntity;
     }
