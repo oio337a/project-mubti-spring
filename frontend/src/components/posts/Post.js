@@ -18,9 +18,9 @@ function Post(){
     const getPost = async () => {
         try{
             const response = await PostsService.getPost(params);
-            console.log(response);
+            console.log("SD",response);
             await setPost(response.data);
-            await setComments(response.data.comments);
+            await setComments(response.data.comment);
             await setLoading(true);
         }
         catch (e){}
@@ -35,7 +35,10 @@ function Post(){
     }
 
     const onClickDelete = () => {
-        //PostsService.
+        PostsService.deletePost(post.postSeq).then((res) => {
+            console.log(res);
+        });
+        //window.location.replace(`http://localhost:3000/posts`);
     }
 
     const onClickModify = () => {
@@ -45,29 +48,28 @@ function Post(){
             content: post.postContent
         }));
         window.location.replace(`http://localhost:3000/posts/${post.postSeq}/write`);
-        //navigator(`posts/${post.postSeq}/write`);
     }
 
     return (
         <div>
             {loading ?
                 <div>
-                    {(userId === post.user.userId ?
+                    {(userId === post.userId ?
                         <div>
                             <button onClick={onClickModify}>수정</button>
                             <button onClick={onClickDelete}>삭제</button>
                         </div>
-                        : <div>{userId}와 {post.user.userId}</div> )}
+                        : <div>{userId}와 {post.userId}</div> )}
                     <div>category {post.postCategoryType}</div>
                     <div>title {post.postTitle}</div>
                     <div>date {dateformat(post.postDate, 'yyyy/mm/dd')}</div>
                     <div>view {post.view}</div>
                     <div>vote {post.vote}</div>
-                    <div>user {post.user.userAlias}</div>
+                    <div>user {post.userAlias}</div>
                     <div>content {post.postContent}</div>
                     <button onClick={onClickVote}>추천</button>
                     <div>---댓글---</div>
-                    <ReadComments comments={comments}/>
+                    <ReadComments allComments={comments}/>
                 </div>
                 : <div>로딩 중</div>}
         </div>

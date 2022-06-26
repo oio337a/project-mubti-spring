@@ -10,11 +10,10 @@ axios.defaults.withCredentials = true;
 
 function useReIssueToken (){
     const dispatch = useDispatch();
-    const token = useSelector((state) => state.user.value);
+    const token = useSelector((state) => state.user.userReducer.value);
 
     let timeNow = new Date;
 
-    const [loading, setloading] = useState(true);
     const [newToken, setNewToken] = useState("");
 
     const getToken = () => {
@@ -37,9 +36,6 @@ function useReIssueToken (){
                         id: id
                     }));
                 })
-                .finally(() => {
-                    setloading(false);
-                });
         }
         catch (err){
             console.error("issueToken.get", err.message);
@@ -48,11 +44,12 @@ function useReIssueToken (){
 
     useEffect(() => {
         if (token.expiryTime < timeNow.getTime() + 30000) {
+            console.log(token.expiryTime, timeNow.getTime());
             getToken();
         }
     }, []);
 
-    return loading;
+    return newToken;
 };
 
 export default useReIssueToken;

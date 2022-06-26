@@ -7,12 +7,10 @@ const userSlice = createSlice({
     initialState: { value: initialStateValue},
     reducers:{
         login: (state, action) => {
-            console.log("ASD",state, action)
                 state.userReducer.value = action.payload
         },
         logout: (state) => {
-            console.log("SDSDSD",state)
-            state.value = initialStateValue;
+            state.userReducer.value = initialStateValue;
         }
     },
 })

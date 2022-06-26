@@ -2,6 +2,9 @@ import {useNavigate, useParams} from "react-router-dom";
 import PostsService from "../../service/PostsService";
 import {useEffect, useState} from "react";
 import dateformat from "dateformat";
+import queryString from "query-string";
+
+const BASE_URL="http://localhost:3000/posts";
 
 function ReadPosts(){
     let navigator = useNavigate();
@@ -12,12 +15,14 @@ function ReadPosts(){
         navigator("/posts/write");
     }
 
+    const page = queryString.parse(window.location.search).page;
     const [posts, setPosts] = useState([]);
-    const [currentPage, setCurrentPage] = useState(useParams().id);
+    const [currentPage, setCurrentPage] = useState(page);
     const [maxPage, setMaxPage] = useState(0);
 
     const getBoard = async () => {
         const response = await PostsService.getBoard();
+        console.log(response);
         setPosts(response.data.content);
         setMaxPage(parseInt((response.data.totalElements - 1)/10) + 1);
     }
@@ -32,7 +37,7 @@ function ReadPosts(){
 
     const onClickPage = (e, page) => {
         setCurrentPage(page);
-        window.history.pushState("","", `http://localhost:3000/posts/pages/${page}`)
+        window.history.pushState("","", `${BASE_URL}?page=${page}`)
         PostsService.getPagedPosts(page - 1).then((res) => {
             setPosts(res.data.content);
         })
@@ -65,7 +70,7 @@ function ReadPosts(){
                             <td> {dateformat(post.postDate, 'yy-m-dd') === dateformat(today, 'yy-m-dd')?
                                 dateformat(post.postDate, 'h:MM'):dateformat(post.postDate, 'yy-m-dd')}</td>
                             <td> {post.vote}</td>
-                            <td> {post.view} [{post.comments.length}]</td>
+                            <td> {post.view} [{post.comment.length}]</td>
                         </tr>
                     )
               }

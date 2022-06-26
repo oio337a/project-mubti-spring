@@ -15,14 +15,14 @@ import ModifyPost from "./pages/ModifyPost";
 
 function App() {
     return (
-        <Interceptor>
+        //<Interceptor>
             <Router>
                 <Routes>
                     <Route path="/" element={<Main/>}/>
                     <Route path="/login" element={<Login/>}/>
                     <Route path="/oauth/redirect" element={<Redirect/>}/>
                     <Route path="/mypage" element={<Mypage/>}/>
-                    <Route path="/posts/pages/:id" element={<Board/>}/>
+                    <Route path="/posts" element={<Board/>}/>
                     <Route path="/posts/:id" element={<ReadPost/>}/>
                     <Route path="/posts/write" element={<Write/>}/>
                     <Route path="/posts/:id/write" element={<ModifyPost />} />
@@ -31,7 +31,7 @@ function App() {
                     <Route path="/user/create" element={< CreateUser/>}/>
                 </Routes>
             </Router>
-        </Interceptor>
+        //</Interceptor>
   );
 }
 

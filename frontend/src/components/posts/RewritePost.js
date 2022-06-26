@@ -29,7 +29,7 @@ function RewritePost({id}){
         else if (content.length == 0) alert("내용을 입력하세요.");
         else if (category == "-선택-") alert("카테고리를 선택하세요.");
         else {
-            PostsService.modifyPost(id, category, content, title);
+            PostsService.modifyPost(id, content, title);
             navigate(`/posts/${id}`);
         }
     };

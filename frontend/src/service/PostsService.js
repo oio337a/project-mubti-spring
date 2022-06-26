@@ -4,28 +4,28 @@ import userRequestApi from "../utils/userRequestApi";
 class PostsService {
     getBoard() {
         return userRequestApi({
-            url: "/posts",
+            url: "/post",
             method: "get",
         })
     }
 
     getPagedPosts(page) {
         return userRequestApi({
-            url: `/posts?page=${page}`,
+            url: `/post?page=${page}`,
             method: "get"
         })
     }
 
     getPost(id) {
         return userRequestApi({
-            url: `/posts/${id}`,
+            url: `/post/${id}`,
             method: "get",
         })
     }
 
     savePost(category, content, title) {
         return userRequestApi({
-            url: `/posts`,
+            url: `/post`,
             method: "post",
             data: {
                 post_cateroty: category,
@@ -35,15 +35,21 @@ class PostsService {
         })
     }
 
-    modifyPost(id, category, content, title) {
+    modifyPost(id, content, title) {
         return userRequestApi({
-            url: `/posts/${id}`,
-            method: "post",
+            url: `/post/${id}`,
+            method: "put",
             data: {
-                post_cateroty: category,
                 post_content: content,
                 post_title: title,
             }
+        })
+    }
+
+    deletePost(id) {
+        return userRequestApi({
+            url: `/post/${id}`,
+            method: "delete",
         })
     }
 
