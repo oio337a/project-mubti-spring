@@ -2,6 +2,7 @@ package com.mubti.domain.post.service.impl;
 
 import com.mubti.domain.post.entity.Post;
 import com.mubti.domain.post.entity.CategoryType;
+import com.mubti.domain.post.entity.SearchType;
 import com.mubti.domain.post.entity.Vote;
 import com.mubti.domain.post.repository.PostRepository;
 import com.mubti.domain.post.dto.PostRequestDto;
@@ -27,43 +28,11 @@ public class PostServiceImpl implements PostService {
     private final UserRepository userRepository;
 
     @Override
-    public Page<PostResponseDto> getPostList(Pageable pageable){
-        Page<Post> postList = postRepository.findAll(pageable);
+    public Page<PostResponseDto> getPostList(Pageable pageable, CategoryType categoryType, SearchType searchType, String keyword){
+        Page<Post> postList = postRepository.selectPostLIst(pageable, categoryType, searchType, keyword);
 
         return postList.map(post -> new PostResponseDto(post));
     }
-
-    @Override
-    public Page<PostResponseDto> getPostListByCategory(Pageable pageable, CategoryType categoryType) {
-        Page<Post> postList = postRepository.findAllByCategoryTypeContaining(pageable, categoryType);
-
-        return postList.map(post -> new PostResponseDto(post));
-    }
-
-/*    public Page<Post> findAllByTargetAndKeyword(Pageable pageable, String target, String keyword) {
-        Page<Post> posts;
-
-        switch(target) {
-            case "title_content" :
-                posts = postsRepository.findAllByPostTitleAndPostContentContaining(pageable, keyword);
-                break;
-            case "title" :
-                posts = postsRepository.findAllByPostTitleContaining(pageable, keyword);
-                break;
-            case "content" :
-                posts = postsRepository.findALlByPostContentContaining(pageable, keyword);
-                break;
-            case "alias" :
-                posts = postsRepository.findAllByUserAliasContaining(pageable, keyword);
-                break;
-            case "" :
-                posts = postsRepository.findAll(pageable);
-                break;
-            default :
-                posts = postsRepository.findAllByPostTitleAndPostContentContaining(pageable, keyword);
-        }
-        return posts;
-    }*/
 
     @Override
     @Transactional
