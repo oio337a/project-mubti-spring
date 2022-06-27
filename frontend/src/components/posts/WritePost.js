@@ -11,7 +11,7 @@ function WritePost()
 {
     const navigate = useNavigate();
 
-    const [category, setCateroty] = useState("-선택-");
+    const [category, setCategory] = useState("-선택-");
     const [title, setTitle] = useState("");
     const [content, setContent] = useState("");
 
@@ -39,7 +39,7 @@ function WritePost()
 
     function SelectCategory(){
         const onSelect = (event) => {
-            setCateroty(event.target.value);
+            setCategory(event.target.value);
         };
         return(
             <div>

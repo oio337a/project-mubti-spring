@@ -1,5 +1,6 @@
 import {useState} from "react";
 import React from "react";
+import PostsService from "../../service/PostsService";
 
 function WriteComment(){
     const [comment, setComment] = useState("");
@@ -9,7 +10,7 @@ function WriteComment(){
     }
 
     const onClickBtn = () => {
-        //PostReducer.
+        //PostsService.saveComment();
     }
 
     return(

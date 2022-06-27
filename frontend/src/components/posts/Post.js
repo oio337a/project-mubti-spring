@@ -87,7 +87,7 @@ function Post(){
                     <button onClick={onClickVote}>추천</button>
                     <div>---댓글---</div>
                     {checkValue.approval ? <WriteComment />: <div>로그인해야 댓글 작성이 가능합니다.</div>}
-                    <ReadComments allComments={comments}/>
+                    <ReadComments allComments={comments} id={userId}/>
                 </div>
                 : <div>로딩 중</div>}
         </div>

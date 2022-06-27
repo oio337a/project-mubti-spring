@@ -1,8 +1,9 @@
 import dateformat from "dateformat";
 import {useEffect, useState} from "react";
 import React from "react";
+import PostsService from "../../service/PostsService";
 
-function ReadComments({allComments}){
+function ReadComments({allComments, id}){
     console.log(allComments);
     const maxPage = parseInt((allComments.length - 1)/10) + 1;
     const amount = 10;
@@ -13,6 +14,11 @@ function ReadComments({allComments}){
         setCurrentPage(page);
     }
 
+    const onClickDelete = () => {
+        PostsService.deletePost();
+    }
+
+    console.log(allComments);
     useEffect(() => {
         const startComment = (currentPage - 1) * amount + 1;
         if (allComments.length < currentPage * 10)
@@ -29,6 +35,7 @@ function ReadComments({allComments}){
                     <div> user {comment.user.userAlias}</div>
                     <div> time {dateformat(comment.commentDate, 'yyyy/mm/dd')}</div>
                     <div> {comment.commentContent}</div>
+                    {id === comment.user.userSeq ? <button onClick={onClickDelete}>삭제하기</button> : null}
                 </div>
             )}
             {currentPage < 3 ? null : <button onClick={(e) => onClickPage(e, 1)}>1</button>}

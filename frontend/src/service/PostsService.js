@@ -22,6 +22,10 @@ class PostsService {
         })
     }
 
+    getPostByCategory() {
+
+    }
+
     savePost(category, content, title) {
         return userRequestApi({
             url: `/posts`,
@@ -59,6 +63,14 @@ class PostsService {
             url:`/posts/${id}/vote`,
             method: "post"
         })
+    }
+
+    saveComment(){
+
+    }
+
+    deleteComment(){
+
     }
 }
 

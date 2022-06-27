@@ -4,6 +4,7 @@ import {useEffect, useState} from "react";
 import dateformat from "dateformat";
 import queryString from "query-string";
 import React from "react";
+import {types} from "./mbtiTypes";
 
 const BASE_URL="http://localhost:3000/posts";
 
@@ -18,10 +19,12 @@ function ReadPosts(){
 
     const queryStrings = queryString.parse(window.location.search);
     const page = queryStrings.page === undefined ? 1 : queryStrings.page;
+    const type = queryStrings.type === undefined ? "전체" : queryStrings.type;
 
     const [posts, setPosts] = useState([]);
     const [currentPage, setCurrentPage] = useState(page);
     const [maxPage, setMaxPage] = useState(0);
+    const [category, setCategory] = useState(type);
 
     const getBoard = async () => {
         const response = await PostsService.getBoard();
@@ -46,10 +49,37 @@ function ReadPosts(){
         })
     }
 
+    function SelectCategory(){
+        const onSelect = (event) => {
+            const newCategory = event.target.value;
+            setCategory(newCategory);
+            PostsService.getPostByCategory()
+                .then((res)=> {
+                    setMaxPage();
+                })
+            window.history.pushState("","", `${BASE_URL}?type=${newCategory}&page=${page}`)
+        };
+        return(
+            <div>
+                <h3>카테고리</h3>
+                <select value={category} onChange={onSelect}>
+                    <option value={"전체"}>
+                        전체
+                    </option>
+                    {types.map((type, index) => (
+                        <option value={type} key={index}>
+                            {type}
+                        </option>
+                    ))}
+                </select>
+            </div>
+        );
+    }
+
     return (
       <div>
-
           <button onClick={onClickNew}>글 쓰기</button>
+          <SelectCategory />
           <table>
               <thead>
                 <tr>
