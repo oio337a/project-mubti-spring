@@ -11,5 +11,5 @@ import org.springframework.data.repository.query.Param;
 
 public interface PostRepository extends JpaRepository<Post, Long> {
     @Query(value = "SELECT * FROM Post p WHERE p.categoryType = :categoryType AND p.:searchType LIKE %:keyword%", nativeQuery = true)
-    Page<Post> selectPostLIst(Pageable pageable, @Param("categoryType") CategoryType categoryType, @Param("searchType") SearchType searchType, @Param("keyword") String keyword);
+    Page<Post> selectPostLIst(Pageable pageable, @Param("categoryType") String categoryType, @Param("searchType") String searchType, @Param("keyword") String keyword);
 }

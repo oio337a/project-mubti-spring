@@ -19,7 +19,7 @@ public class PostResponseDto {
     private String userId;
     private String userAlias;
     private String postTitle;
-    private CategoryType categoryType;
+    private String categoryType;
     private String postContent;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS")
     @JsonDeserialize(using = LocalDateTimeDeserializer.class)

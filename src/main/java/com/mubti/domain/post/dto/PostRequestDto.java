@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 public class PostRequestDto {
     private User user;
     private String postTitle;
-    private CategoryType categoryType;
+    private String categoryType;
     private String postContent;
 
     public Post toEntity(){

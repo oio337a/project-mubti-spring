@@ -40,9 +40,8 @@ public class Post {
     private String postTitle;
 
     @Column(name = "POST_CATEROTY", length = 4)
-    @Enumerated(EnumType.STRING)
     @NotNull
-    private CategoryType categoryType;
+    private String categoryType;
 
     @Column(name = "POST_CONTENT", columnDefinition = "TEXT")
     @NotNull

@@ -28,7 +28,7 @@ public class PostServiceImpl implements PostService {
     private final UserRepository userRepository;
 
     @Override
-    public Page<PostResponseDto> getPostList(Pageable pageable, CategoryType categoryType, SearchType searchType, String keyword){
+    public Page<PostResponseDto> getPostList(Pageable pageable, String categoryType, String searchType, String keyword){
         Page<Post> postList = postRepository.selectPostLIst(pageable, categoryType, searchType, keyword);
 
         return postList.map(post -> new PostResponseDto(post));
