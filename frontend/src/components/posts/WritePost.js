@@ -5,10 +5,11 @@ import Editor from '../EditorComponent';
 import PostsService from "../../service/PostsService";
 import React from "react";
 
+const POST_URL = "http://localhost:3000/posts";
+
 function WritePost()
 {
     const navigate = useNavigate();
-    //const id = useSelector((state) => state.user.value.id);
 
     const [category, setCateroty] = useState("-선택-");
     const [title, setTitle] = useState("");
@@ -32,7 +33,7 @@ function WritePost()
         else if (category == "-선택-") alert("카테고리를 선택하세요.");
         else {
             PostsService.savePost(category, content, title);
-            navigate("/posts");
+            window.location.replace(POST_URL);
         }
     };
 

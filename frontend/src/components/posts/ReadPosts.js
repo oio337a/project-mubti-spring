@@ -18,7 +18,6 @@ function ReadPosts(){
 
     const queryStrings = queryString.parse(window.location.search);
     const page = queryStrings.page === undefined ? 1 : queryStrings.page;
-    console.log(page);
 
     const [posts, setPosts] = useState([]);
     const [currentPage, setCurrentPage] = useState(page);

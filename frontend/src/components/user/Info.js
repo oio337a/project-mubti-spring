@@ -34,7 +34,7 @@ const Button = styled.button`
 `;
 
 function Info() {
-    const token = useSelector((state) => state.user.value);
+    const token = useSelector((state) => state.root.user.value);
     const dispatch = useDispatch();
     let navigator = useNavigate();
 
@@ -44,7 +44,7 @@ function Info() {
     const [newToken, setNewToken] = useState("");
 
     useEffect(() => {
-        if (newToken != "") {
+        if (newToken !== "") {
             const [expiryTime, role, id] = parseToken(newToken);
             dispatch(login({
                 accessToken: newToken,
@@ -57,14 +57,14 @@ function Info() {
     }, [newToken]);
 
     const onClickBtn = async () => {
-        if (checked == false) {
+        if (checked === false) {
             setAlias("");
             alert("중복된 닉네임");
         }
-        else if (alias.length == 0) {
+        else if (alias.length === 0) {
             alert("닉네임을 입력하세요.");
         }
-        else if (type == "TYPE"){
+        else if (type === "TYPE"){
             alert("유형을 선택하세요.");
         }
         else {
@@ -86,9 +86,9 @@ function Info() {
         setAlias(newAlias);
         UserService.checkAilas(newAlias)
             .then((res) => {
-                if (res.status == 200) setChecked(true);})
+                if (res.status === 200) setChecked(true);})
             .catch(e => {
-                if(e.response.status == 409) setChecked(false);
+                if(e.response.status === 409) setChecked(false);
         })
     }
 
@@ -100,7 +100,7 @@ function Info() {
                 <Content>
                     <Text>닉네임</Text>
                     <InputNick maxlength="15" onChange={onChangeAlias}/>
-                    <Text>{checked ? (alias.length == 0 ? "닉네임을 입력하세요" : "가능한 닉네임") : "중복 닉네임" }</Text>
+                    <Text>{checked ? (alias.length === 0 ? "닉네임을 입력하세요" : "가능한 닉네임") : "중복 닉네임" }</Text>
                 </Content>
                 <Content>
                     <Text>MBTI</Text>
