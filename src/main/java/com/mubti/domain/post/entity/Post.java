@@ -39,7 +39,7 @@ public class Post {
     @Size(max = 128)
     private String postTitle;
 
-    @Column(name = "POST_CATEROTY", length = 4)
+    @Column(name = "POST_CATEGORY", length = 4)
     @NotNull
     private String categoryType;
 

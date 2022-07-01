@@ -10,16 +10,16 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 public interface PostRepository extends JpaRepository<Post, Long> {
-    @Query(value = "SELECT * FROM Post p WHERE p.categoryType LIKE %:categoryType% AND p.postTitle LIKE %:keyword%", nativeQuery = true)
+    @Query(value = "SELECT * FROM post WHERE post_category LIKE %:categoryType% AND post_title LIKE %:keyword%", nativeQuery = true)
     Page<Post> selectPostListByTitle(Pageable pageable, @Param("categoryType") String categoryType, @Param("keyword") String keyword);
 
-    @Query(value = "SELECT * FROM Post p WHERE p.categoryType LIKE %:categoryType% AND p.postContent LIKE %:keyword%", nativeQuery = true)
+    @Query(value = "SELECT * FROM post WHERE post_category LIKE %:categoryType% AND post_content LIKE %:keyword%", nativeQuery = true)
     Page<Post> selectPostListByContent(Pageable pageable, @Param("categoryType") String categoryType, @Param("keyword") String keyword);
 
-    @Query(value = "SELECT p.* FROM Post p INNER JOIN User u ON p.userSeq = u.userSeq WHERE p.categoryType LIKE %:categoryType% AND u.userAlias LIKE %:keyword%", nativeQuery = true)
+    @Query(value = "SELECT p.* FROM post p INNER JOIN user u ON p.user_seq = u.user_seq WHERE post_category LIKE %:categoryType% AND u.user_alias LIKE %:keyword%", nativeQuery = true)
     Page<Post> selectPostListByUserAlias(Pageable pageable, @Param("categoryType") String categoryType, @Param("keyword") String keyword);
 
-    @Query(value = "SELECT * FROM Post p WHERE p.categoryType LIKE %:categoryType% AND (p.postContent LIKE %:keyword% OR p.postTitle LIKE %:keyword%)", nativeQuery = true)
+    @Query(value = "SELECT * FROM Post WHERE post_category LIKE %:categoryType% AND (post_title LIKE %:keyword% OR post_content LIKE %:keyword%)", nativeQuery = true)
     Page<Post> selectPostListByTitleContent(Pageable pageable, @Param("categoryType") String categoryType, @Param("keyword") String keyword);
 
 }

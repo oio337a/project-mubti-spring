@@ -22,7 +22,7 @@ public class PostController {
     private final PostService postService;
 
     @GetMapping
-    public ResponseEntity getPostList(@PageableDefault(page = 0, size = 10, sort = "postSeq", direction = Sort.Direction.DESC) Pageable pageable,
+    public ResponseEntity getPostList(@PageableDefault(page = 0, size = 10, sort = "post_seq", direction = Sort.Direction.DESC) Pageable pageable,
                                       @RequestParam(value = "category_type", required = false, defaultValue = "") String categoryType,
                                       @RequestParam(value = "search_type", required = false, defaultValue = "") String searchType,
                                       @RequestParam(value = "keyword", required = false, defaultValue = "") String keyword) {
