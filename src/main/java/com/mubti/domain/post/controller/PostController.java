@@ -23,8 +23,8 @@ public class PostController {
 
     @GetMapping
     public ResponseEntity getPostList(@PageableDefault(page = 0, size = 10, sort = "postSeq", direction = Sort.Direction.DESC) Pageable pageable,
-                                      @RequestParam(value = "category_type", required = false, defaultValue = "") CategoryType categoryType,
-                                      @RequestParam(value = "search_type", required = false, defaultValue = "") SearchType searchType,
+                                      @RequestParam(value = "category_type", required = false, defaultValue = "") String categoryType,
+                                      @RequestParam(value = "search_type", required = false, defaultValue = "") String searchType,
                                       @RequestParam(value = "keyword", required = false, defaultValue = "") String keyword) {
 
         Page<PostResponseDto> postList = postService.getPostList(pageable, categoryType, searchType, keyword);

@@ -10,7 +10,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 
 public interface PostService {
-    Page<PostResponseDto> getPostList(Pageable pageable, CategoryType categoryType, SearchType searchType, String keyword);
+    Page<PostResponseDto> getPostList(Pageable pageable, String categoryType, String searchType, String keyword);
     PostResponseDto getPost(long id);
     void postPost(String userId, PostRequestDto postRequestDto);
     void putPost(long id, PostRequestDto postRequestDto);
