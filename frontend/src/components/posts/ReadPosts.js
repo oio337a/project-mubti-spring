@@ -25,6 +25,8 @@ function ReadPosts(){
     const [currentPage, setCurrentPage] = useState(page);
     const [maxPage, setMaxPage] = useState(0);
     const [category, setCategory] = useState(type);
+    const [search, setSearch] = useState("");
+    const [searchType, setSearchType] = useState("전체");
 
     const getBoard = async () => {
         const response = await PostsService.getBoard();
@@ -43,19 +45,29 @@ function ReadPosts(){
 
     const onClickPage = (e, page) => {
         setCurrentPage(page);
-        window.history.pushState("","", `${BASE_URL}?page=${page}`)
-        PostsService.getPagedPosts(page - 1).then((res) => {
-            setPosts(res.data.content);
-        })
+        if (category === "전체") {
+            window.history.pushState("", "", `${BASE_URL}?page=${page}`)
+            PostsService.getPagedPosts(page - 1).then((res) => {
+                setPosts(res.data.content);
+            })
+        }
+        else {
+            window.history.pushState("", "", `${BASE_URL}?type=${category}&page=${page}`)
+            PostsService.getPostByCategory(category, page - 1).then((res) => {
+                console.log("PAGE WITH CATEGORY", res);
+                //setPosts(res.data.content);
+            })
+        }
     }
 
     function SelectCategory(){
-        const onSelect = (event) => {
-            const newCategory = event.target.value;
+        const onSelect = (e) => {
+            const newCategory = e.target.value;
             setCategory(newCategory);
-            PostsService.getPostByCategory()
+            PostsService.getPostByCategory(category, 1)
                 .then((res)=> {
-                    setMaxPage();
+                    console.log("CATEGORY", res);
+                    //setMaxPage();
                 })
             window.history.pushState("","", `${BASE_URL}?type=${newCategory}&page=${page}`)
         };
@@ -74,6 +86,39 @@ function ReadPosts(){
                 </select>
             </div>
         );
+    }
+
+    function Searching(){
+        const onSelectSearch = (e) => {
+            const newCategory = e.target.value;
+            setSearchType(newCategory);
+        }
+
+        const onChangeSearch = (e) => {
+            setSearch(e.target.value);
+        }
+
+        const onClickSearch = () => {
+            PostsService.getSearchedPost(category, 1, search, searchType)
+                .then((res) => {console.log("SEARCH", res);})
+        }
+
+        return(
+            <div>
+                <select value={category} onChange={onSelectSearch}>
+                    <option value={"전체"}>
+                        전체
+                    </option>
+                    {types.map((type, index) => (
+                        <option value={type} key={index}>
+                            {type}
+                        </option>
+                    ))}
+                </select>
+                <input onChange={onChangeSearch} />
+                <button onClick={onClickSearch}>검색</button>
+            </div>
+        )
     }
 
     return (
@@ -120,6 +165,7 @@ function ReadPosts(){
                   {maxPage === currentPage ? null : <button onClick={(e) => onClickPage(e, maxPage)}>{maxPage}</button>}
               </div>
           </div>
+          <Searching />
       </div>
     );
 }

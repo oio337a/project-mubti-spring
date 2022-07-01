@@ -22,8 +22,28 @@ class PostsService {
         })
     }
 
-    getPostByCategory() {
+    getPostByCategory(category, page) {
+        return userRequestApi({
+            url: "/posts",
+            method: "get",
+            data: {
+                category_type: category,
+                page: page
+            }
+        })
+    }
 
+    getSearchedPost(category, page, search, searchType){
+        return userRequestApi({
+            url: "/posts",
+            method: "get",
+            data: {
+                category_type: category,
+                page: page,
+                search_type: searchType,
+                keyword: search
+            }
+        })
     }
 
     savePost(category, content, title) {
