@@ -33,19 +33,19 @@ public class PostServiceImpl implements PostService {
 
         switch(searchType) {
             case "title" :
-                postList = postRepository.selectPostListByTitle(pageable, categoryType, keyword);
+                postList = postRepository.findAllByPostTitle(pageable, categoryType, keyword);
                 break;
             case "content" :
-                postList = postRepository.selectPostListByContent(pageable, categoryType, keyword);
+                postList = postRepository.findAllByPostContent(pageable, categoryType, keyword);
                 break;
             case "userAlias" :
-                postList = postRepository.selectPostListByUserAlias(pageable, categoryType, keyword);
+                postList = postRepository.findAllByUserAlias(pageable, categoryType, keyword);
                 break;
             case "title_content" :
-                postList = postRepository.selectPostListByTitleContent(pageable, categoryType, keyword);
+                postList = postRepository.findAllByPostTitleOrPostContent(pageable, categoryType, keyword);
                 break;
             default :
-                postList = postRepository.selectPostList(pageable);
+                postList = postRepository.findAll(pageable);
         }
 
         return postList.map(post -> new PostResponseDto(post));
