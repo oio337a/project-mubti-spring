@@ -35,14 +35,8 @@ class PostsService {
 
     getSearchedPost(category, page, search, searchType){
         return userRequestApi({
-            url: "/posts",
+            url: `/posts?category_type=${category}&page=${page}&search_type=${searchType}&keyword=${search}`,
             method: "get",
-            data: {
-                category_type: category,
-                page: page,
-                search_type: searchType,
-                keyword: search
-            }
         })
     }
 

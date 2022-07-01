@@ -5,6 +5,7 @@ import dateformat from "dateformat";
 import queryString from "query-string";
 import React from "react";
 import {types} from "./mbtiTypes";
+import {SearchType} from "../../data/SearchType";
 
 const BASE_URL="http://localhost:3000/posts";
 
@@ -26,7 +27,7 @@ function ReadPosts(){
     const [maxPage, setMaxPage] = useState(0);
     const [category, setCategory] = useState(type);
     const [search, setSearch] = useState("");
-    const [searchType, setSearchType] = useState("전체");
+    const [searchType, setSearchType] = useState("title");
 
     const getBoard = async () => {
         const response = await PostsService.getBoard();
@@ -90,6 +91,7 @@ function ReadPosts(){
 
     function Searching(){
         const onSelectSearch = (e) => {
+            console.log("@@",e.target.value);
             const newCategory = e.target.value;
             setSearchType(newCategory);
         }
@@ -99,23 +101,21 @@ function ReadPosts(){
         }
 
         const onClickSearch = () => {
+            console.log(category, "search", search, "searchType", searchType);
             PostsService.getSearchedPost(category, 1, search, searchType)
                 .then((res) => {console.log("SEARCH", res);})
         }
 
         return(
             <div>
-                <select value={category} onChange={onSelectSearch}>
-                    <option value={"전체"}>
-                        전체
-                    </option>
-                    {types.map((type, index) => (
-                        <option value={type} key={index}>
-                            {type}
+                <select value={searchType} onChange={onSelectSearch}>
+                    {SearchType.map((type, index) => (
+                        <option value={type.value} key={index}>
+                            {type.type}
                         </option>
                     ))}
                 </select>
-                <input onChange={onChangeSearch} />
+                <input value={search} onChange={onChangeSearch} />
                 <button onClick={onClickSearch}>검색</button>
             </div>
         )
