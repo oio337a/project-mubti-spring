@@ -11,6 +11,4 @@ import org.springframework.stereotype.Repository;
 public interface UserRepository extends JpaRepository<User, Long> {
     User findByUserId(String userId);
     User findByUserAlias(String userAlias);
-    @Query("SELECT roleType FROM User WHERE userId = :id")
-    RoleType findRoleTypeByUserId(@Param("id") String userId);
 }

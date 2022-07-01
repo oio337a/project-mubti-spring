@@ -7,7 +7,6 @@ import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import com.mubti.domain.post.entity.Comment;
 import com.mubti.domain.post.entity.Post;
-import com.mubti.domain.post.entity.CategoryType;
 import lombok.Data;
 
 import java.time.LocalDateTime;

@@ -46,7 +46,7 @@ public class AuthController {
         Claims claims = authToken.getExpiredTokenClaims();
 
         String userId = claims.getSubject();
-        RoleType roleType = userRepository.findRoleTypeByUserId(userId);
+        RoleType roleType = userRepository.findByUserId(userId).getRoleType();
 
         // refresh token
         String refreshToken = CookieUtil.getCookie(request, REFRESH_TOKEN)
