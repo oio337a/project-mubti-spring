@@ -34,4 +34,10 @@ public interface PostRepository extends JpaRepository<Post, Long> {
             nativeQuery = true)
     Page<Post> selectPostListByTitleContent(Pageable pageable, @Param("categoryType") String categoryType, @Param("keyword") String keyword);
 
+    @Query(
+            value = "SELECT * FROM Post",
+            countQuery = "SELECT count(*) FROM post",
+            nativeQuery = true)
+    Page<Post> selectPostList(Pageable pageable);
+
 }

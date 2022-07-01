@@ -45,7 +45,7 @@ public class PostServiceImpl implements PostService {
                 postList = postRepository.selectPostListByTitleContent(pageable, categoryType, keyword);
                 break;
             default :
-                postList = postRepository.findAll(pageable);
+                postList = postRepository.selectPostList(pageable);
         }
 
         return postList.map(post -> new PostResponseDto(post));
