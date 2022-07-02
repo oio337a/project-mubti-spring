@@ -1,7 +1,5 @@
 package com.mubti.domain.post.controller;
 
-import com.mubti.domain.post.entity.CategoryType;
-import com.mubti.domain.post.entity.SearchType;
 import com.mubti.domain.post.service.PostService;
 import com.mubti.domain.post.dto.PostRequestDto;
 import com.mubti.domain.post.dto.PostResponseDto;
