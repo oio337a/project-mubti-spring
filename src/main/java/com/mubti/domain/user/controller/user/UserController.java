@@ -1,7 +1,6 @@
 package com.mubti.domain.user.controller.user;
 
 import com.mubti.domain.user.service.UserService;
-import com.mubti.domain.user.service.impl.UserServiceImpl;
 import com.mubti.domain.user.dto.UserRequestDto;
 import com.mubti.domain.user.dto.UserResponseDto;
 import lombok.RequiredArgsConstructor;
@@ -38,7 +37,9 @@ public class UserController {
 
     @GetMapping("/alias/{userAlias}/check")
     public ResponseEntity checkUserAlias(@PathVariable("userAlias") String userAlias) {
-        return userService.checkUserAlias(userAlias);
+        ResponseEntity responseEntity = userService.checkUserAlias(userAlias);
+
+        return responseEntity;
     }
 
 }

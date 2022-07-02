@@ -1,6 +1,8 @@
 package com.mubti.domain.post.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
@@ -15,6 +17,7 @@ import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 import java.util.List;
 
+@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class)
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
@@ -36,10 +39,9 @@ public class Post {
     @Size(max = 128)
     private String postTitle;
 
-    @Column(name = "POST_CATEROTY", length = 4)
-    @Enumerated(EnumType.STRING)
+    @Column(name = "POST_CATEGORY", length = 4)
     @NotNull
-    private CategoryType categoryType;
+    private String categoryType;
 
     @Column(name = "POST_CONTENT", columnDefinition = "TEXT")
     @NotNull
@@ -66,9 +68,14 @@ public class Post {
     public void updateTitleAndContent(PostRequestDto post) {
         this.postTitle = post.getPostTitle();
         this.postContent = post.getPostContent();
+        this.categoryType = post.getCategoryType();
     }
 
     public void updateView() {
         this.view += 1;
     }
+    public void updateVote() {
+        this.vote += 1;
+    }
+
 }
