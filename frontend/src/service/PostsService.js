@@ -81,7 +81,7 @@ class PostsService {
 
     saveComment(){
         return userRequestApi({
-            url:`/posts/${id}/vote`,
+            url:`/posts/vote`,
             method: "post"
         })
     }

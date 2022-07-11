@@ -19,14 +19,14 @@ export default function useCheckUser(acceptedRole){
                     redirectURL: null
                 };
             }
-            if (value.role === "INCOMPLETE_USER")
+            if (value.role === "ROLE_INCOMPLETE_USER")
                 return {
                     approval: false,
                     redirectURL: `${process.env.REACT_APP_BASE_URL}/user/create`
                 };
         }
-        case "INCOMPLETE_USER" : {
-            if (value.role === "INCOMPLETE_USER")
+        case "ROLE_INCOMPLETE_USER" : {
+            if (value.role === "ROLE_INCOMPLETE_USER")
                 return {
                     approval: true,
                     redirectURL: null
